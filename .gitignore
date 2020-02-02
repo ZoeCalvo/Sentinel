@@ -7,7 +7,7 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-
+.idea/inspectionProfiles/profiles_settings.xml
 # Generated files
 .idea/**/contentModel.xml
 

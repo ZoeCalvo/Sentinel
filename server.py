@@ -1,5 +1,19 @@
 from flask import Flask, render_template
+import mysql.connector
 app = Flask(__name__)
+
+mydb = mysql.connector.connect(host="localhost", user="root", passwd="***REMOVED***", database="telusko")
+
+mycursor = mydb.cursor()
+
+
+def insertarEnBD():
+    sql = "INSERT INTO student(name , college) VALUES(%s,%s)"
+    val = ("Maria", "rist")
+    mycursor.execute(sql, val)
+    mydb.commit()
+    print(mycursor.rowcount, "record inserted.")
+
 
 @app.route('/')
 def titulo():
@@ -10,3 +24,4 @@ def titulo():
 
 if __name__ == '__main__':
     app.run()
+

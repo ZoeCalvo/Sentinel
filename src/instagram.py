@@ -1,6 +1,7 @@
 from InstagramAPI import InstagramAPI
 import json
 import re
+from claves import *
 import time
 from datetime import date, datetime, timedelta
 
@@ -124,9 +125,8 @@ def explore():
 if __name__ == "__main__":
     # nombre = input("Introduce tu nombre: ")
     # passw = input("Introduce tu contrasena: ")
-    nombre = "sentinel______"
-    passw = "***REMOVED***"
-    api = InstagramAPI(nombre, passw)
+
+    api = InstagramAPI(user_ig, pass_ig)
     api.login()
     user_id = api.username_id
     followings = input("¿Quieres mirar a quién sigues?: (Y/N) ")

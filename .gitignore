@@ -52,3 +52,7 @@ cmake-build-*/
  modules.xml
  .idea/misc.xml
  *.ipr
+
+#Archivos propios
+claves.py
+claves.cpython-38.pyc

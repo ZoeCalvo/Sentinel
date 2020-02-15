@@ -1,11 +1,12 @@
 import tweepy
+from claves import *
 import json
 
 #Autenticación
-access_token = "***REMOVED***"
-access_token_secret = "***REMOVED***"
-api_key = "***REMOVED***"
-api_secret_key = "***REMOVED***"
+access_token = access_token
+access_token_secret = access_token_secret
+api_key = api_key
+api_secret_key = api_secret_key
 
 auth = tweepy.OAuthHandler(api_key, api_secret_key)
 auth.set_access_token(access_token, access_token_secret)

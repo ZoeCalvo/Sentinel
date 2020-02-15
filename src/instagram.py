@@ -17,47 +17,52 @@ def parse(lst):
 
     return listReturn
 
-def investigar():
-    investigar = []
+
+def research(user_id):
+    research = []
     following = api.getTotalFollowings(user_id)
-    investigar.append(following)
-    f2 = parse(investigar[0])
-    numero = 0
+    research.append(following)
+    f2 = parse(research[0])
+    num = 0
 
     for j in range(len(f2)):
-        if numero >= 0:
-            IDpersona = f2[j].get("pk")
-            getMediaData(IDpersona)
+        if num >= 0:
+            user_id = f2[j].get("pk")
+            user_name = f2[j].get("username")
+            print("id: ", user_id)
+            print("name: ", user_name)
+            #getMediaData(user_id)
         else:
-            numero += 1
+            num += 1
     return None
 
-def getMediaData(IDpersona):
+
+def getMediaData(userId):
     try:
-        all_posts = api.getTotalUserFeed(IDpersona)
+        all_posts = api.getTotalUserFeed(userId)
         flag = True
 
         for post in all_posts:
             while flag:
                 if "id" in post:
-                    IDpublicacion = str(post["id"])
+                    idPost = str(post["id"])
 
                 if "caption" in post:
                     if post["caption"]:
                         if "text" in post["caption"]:
                             txt_sinEmojis = deEmojify(post["caption"]["text"])
-                            texto = str(txt_sinEmojis.encode("utf8"))
+                            text = str(txt_sinEmojis.encode("utf8"))
 
                 if "taken_at" in post:
                     timestamp = str(post["taken_at"])
 
-                    fecha = datetime.fromtimestamp(float(timestamp))
+                    datePost = datetime.fromtimestamp(float(timestamp))
 
-                print ("idpubl: ", IDpublicacion)
-                print("txt: ", texto)
-                print("fecha: ", fecha)
-                getMediaHashtag(IDpublicacion, texto)
-                getComments(IDpublicacion)
+                print ("idpost: ", idPost)
+                print("txt: ", text)
+                print("date: ", datePost)
+                getMediaHashtag(idPost, text)
+                getComments(idPost)
                 flag = False
 
     except:
@@ -65,8 +70,8 @@ def getMediaData(IDpersona):
     return None
 
 
-def getMediaHashtag(media_id, texto):
-    total_hashtags = re.findall(r"\#(\w+)", texto)
+def getMediaHashtag(media_id, text):
+    total_hashtags = re.findall(r"\#(\w+)", text)
 
     for hashtag in total_hashtags:
         print(hashtag)
@@ -99,40 +104,51 @@ def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')
 
 def explore():
-    explora = []
+    explore = []
     captions = []
     _ = api.explore()
-    for publicacion in api.LastJson['items']:
-        explora.append(publicacion)
+    for post in api.LastJson['items']:
+        explore.append(post)
 
-    for publicacion in explora:
-        if "media" in publicacion:
-            if publicacion["media"]:
-                if "id" in publicacion["media"]:
-                    IDpublicacion = str(publicacion["media"]["id"])
+    for post in explore:
+        if "media" in post:
+            if post["media"]:
+                if "id" in post["media"]:
+                    postId = str(post["media"]["id"])
 
-                if "caption" in publicacion["media"]:
-                    captions.append(publicacion["media"]["caption"])
+                if "caption" in post["media"]:
+                    captions.append(post["media"]["caption"])
                     for txt in captions:
                         if txt is not None:
                             if "text" in txt:
-                                texto = str(txt["text"])
-                                print(texto)
-                        getMediaHashtag(IDpublicacion, texto)
+                                text = str(txt["text"])
+                                print(text)
+                        getMediaHashtag(postId, text)
     return None
 
+def search_users(userName):
+    _ = api.searchUsername(userName)
+    userId = api.LastJson["user"]["pk"]
+    #
+
+    return userId
 
 if __name__ == "__main__":
-    # nombre = input("Introduce tu nombre: ")
-    # passw = input("Introduce tu contrasena: ")
-
     api = InstagramAPI(user_ig, pass_ig)
     api.login()
-    user_id = api.username_id
+    # user_id = api.username_id
     followings = input("¿Quieres mirar a quién sigues?: (Y/N) ")
     if followings == "Y":
-        investigarFollowings = investigar()
+        user = input("Introduce tu nombre de usuario sin @: ")
+        userId = search_users(user)
+        research(userId)
     else:
-        explorar = explore()
+        ans = input("Quieres buscar a un usuario concreto?: (Y/N) ")
+        if ans == "Y":
+            user = input("Introduce el nombre del usuario sin @: ")
+            userId = search_users(user)
+            getMediaData(userId)
+        else:
+            explore()
 
 

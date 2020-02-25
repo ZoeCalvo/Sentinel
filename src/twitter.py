@@ -1,12 +1,12 @@
 import tweepy
-from claves import *
+import os
 import json
 
 #Autenticación
-access_token = access_token
-access_token_secret = access_token_secret
-api_key = api_key
-api_secret_key = api_secret_key
+access_token = os.getenv('ACCESS_TOKEN')
+access_token_secret = os.getenv('ACCESS_TOKEN_SECRET')
+api_key = os.getenv('API_KEY')
+api_secret_key = os.getenv('API_SECRET_KEY')
 
 auth = tweepy.OAuthHandler(api_key, api_secret_key)
 auth.set_access_token(access_token, access_token_secret)

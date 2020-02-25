@@ -1,9 +1,11 @@
 from flask import Flask, render_template
 import mysql.connector
-from claves import *
-app = Flask(__name__)
+import os
 
-mydb = mysql.connector.connect(host="localhost", user=user_bd, passwd=pass_bd, database="telusko")
+app = Flask(__name__)
+user_db = os.getenv('USER_DB')
+pass_db = os.getenv('PASSWD_DB')
+mydb = mysql.connector.connect(host="localhost", user=user_db, passwd=pass_db, database="telusko")
 
 mycursor = mydb.cursor()
 

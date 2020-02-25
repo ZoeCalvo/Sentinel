@@ -1,7 +1,7 @@
 from InstagramAPI import InstagramAPI
 import json
 import re
-from claves import *
+import os
 import time
 from datetime import date, datetime, timedelta
 
@@ -134,9 +134,11 @@ def search_users(userName):
     return userId
 
 if __name__ == "__main__":
+    user_ig = os.getenv('USER_IG')
+    pass_ig = os.getenv('PASSWD_IG')
     api = InstagramAPI(user_ig, pass_ig)
     api.login()
-    # user_id = api.username_id
+    
     followings = input("¿Quieres mirar a quién sigues?: (Y/N) ")
     if followings == "Y":
         user = input("Introduce tu nombre de usuario sin @: ")

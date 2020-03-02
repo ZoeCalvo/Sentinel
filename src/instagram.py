@@ -18,7 +18,7 @@ def parse(lst):
     return listReturn
 
 
-def research(user_id):
+def research(api,user_id):
     research = []
     following = api.getTotalFollowings(user_id)
     research.append(following)
@@ -37,7 +37,7 @@ def research(user_id):
     return None
 
 
-def getMediaData(userId):
+def getMediaData(api,userId):
     try:
         all_posts = api.getTotalUserFeed(userId)
         flag = True
@@ -79,7 +79,7 @@ def getMediaHashtag(media_id, text):
     return None
 
 
-def getComments(media_id):
+def getComments(api,media_id):
     has_comments = True
     max_id = ''
     comments = []
@@ -103,7 +103,7 @@ def getComments(media_id):
 def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')
 
-def explore():
+def explore(api):
     explore = []
     captions = []
     _ = api.explore()
@@ -126,31 +126,36 @@ def explore():
                         getMediaHashtag(postId, text)
     return None
 
-def search_users(userName):
+def search_users(api, userName):
     _ = api.searchUsername(userName)
     userId = api.LastJson["user"]["pk"]
     #
 
     return userId
 
-if __name__ == "__main__":
+
+def main():
     user_ig = os.getenv('USER_IG')
     pass_ig = os.getenv('PASSWD_IG')
     api = InstagramAPI(user_ig, pass_ig)
     api.login()
-    
-    followings = input("¿Quieres mirar a quién sigues?: (Y/N) ")
-    if followings == "Y":
-        user = input("Introduce tu nombre de usuario sin @: ")
-        userId = search_users(user)
-        research(userId)
-    else:
-        ans = input("Quieres buscar a un usuario concreto?: (Y/N) ")
-        if ans == "Y":
-            user = input("Introduce el nombre del usuario sin @: ")
-            userId = search_users(user)
-            getMediaData(userId)
-        else:
-            explore()
+
+    return api
+
+
+
+    # followings = input("¿Quieres mirar a quién sigues?: (Y/N) ")
+    # if followings == "Y":
+    #     user = input("Introduce tu nombre de usuario sin @: ")
+    #     userId = search_users(user)
+    #     research(userId)
+    # else:
+    #     ans = input("Quieres buscar a un usuario concreto?: (Y/N) ")
+    #     if ans == "Y":
+    #         user = input("Introduce el nombre del usuario sin @: ")
+    #         userId = search_users(user)
+    #         getMediaData(userId)
+    #     else:
+    #         explore()
 
 

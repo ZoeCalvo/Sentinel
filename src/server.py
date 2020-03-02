@@ -1,8 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, jsonify, render_template
+from flask_cors import CORS
 import mysql.connector
 import os
+# import src.instagram
+import json
+from src.instagram import *
+
+# from src.twitter import *
 
 app = Flask(__name__)
+CORS(app)
+
 user_db = os.getenv('USER_DB')
 pass_db = os.getenv('PASSWD_DB')
 mydb = mysql.connector.connect(host="localhost", user=user_db, passwd=pass_db, database="telusko")
@@ -20,10 +28,19 @@ def insertarEnBD():
 
 @app.route('/')
 def titulo():
-    title = "Sentinel"
-    user = {'nombre': 'Zoe'}
 
-    return render_template("plantilla.html", title=title, user=user)
+    return jsonify({'text': 'Hola!!!'})
+
+
+@app.route('/instagram')
+def init_ig():
+    api_ig = main()
+    user = input("Introduce tu nombre de usuario sin @: ")
+    userId = search_users(api_ig, user)
+    userId_json = json.dumps(userId)
+    return jsonify({'userID' : userId_json})
+
+
 
 if __name__ == '__main__':
     app.run()

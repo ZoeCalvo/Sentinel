@@ -1,12 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HttpBackend } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+import { ConfigComponent } from './config/config.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ConfigComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

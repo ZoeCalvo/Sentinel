@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+// import { HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -8,30 +8,29 @@ import { HttpClient} from '@angular/common/http';
 })
 
 
-export class AppComponent implements OnInit{
-  title = 'Sentinel';
-  userId: JSON;
-  serverData: JSON;
+export class AppComponent {
+  // title = 'Sentinel';
+  // userId: JSON;
+  // serverData: JSON;
 
-  constructor(private httpClient: HttpClient) {
-  }
+  // constructor(private httpClient: HttpClient) {
+  // }
 
-  ngOnInit(): void {
-  }
+  // ngOnInit(): void {
+  // }
 
-  sayHi() {
-    this.httpClient.get('http://127.0.0.1:5000/').subscribe(data => {
-      this.serverData = data as JSON;
-      console.log(this.serverData);
-    });
-  }
-
-  userIG() {
-    this.httpClient.get('http://127.0.0.1:5000/instagram').subscribe(data => {
-      this.userId = data as JSON;
-      console.log(this.userId);
-    });
-  }
+  // sayHi() {
+  //   this.httpClient.get('http://127.0.0.1:5000/').subscribe(data => {
+  //     this.serverData = data as JSON;
+  //     console.log(this.serverData);
+  //   });
+  // }
+  //
+  // userIG() {
+  //   this.httpClient.get('http://127.0.0.1:5000/instagram').subscribe(data => {
+  //     this.userId = data as JSON;
+  //     console.log(this.userId);
+  //   });}
 }
 
 

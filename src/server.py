@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, redirect, url_for, request
 from flask_cors import CORS
 import mysql.connector
 import os
@@ -17,14 +17,20 @@ mydb = mysql.connector.connect(host="localhost", user=user_db, passwd=pass_db, d
 
 mycursor = mydb.cursor()
 
-
+@app.route('/register', methods=['POST'])
 def insertarEnBD():
-    sql = "INSERT INTO student(name , college) VALUES(%s,%s)"
-    val = ("Maria", "rist")
+
+    sql = ("INSERT INTO register(name, surname, user, passwd) VALUES(%s,%s, %s, %s)")
+    data = request.json
+    name=data.get('name')
+    surname = data.get('surname')
+    username = data.get('user')
+    passwd = data.get('passwd')
+    val = (name, surname, username, passwd)
     mycursor.execute(sql, val)
     mydb.commit()
-    print(mycursor.rowcount, "record inserted.")
-
+    #print(mycursor.rowcount, "record inserted.")
+    return None
 
 @app.route('/')
 def titulo():

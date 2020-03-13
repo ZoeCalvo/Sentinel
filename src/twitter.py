@@ -1,5 +1,9 @@
 import tweepy
+import html
 import os
+from textblob import TextBlob
+from classifier import *
+from googletrans import Translator
 import json
 
 #Autenticación
@@ -15,7 +19,8 @@ auth.set_access_token(access_token, access_token_secret)
 #Los parámetros wait_on_rate_limit se utilizan para que si se cumple con el cupo de tweets cargados, la app no se pare
 #si no que espere un tiempo y cuando pueda continúe
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
-
+clf = SentimentClassifier()
+translator = Translator()
 #Obtener información sobre mi usuario
 # data = api.me()
 # print(json.dumps(data._json, indent=2))
@@ -35,23 +40,44 @@ api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
 def searchHashtag(hashtag, since_date=None, until_date=None):
     for tweet in tweepy.Cursor(api.search, q=hashtag, tweet_mode="extended", since=since_date, until=until_date).items():
-        print(tweet._json["full_text"])
+        sentiment_analysis(tweet)
 
     return None
 
 def searchUser(user, since_date=None, until_date=None):
     for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items():
-        print(tweet._json["full_text"])
+        sentiment_analysis(tweet)
 
     return None
 
 def searchWord(word, since_date=None, until_date=None):
     for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items():
-        print(tweet._json["full_text"])
+        sentiment_analysis(tweet)
 
     return None
 
+def deEmojify(inputString):
 
+    return inputString.encode('ascii', 'ignore').decode('ascii')
+
+def sentiment_analysis(tweet):
+
+    tweet=html.unescape(tweet._json["full_text"])
+    tw_sinemoji = deEmojify(tweet)
+
+    if translator.detect(tw_sinemoji).lang == 'en':
+        txt = TextBlob(tweet)
+        print(tweet + "\n", txt.sentiment)
+    elif translator.detect(tw_sinemoji).lang == 'es':
+        # Primera opción, utilizar libreria en español
+        # print(tweet + '\n' + '%.5f' % clf.predict(tweet))
+
+        #Segunda opción traducir y utilizar librería en inglés
+        translate = translator.translate(tw_sinemoji, dest='en')
+        trans = TextBlob(translate.text)
+        print(tweet + "\n", trans.sentiment)
+
+    return None
 
 if __name__ == "__main__":
     print("Selecciona una opción")

@@ -2,8 +2,16 @@ from InstagramAPI import InstagramAPI
 import json
 import re
 import os
+import html
+from textblob import TextBlob
+from googletrans import Translator
+from classifier import *
 import time
 from datetime import date, datetime, timedelta
+
+
+clf = SentimentClassifier()
+translator = Translator()
 
 def parse(lst):
     listReturn=[]
@@ -43,27 +51,27 @@ def getMediaData(api,userId):
         flag = True
 
         for post in all_posts:
-            while flag:
-                if "id" in post:
-                    idPost = str(post["id"])
+            # while flag:
+            if "id" in post:
+                idPost = str(post["id"])
 
-                if "caption" in post:
-                    if post["caption"]:
-                        if "text" in post["caption"]:
-                            txt_sinEmojis = deEmojify(post["caption"]["text"])
-                            text = str(txt_sinEmojis.encode("utf8"))
+            if "caption" in post:
+                if post["caption"]:
+                    if "text" in post["caption"]:
+                        txt_sinEmojis = deEmojify(post["caption"]["text"])
+                        text = str(txt_sinEmojis.encode("utf8"))
 
-                if "taken_at" in post:
-                    timestamp = str(post["taken_at"])
+            if "taken_at" in post:
+                timestamp = str(post["taken_at"])
 
-                    datePost = datetime.fromtimestamp(float(timestamp))
+                datePost = datetime.fromtimestamp(float(timestamp))
 
-                print ("idpost: ", idPost)
-                print("txt: ", text)
-                print("date: ", datePost)
-                getMediaHashtag(idPost, text)
-                getComments(idPost)
-                flag = False
+            print ("idpost: ", idPost)
+            print("txt: ", text)
+            # print("date: ", datePost)
+            # getMediaHashtag(idPost, text)
+            getComments(idPost)
+
 
     except:
         pass
@@ -79,7 +87,7 @@ def getMediaHashtag(media_id, text):
     return None
 
 
-def getComments(api,media_id):
+def getComments(api, media_id):
     has_comments = True
     max_id = ''
     comments = []
@@ -94,11 +102,29 @@ def getComments(api,media_id):
     for c in comments:
        if "text" in c:
            sin_emoji = deEmojify(c["text"])
-           comentario = str(sin_emoji.encode("utf8"))
-           print(comentario)
+           comment = json.dumps(sin_emoji)
+           sentiment_analysis(comment)
 
     return None
 
+
+def sentiment_analysis(comment):
+
+    comment = html.unescape(comment)
+
+    if translator.detect(comment).lang == 'en':
+        txt = TextBlob(comment)
+        print(comment + "\n", txt.sentiment)
+    elif translator.detect(comment).lang == 'es':
+        #Primera opción utilizar la librería en español
+        # print(comment + '\n' + '%.5f' % clf.predict(comment))
+
+        # Segunda opción, traducir y utilizar librería en inglés
+        translate = translator.translate(comment, dest='en')
+        trans = TextBlob(translate.text)
+        print(comment + "\n", trans.sentiment)
+
+    return None
 
 def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')

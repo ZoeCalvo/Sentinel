@@ -30,7 +30,7 @@ def insertarEnBD():
     mycursor.execute(sql, val)
     mydb.commit()
     #print(mycursor.rowcount, "record inserted.")
-    return None
+    return 'OK'
 
 @app.route('/')
 def titulo():

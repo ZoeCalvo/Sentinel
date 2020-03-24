@@ -3,7 +3,7 @@ import html
 import os
 from textblob import TextBlob
 from classifier import *
-from googletrans import Translator
+from yandex_translate import YandexTranslate
 import json
 
 #Autenticación
@@ -20,7 +20,7 @@ auth.set_access_token(access_token, access_token_secret)
 #si no que espere un tiempo y cuando pueda continúe
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 clf = SentimentClassifier()
-translator = Translator()
+translator = YandexTranslate(os.getenv('YANDEX_KEY'))
 #Obtener información sobre mi usuario
 # data = api.me()
 # print(json.dumps(data._json, indent=2))
@@ -39,22 +39,25 @@ translator = Translator()
 #     print(tweet._json["full_text"], tweet.text.encode("utf-8"))
 
 def searchHashtag(hashtag, since_date=None, until_date=None):
-    for tweet in tweepy.Cursor(api.search, q=hashtag, tweet_mode="extended", since=since_date, until=until_date).items():
-        sentiment_analysis(tweet)
+    analysis_score = []
+    for tweet in tweepy.Cursor(api.search, q=hashtag, tweet_mode="extended", since=since_date, until=until_date).items(4):
+        analysis_score.append(sentiment_analysis(tweet))
 
-    return None
+    return analysis_score
 
 def searchUser(user, since_date=None, until_date=None):
+    analysis_score = []
     for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items():
-        sentiment_analysis(tweet)
+        analysis_score.append(sentiment_analysis(tweet))
 
-    return None
+    return analysis_score
 
 def searchWord(word, since_date=None, until_date=None):
+    analysis_score = []
     for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items():
-        sentiment_analysis(tweet)
+        analysis_score.append(sentiment_analysis(tweet))
 
-    return None
+    return analysis_score
 
 def deEmojify(inputString):
 
@@ -64,41 +67,16 @@ def sentiment_analysis(tweet):
 
     tweet=html.unescape(tweet._json["full_text"])
     tw_sinemoji = deEmojify(tweet)
+    if not tw_sinemoji == '""' :
+        if translator.detect(tw_sinemoji) == 'en':
+            score = TextBlob(tweet).sentiment
 
-    if translator.detect(tw_sinemoji).lang == 'en':
-        txt = TextBlob(tweet)
-        print(tweet + "\n", txt.sentiment)
-    elif translator.detect(tw_sinemoji).lang == 'es':
-        # Primera opción, utilizar libreria en español
-        # print(tweet + '\n' + '%.5f' % clf.predict(tweet))
+        elif translator.detect(tw_sinemoji) == 'es':
+            # Primera opción, utilizar libreria en español
+            # score=clf.predict(tw_sinemoji)
 
-        #Segunda opción traducir y utilizar librería en inglés
-        translate = translator.translate(tw_sinemoji, dest='en')
-        trans = TextBlob(translate.text)
-        print(tweet + "\n", trans.sentiment)
+            #Segunda opción traducir y utilizar librería en inglés
+            translate = translator.translate(tw_sinemoji, 'en')
+            score = TextBlob(translate["text"][0]).sentiment
 
-    return None
-
-if __name__ == "__main__":
-    print("Selecciona una opción")
-    print("1. Buscar tweets en un hashtag")
-    print("2. Buscar tweets donde aparezca un usuario mencionado")
-    print("3. Buscar tweets relacionados con una palabra")
-
-    option = input("Introduce el número de la opción deseada: ")
-
-    if option == "1":
-        hashtag = input("Introduzca el hashtag con #: ")
-        since_date = input("Introduce la fecha de comienzo de búsqueda: ")
-        until_date = input("Introduce la fecha de fin de búsqueda: ")
-        searchHashtag(hashtag, since_date, until_date)
-    if option == "2":
-        user = input("Introduzca el nombre del usuario con @: ")
-        since_date = input("Introduce la fecha de comienzo de búsqueda: ")
-        until_date = input("Introduce la fecha de fin de búsqueda: ")
-        searchUser(user, since_date, until_date)
-    if option == "3":
-        word = input("Introduce la palabra: ")
-        since_date = input("Introduce la fecha de comienzo de búsqueda: ")
-        until_date = input("Introduce la fecha de fin de búsqueda: ")
-        searchWord(word, since_date, until_date)
+    return score

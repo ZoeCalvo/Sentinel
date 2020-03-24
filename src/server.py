@@ -2,7 +2,6 @@ from flask import Flask, jsonify, redirect, url_for, request
 from flask_cors import CORS
 import mysql.connector
 import os
-# import src.instagram
 import json
 from src.instagram import *
 
@@ -41,10 +40,23 @@ def titulo():
 @app.route('/instagram')
 def init_ig():
     api_ig = main()
-    user = input("Introduce tu nombre de usuario sin @: ")
-    userId = search_users(api_ig, user)
-    userId_json = json.dumps(userId)
-    return jsonify({'userID' : userId_json})
+    followings = input("¿Quieres mirar a quién sigues?: (Y/N) ")
+    if followings == "Y":
+        user = input("Introduce tu nombre de usuario sin @: ")
+        userId = search_users(api_ig, user)
+        research(api_ig, userId)
+    else:
+        ans = input("Quieres buscar a un usuario concreto?: (Y/N) ")
+        if ans == "Y":
+            user = input("Introduce el nombre del usuario sin @: ")
+            userId = search_users(api_ig, user)
+            results_analysis = getMediaData(api_ig, userId)
+            userId_json = json.dumps(userId)
+            results_analysis_json = json.dumps(results_analysis)
+        else:
+            explore(api_ig)
+
+    return jsonify({'userID' : userId_json, 'results_analysis' : results_analysis_json})
 
 
 

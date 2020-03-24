@@ -4,14 +4,14 @@ import re
 import os
 import html
 from textblob import TextBlob
-from googletrans import Translator
+from yandex_translate import YandexTranslate
 from classifier import *
 import time
 from datetime import date, datetime, timedelta
 
 
 clf = SentimentClassifier()
-translator = Translator()
+translator = YandexTranslate(os.getenv('YANDEX_KEY'))
 
 def parse(lst):
     listReturn=[]
@@ -26,7 +26,7 @@ def parse(lst):
     return listReturn
 
 
-def research(api,user_id):
+def research(api, user_id):
     research = []
     following = api.getTotalFollowings(user_id)
     research.append(following)
@@ -45,7 +45,8 @@ def research(api,user_id):
     return None
 
 
-def getMediaData(api,userId):
+def getMediaData(api, userId):
+    list_results_analysis = []
     try:
         all_posts = api.getTotalUserFeed(userId)
         flag = True
@@ -70,12 +71,11 @@ def getMediaData(api,userId):
             print("txt: ", text)
             # print("date: ", datePost)
             # getMediaHashtag(idPost, text)
-            getComments(idPost)
-
-
+            list_results_analysis.append(getComments(api, idPost))
     except:
         pass
-    return None
+
+    return list_results_analysis
 
 
 def getMediaHashtag(media_id, text):
@@ -91,7 +91,7 @@ def getComments(api, media_id):
     has_comments = True
     max_id = ''
     comments = []
-
+    analysis_score_post = []
     while has_comments:
         _ = api.getMediaComments(media_id, max_id=max_id)
         # comments' page come from older to newer, lets preserve desc order in full list
@@ -99,32 +99,33 @@ def getComments(api, media_id):
             comments.append(c)
         has_comments = api.LastJson.get('has_comments', False)
 
-    for c in comments:
-       if "text" in c:
-           sin_emoji = deEmojify(c["text"])
-           comment = json.dumps(sin_emoji)
-           sentiment_analysis(comment)
 
-    return None
+    for c in comments:
+        if "text" in c:
+            sin_emoji = deEmojify(c["text"])
+            comment = json.dumps(sin_emoji)
+            analysis_score_post.append(sentiment_analysis(comment))
+
+    return analysis_score_post
 
 
 def sentiment_analysis(comment):
-
     comment = html.unescape(comment)
 
-    if translator.detect(comment).lang == 'en':
-        txt = TextBlob(comment)
-        print(comment + "\n", txt.sentiment)
-    elif translator.detect(comment).lang == 'es':
-        #Primera opción utilizar la librería en español
-        # print(comment + '\n' + '%.5f' % clf.predict(comment))
-
-        # Segunda opción, traducir y utilizar librería en inglés
-        translate = translator.translate(comment, dest='en')
-        trans = TextBlob(translate.text)
-        print(comment + "\n", trans.sentiment)
-
-    return None
+    if not comment == '""':
+        if translator.detect(comment) == 'en':
+            score = TextBlob(comment).sentiment
+        elif translator.detect(comment) == 'es':
+            # Primera opción utilizar la librería en español
+            score = clf.predict(comment)
+            # Segunda opción, traducir y utilizar librería en inglés
+            # translate = translator.translate(comment, 'en')
+            # score = TextBlob(translate["text"][0]).sentiment
+        else:
+            score = TextBlob(comment).sentiment
+    else:
+        score = []
+    return score
 
 def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')
@@ -152,7 +153,7 @@ def explore(api):
                         getMediaHashtag(postId, text)
     return None
 
-def search_users(api, userName):
+def search_users(api,userName):
     _ = api.searchUsername(userName)
     userId = api.LastJson["user"]["pk"]
     #
@@ -167,21 +168,5 @@ def main():
     api.login()
 
     return api
-
-
-
-    # followings = input("¿Quieres mirar a quién sigues?: (Y/N) ")
-    # if followings == "Y":
-    #     user = input("Introduce tu nombre de usuario sin @: ")
-    #     userId = search_users(user)
-    #     research(userId)
-    # else:
-    #     ans = input("Quieres buscar a un usuario concreto?: (Y/N) ")
-    #     if ans == "Y":
-    #         user = input("Introduce el nombre del usuario sin @: ")
-    #         userId = search_users(user)
-    #         getMediaData(userId)
-    #     else:
-    #         explore()
 
 

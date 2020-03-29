@@ -5,29 +5,15 @@ import os
 import json
 from src.instagram import *
 from src.twitter import *
+from src.database import *
 
 app = Flask(__name__)
 CORS(app)
 
-user_db = os.getenv('USER_DB')
-pass_db = os.getenv('PASSWD_DB')
-mydb = mysql.connector.connect(host="localhost", user=user_db, passwd=pass_db, database="telusko")
-
-mycursor = mydb.cursor()
 
 @app.route('/register', methods=['POST'])
-def insertarEnBD():
-
-    sql = ("INSERT INTO register(name, surname, user, passwd) VALUES(%s,%s, %s, %s)")
-    data = request.json
-    name=data.get('name')
-    surname = data.get('surname')
-    username = data.get('user')
-    passwd = data.get('passwd')
-    val = (name, surname, username, passwd)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    #print(mycursor.rowcount, "record inserted.")
+def register_db():
+    insert_db(request.json)
     return 'OK'
 
 @app.route('/')

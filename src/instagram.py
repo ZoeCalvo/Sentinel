@@ -6,6 +6,7 @@ import html
 from textblob import TextBlob
 from yandex_translate import YandexTranslate
 from classifier import *
+from src.statistics_formulas import *
 import time
 from datetime import date, datetime, timedelta
 
@@ -49,10 +50,9 @@ def getMediaData(api, userId):
     list_results_analysis = []
     try:
         all_posts = api.getTotalUserFeed(userId)
-        flag = True
 
         for post in all_posts:
-            # while flag:
+
             if "id" in post:
                 idPost = str(post["id"])
 
@@ -72,10 +72,13 @@ def getMediaData(api, userId):
             # print("date: ", datePost)
             # getMediaHashtag(idPost, text)
             list_results_analysis.append(getComments(api, idPost))
+            results = reconvert_results_ig(list_results_analysis)
+            mean, median, mode, variance, typical_desviation = calculateStats(results)
+
     except:
         pass
 
-    return list_results_analysis
+    return results, mean, median, mode, variance, typical_desviation
 
 
 def getMediaHashtag(media_id, text):
@@ -114,13 +117,13 @@ def sentiment_analysis(comment):
 
     if not comment == '""':
         if translator.detect(comment) == 'en':
-            score = TextBlob(comment).sentiment
+            score = TextBlob(comment).sentiment.polarity
         elif translator.detect(comment) == 'es':
             # Primera opción utilizar la librería en español
             score = clf.predict(comment)
             # Segunda opción, traducir y utilizar librería en inglés
             # translate = translator.translate(comment, 'en')
-            # score = TextBlob(translate["text"][0]).sentiment
+            # score = TextBlob(translate["text"][0]).sentiment.polarity
         else:
             score = TextBlob(comment).sentiment
     else:

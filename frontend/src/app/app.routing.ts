@@ -9,6 +9,8 @@ import { LoginComponent } from './examples/login/login.component';
 import { ProfileComponent } from './examples/profile/profile.component';
 import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.component';
 import {RegisterComponent} from './examples/register/register.component';
+import {DashboardComponent} from './examples/dashboard/dashboard.component';
+import {TableListComponent} from './examples/table-list/table-list.component';
 
 const routes: Routes =[
     { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -17,7 +19,9 @@ const routes: Routes =[
     { path: 'examples/landing',     component: LandingComponent },
     { path: 'examples/login',       component: LoginComponent },
     { path: 'examples/profile',     component: ProfileComponent },
-    { path: 'examples/register',    component: RegisterComponent}
+    { path: 'examples/register',    component: RegisterComponent},
+    { path: 'examples/dashboard',   component: DashboardComponent},
+    { path: 'examples/table-list',  component: TableListComponent}
 ];
 
 @NgModule({

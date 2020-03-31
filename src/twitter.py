@@ -5,7 +5,7 @@ from textblob import TextBlob
 from classifier import *
 from yandex_translate import YandexTranslate
 import json
-
+from src.statistics_formulas import *
 #Autenticación
 access_token = os.getenv('ACCESS_TOKEN')
 access_token_secret = os.getenv('ACCESS_TOKEN_SECRET')
@@ -43,21 +43,27 @@ def searchHashtag(hashtag, since_date=None, until_date=None):
     for tweet in tweepy.Cursor(api.search, q=hashtag, tweet_mode="extended", since=since_date, until=until_date).items(4):
         analysis_score.append(sentiment_analysis(tweet))
 
-    return analysis_score
+    mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
+
+    return analysis_score, mean, median, mode, variance, typical_deviation
 
 def searchUser(user, since_date=None, until_date=None):
     analysis_score = []
     for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items():
         analysis_score.append(sentiment_analysis(tweet))
 
-    return analysis_score
+    mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
+
+    return analysis_score, mean, median, mode, variance, typical_deviation
 
 def searchWord(word, since_date=None, until_date=None):
     analysis_score = []
     for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items():
         analysis_score.append(sentiment_analysis(tweet))
 
-    return analysis_score
+    mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
+
+    return analysis_score, mean, median, mode, variance, typical_deviation
 
 def deEmojify(inputString):
 
@@ -67,9 +73,11 @@ def sentiment_analysis(tweet):
 
     tweet=html.unescape(tweet._json["full_text"])
     tw_sinemoji = deEmojify(tweet)
+
     if not tw_sinemoji == '""' :
+
         if translator.detect(tw_sinemoji) == 'en':
-            score = TextBlob(tweet).sentiment
+            score = TextBlob(tweet).sentiment.polarity
 
         elif translator.detect(tw_sinemoji) == 'es':
             # Primera opción, utilizar libreria en español
@@ -77,6 +85,6 @@ def sentiment_analysis(tweet):
 
             #Segunda opción traducir y utilizar librería en inglés
             translate = translator.translate(tw_sinemoji, 'en')
-            score = TextBlob(translate["text"][0]).sentiment
+            score = TextBlob(translate["text"][0]).sentiment.polarity
 
     return score

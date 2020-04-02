@@ -50,7 +50,7 @@ def searchHashtag(hashtag, since_date=None, until_date=None):
         analysis_score.append(score)
 
     mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
-
+    insert_statistics(hashtag, mean, median, mode, variance, typical_deviation)
 
     return analysis_score, mean, median, mode, variance, typical_deviation
 
@@ -64,7 +64,7 @@ def searchUser(user, since_date=None, until_date=None):
         analysis_score.append(score)
 
     mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
-
+    insert_statistics(user, mean, median, mode, variance, typical_deviation)
 
     return analysis_score, mean, median, mode, variance, typical_deviation
 
@@ -78,7 +78,7 @@ def searchWord(word, since_date=None, until_date=None):
         analysis_score.append(score)
 
     mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
-    
+    insert_statistics(word, mean, median, mode, variance, typical_deviation)
 
     return analysis_score, mean, median, mode, variance, typical_deviation
 

@@ -13,7 +13,7 @@ CORS(app)
 
 @app.route('/register', methods=['POST'])
 def register_db():
-    insert_db(request.json)
+    register_users(request.json)
     return 'OK'
 
 @app.route('/')

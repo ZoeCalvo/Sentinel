@@ -48,6 +48,7 @@ def research(api, user_id):
 
 def getMediaData(api, userId):
     list_results_analysis = []
+    until_date = '2019-01-01'
     try:
         all_posts = api.getTotalUserFeed(userId)
 
@@ -67,18 +68,25 @@ def getMediaData(api, userId):
 
                 datePost = datetime.fromtimestamp(float(timestamp))
 
-            print ("idpost: ", idPost)
-            print("txt: ", text)
+            # print ("idpost: ", idPost)
+            # print("txt: ", text)
+
+            if datePost.isoformat() > until_date:
+                list_results_analysis.append(getComments(api, idPost))
+                results = reconvert_results_ig(list_results_analysis)
+                mean, median, mode, variance, typical_deviation = calculateStats(results)
+
+            else:
+                break
+                #
             # print("date: ", datePost)
             # getMediaHashtag(idPost, text)
-            list_results_analysis.append(getComments(api, idPost))
-            results = reconvert_results_ig(list_results_analysis)
-            mean, median, mode, variance, typical_desviation = calculateStats(results)
+
 
     except:
         pass
 
-    return results, mean, median, mode, variance, typical_desviation
+    return results, mean, median, mode, variance, typical_deviation
 
 
 def getMediaHashtag(media_id, text):
@@ -91,10 +99,13 @@ def getMediaHashtag(media_id, text):
 
 
 def getComments(api, media_id):
+
+    count = 100
     has_comments = True
     max_id = ''
     comments = []
     analysis_score_post = []
+
     while has_comments:
         _ = api.getMediaComments(media_id, max_id=max_id)
         # comments' page come from older to newer, lets preserve desc order in full list
@@ -102,6 +113,11 @@ def getComments(api, media_id):
             comments.append(c)
         has_comments = api.LastJson.get('has_comments', False)
 
+        if count and len(comments) >= count:
+            comments = comments[:count]
+            # stop loop
+            has_comments = False
+            print("stopped by count")
 
     for c in comments:
         if "text" in c:

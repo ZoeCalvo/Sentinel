@@ -7,6 +7,7 @@ from textblob import TextBlob
 from yandex_translate import YandexTranslate
 from classifier import *
 from src.statistics_formulas import *
+from src.database import *
 import time
 from datetime import date, datetime, timedelta
 
@@ -46,8 +47,9 @@ def research(api, user_id):
     return None
 
 
-def getMediaData(api, userId):
+def getMediaData(api, userId, username):
     list_results_analysis = []
+    until_date = '2019-01-01'
     try:
         all_posts = api.getTotalUserFeed(userId)
 
@@ -67,18 +69,27 @@ def getMediaData(api, userId):
 
                 datePost = datetime.fromtimestamp(float(timestamp))
 
-            print ("idpost: ", idPost)
-            print("txt: ", text)
+            # print ("idpost: ", idPost)
+            # print("txt: ", text)
+
+            if datePost.isoformat() > until_date:
+                list_results_analysis.append(getComments(api, idPost, datePost, username))
+                # results = reconvert_results_ig(list_results_analysis)
+                # mean, median, mode, variance, typical_deviation = calculateStats(results)
+
+            else:
+                break
+                #
             # print("date: ", datePost)
             # getMediaHashtag(idPost, text)
-            list_results_analysis.append(getComments(api, idPost))
-            results = reconvert_results_ig(list_results_analysis)
-            mean, median, mode, variance, typical_desviation = calculateStats(results)
 
+        results = reconvert_results_ig(list_results_analysis)
+        mean, median, mode, variance, typical_deviation = calculateStats(results)
+        insert_statistics(username, mean, median, mode, variance, typical_deviation)
     except:
         pass
 
-    return results, mean, median, mode, variance, typical_desviation
+    return results, mean, median, mode, variance, typical_deviation
 
 
 def getMediaHashtag(media_id, text):
@@ -90,11 +101,14 @@ def getMediaHashtag(media_id, text):
     return None
 
 
-def getComments(api, media_id):
+def getComments(api, media_id, datepost, username):
+
+    count = 100
     has_comments = True
     max_id = ''
     comments = []
     analysis_score_post = []
+
     while has_comments:
         _ = api.getMediaComments(media_id, max_id=max_id)
         # comments' page come from older to newer, lets preserve desc order in full list
@@ -102,13 +116,20 @@ def getComments(api, media_id):
             comments.append(c)
         has_comments = api.LastJson.get('has_comments', False)
 
+        if count and len(comments) >= count:
+            comments = comments[:count]
+            # stop loop
+            has_comments = False
+            print("stopped by count")
 
     for c in comments:
         if "text" in c:
             sin_emoji = deEmojify(c["text"])
             comment = json.dumps(sin_emoji)
-            analysis_score_post.append(sentiment_analysis(comment))
-
+            score = sentiment_analysis(comment)
+            if not score == None:
+                analysis_score_post.append(score)
+                insert_dataUsersIg(username, media_id, datepost, comment, score)
     return analysis_score_post
 
 
@@ -126,9 +147,9 @@ def sentiment_analysis(comment):
             # score = TextBlob(translate["text"][0]).sentiment.polarity
         else:
             score = TextBlob(comment).sentiment
+        return score
     else:
-        score = []
-    return score
+        return None
 
 def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')

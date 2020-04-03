@@ -9,6 +9,7 @@ mycursor = mydb.cursor()
 
 
 def _float64_to_mysql(value):
+    value=round(value, 9)
     return float(value)
 
 def register_users(data):
@@ -63,8 +64,17 @@ def insert_statistics(id, mean, median, mode, variance, typical_deviation):
     mode = _float64_to_mysql(mode)
     variance = _float64_to_mysql(variance)
     typical_deviation = _float64_to_mysql(typical_deviation)
-    sql = ("INSERT INTO statistics(id, mean, median, mode, variance, typical_deviation) VALUES (%s, %s, %s, %s, %s, %s)")
+    sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation) VALUES (%s, %s, %s, %s, %s, %s)")
     val = (id, mean, median, mode, variance, typical_deviation)
+    mycursor.execute(sql, val)
+    mydb.commit()
+
+    return 'OK'
+
+def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
+    analysis_score = _float64_to_mysql(analysis_score)
+    sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
+    val = (user, post, datepost, comment, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
 

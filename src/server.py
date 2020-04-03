@@ -35,7 +35,7 @@ def init_ig():
         if ans == "Y":
             user = input("Introduce el nombre del usuario sin @: ")
             userId = search_users(api_ig, user)
-            results_analysis = getMediaData(api_ig, userId)
+            results_analysis = getMediaData(api_ig, userId, user)
             userId_json = json.dumps(userId)
             results_analysis_json = json.dumps(results_analysis)
         else:

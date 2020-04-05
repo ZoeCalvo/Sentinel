@@ -79,3 +79,38 @@ def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
     mydb.commit()
 
     return 'OK'
+
+def select_dataHashtags(hashtag):
+    sql = ("SELECT analysis_score FROM datahashtags WHERE hashtag = %s")
+    val = (hashtag,)
+    mycursor.execute(sql, val)
+    result = mycursor.fetchall()
+    return result
+
+def select_dataUserTw(user):
+    sql = ("SELECT analysis_score FROM datausertw WHERE user = %s")
+    val = (user,)
+    mycursor.execute(sql, val)
+    result = mycursor.fetchall()
+    return result
+
+def select_dataWord(word):
+    sql = ("SELECT analysis_score FROM dataword WHERE word = %s")
+    val = (word,)
+    mycursor.execute(sql, val)
+    result = mycursor.fetchall()
+    return result
+
+def select_dataUserIg(user):
+    sql = ("SELECT analysis_score FROM datauserig WHERE user = %s")
+    val = (user,)
+    mycursor.execute(sql, val)
+    result = mycursor.fetchall()
+    return result
+
+def select_statistics(id):
+    sql = ("SELECT * FROM statistics WHERE id = %s")
+    val = (id,)
+    mycursor.execute(sql, val)
+    result = mycursor.fetchall()
+    return result

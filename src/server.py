@@ -78,6 +78,11 @@ def init_tw():
         results_analysis_json = json.dumps(analysis_score_word)
         return jsonify({'results_analysis': results_analysis_json})
 
+@app.route('/selecthashtag')
+def select_hashtag():
+    hashtag = input('Introduce el hashtag que quieres rescatar: ')
+    result = select_dataHashtags(hashtag)
+    return jsonify({'analisis': result})
 
 if __name__ == '__main__':
     app.run()

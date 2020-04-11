@@ -15,6 +15,10 @@ import { RegisterComponent } from './register/register.component';
 import { ConfigComponent } from './config/config.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TableListComponent } from './table-list/table-list.component';
+import {DashboardService} from "./dashboard/dashboard.service";
+import {BrowserModule} from "@angular/platform-browser";
+import {AppRoutingModule} from "../app.routing";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     imports: [
@@ -27,7 +31,10 @@ import { TableListComponent } from './table-list/table-list.component';
         AgmCoreModule.forRoot({
             apiKey: 'YOUR_KEY_HERE',
             libraries: ['places']
-        })
+        }),
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule
     ],
     declarations: [
         LandingComponent,
@@ -38,6 +45,7 @@ import { TableListComponent } from './table-list/table-list.component';
         ConfigComponent,
         DashboardComponent,
         TableListComponent
-    ]
+    ],
+  providers: [DashboardService]
 })
 export class ExamplesModule { }

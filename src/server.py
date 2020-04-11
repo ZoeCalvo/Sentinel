@@ -10,6 +10,12 @@ from src.database import *
 app = Flask(__name__)
 CORS(app)
 
+weather = {"data": [{"day": "1/6/2019", "temperature": "23", "windspeed": "16", "event": "Sunny"}]}
+
+@app.route('/weatherReport/', methods=['GET'])
+def weatherReport():
+    global weather
+    return jsonify([weather])
 
 @app.route('/register', methods=['POST'])
 def register_db():
@@ -78,11 +84,11 @@ def init_tw():
         results_analysis_json = json.dumps(analysis_score_word)
         return jsonify({'results_analysis': results_analysis_json})
 
-@app.route('/selecthashtag')
+@app.route('/selecthashtag', methods=['GET'])
 def select_hashtag():
-    hashtag = input('Introduce el hashtag que quieres rescatar: ')
-    result = select_dataHashtags(hashtag)
-    return jsonify({'analisis': result})
+    hashtag = '#viernes'
+    analysis_score = select_dataHashtags(hashtag)
+    return jsonify({"analysis_score": analysis_score})
 
 if __name__ == '__main__':
     app.run()

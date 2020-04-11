@@ -1,8 +1,8 @@
-<div class="panel-header panel-header-lg">
+<div class="panel-header panel-header-lg" >
     <canvas baseChart id="bigDashboardChart"
                 [datasets]="lineBigDashboardChartData"
                 [labels]="lineBigDashboardChartLabels"
-                 [colors]="lineBigDashboardChartColors"
+                [colors]="lineBigDashboardChartColors"
                 [options]="lineBigDashboardChartOptions"
                 [chartType]="lineBigDashboardChartType"
                 (chartHover)="chartHovered($event)"
@@ -105,6 +105,20 @@
         <div class="card-footer">
           <div class="stats">
             <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h4 class="card-title">Analysis Score</h4>
+          <div class="card-body">
+            <div class="chart-area">
+              <div *ngIf="chart">
+                <canvas  id="prueba">{{chart}}</canvas>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -292,4 +306,14 @@
       </div>
     </div>
   </div>
+  <table id = "score">
+    <tr>
+      <th *ngFor="let column of headers">
+        {{column}}
+      </th>
+    </tr>
+    <tr *ngFor="let row of analysis_score">
+        {{row}}
+    </tr>
+  </table>
 </div>

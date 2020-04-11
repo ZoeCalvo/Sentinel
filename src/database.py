@@ -85,7 +85,12 @@ def select_dataHashtags(hashtag):
     val = (hashtag,)
     mycursor.execute(sql, val)
     result = mycursor.fetchall()
-    return result
+    final = []
+    for r in result:
+
+        final.append(r[0])
+
+    return final
 
 def select_dataUserTw(user):
     sql = ("SELECT analysis_score FROM datausertw WHERE user = %s")

@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
 
         this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
         this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
-        this.gradientFill.addColorStop(1, this.hexToRGB('#18ce0f', 0.4));
+        this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.6));
 
         this.chart = new Chart(this.ctx, {
           type: 'bar',
@@ -99,21 +99,13 @@ export class DashboardComponent implements OnInit {
                 pointRadius: 4,
                 fill: true,
                 borderWidth: 1,
-                data: scores
+                data: scores,
+                backgroundColor: this.gradientFill,
+                borderColor: '#2CA8FF',
+                pointBorderColor: '#FFF',
+                pointBackgroundColor: '#2CA8FF'
               }
             ],
-
-             backgroundColor: this.gradientFill,
-             borderColor: '#2CA8FF',
-             pointBorderColor: '#FFF',
-             pointBackgroundColor: '#2CA8FF',
-
-          },
-          colors: {
-           backgroundColor: this.gradientFill,
-           borderColor: '#2CA8FF',
-           pointBorderColor: '#FFF',
-           pointBackgroundColor: '#2CA8FF',
           },
           options: {
             maintainAspectRatio: false,

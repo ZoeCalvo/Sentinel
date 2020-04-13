@@ -81,15 +81,16 @@ def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
     return 'OK'
 
 def select_dataHashtags(hashtag):
-    sql = ("SELECT analysis_score FROM datahashtags WHERE hashtag = %s")
+    sql = ("SELECT analysis_score, text FROM datahashtags WHERE hashtag = %s")
     val = (hashtag,)
     mycursor.execute(sql, val)
-    result = mycursor.fetchall()
+    rv = mycursor.fetchall()
     final = []
-    for r in result:
-
-        final.append(r[0])
-
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'text': result[1]}
+        final.append(content)
+        content = {}
     return final
 
 def select_dataUserTw(user):

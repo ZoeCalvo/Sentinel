@@ -14,6 +14,8 @@ import 'rxjs/add/operator/map';
 
 export class DashboardComponent implements OnInit {
   chart = [];
+  table_score;
+  headers = ['analysis_score', 'text'];
   public lineBigDashboardChartType;
   public gradientStroke;
   public chartColor;
@@ -72,8 +74,9 @@ export class DashboardComponent implements OnInit {
     let scores = [];
     this.dashboardService.readAnalysis().subscribe(
       response => {
-        let score = response['analysis_score'].map(response => response)
-
+        let score = response['data'].map(response => response.analysis_score)
+        this.table_score = response['data'];
+        console.log(this.table_score)
         score.forEach((response) => scores.push(response))
 
         this.chartColor = '#FFFFFF';

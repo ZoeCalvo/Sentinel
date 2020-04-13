@@ -88,7 +88,7 @@ def init_tw():
 def select_hashtag():
     hashtag = '#viernes'
     analysis_score = select_dataHashtags(hashtag)
-    return jsonify({"analysis_score": analysis_score})
+    return jsonify({'data':analysis_score})
 
 if __name__ == '__main__':
     app.run()

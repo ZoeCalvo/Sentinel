@@ -123,6 +123,29 @@
         </div>
       </div>
     </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title"> Analysis Score</h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+                <tr>
+                  <th *ngFor="let column of headers">
+                    {{column}}
+                  </th>
+                </tr>
+                <tr *ngFor="let row of table_score">
+                  <td *ngFor="let col of headers">
+                    {{row[col]}}
+                  </td>
+                </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-6">
@@ -205,6 +228,7 @@
         </div>
       </div>
     </div>
+
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
@@ -306,14 +330,4 @@
       </div>
     </div>
   </div>
-  <table id = "score">
-    <tr>
-      <th *ngFor="let column of headers">
-        {{column}}
-      </th>
-    </tr>
-    <tr *ngFor="let row of analysis_score">
-        {{row}}
-    </tr>
-  </table>
 </div>

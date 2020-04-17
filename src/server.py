@@ -10,12 +10,10 @@ from src.database import *
 app = Flask(__name__)
 CORS(app)
 
-weather = {"data": [{"day": "1/6/2019", "temperature": "23", "windspeed": "16", "event": "Sunny"}]}
-
-@app.route('/weatherReport/', methods=['GET'])
-def weatherReport():
-    global weather
-    return jsonify([weather])
+@app.route('/login', methods=['POST'])
+def login():
+    print(request.json)
+    return 'OK'
 
 @app.route('/register', methods=['POST'])
 def register_db():

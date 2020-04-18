@@ -44,7 +44,16 @@ export class LoginComponent implements OnInit {
           return;
       }
       const newLogin: Login = { username, passwd } as Login;
-      this.loginService.login(newLogin).subscribe(login => this.logins.push(login));
+      this.loginService.login(newLogin).subscribe(login => {
+        let booleano = login['resultado'];
+
+        if (booleano == true){
+          console.log('Acceso permitido');
+        }else{
+          console.log('No existe la cuenta, registrese primero');
+        }
+      });
+
       var body = document.getElementsByTagName('body')[0];
       body.classList.add('login-page');
 

@@ -12,8 +12,9 @@ CORS(app)
 
 @app.route('/login', methods=['POST'])
 def login():
-    print(request.json)
-    return 'OK'
+    result = get_user(request.json)
+    print(result)
+    return jsonify({'resultado': result})
 
 @app.route('/register', methods=['POST'])
 def register_db():

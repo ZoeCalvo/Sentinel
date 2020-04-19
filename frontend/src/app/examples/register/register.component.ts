@@ -31,7 +31,6 @@ export class RegisterComponent implements OnInit {
     }
 
     getRegisters() {
-
       return this.registers;
     }
 
@@ -44,7 +43,6 @@ export class RegisterComponent implements OnInit {
               return;
           }
           const newRegister: Register = { name, surname, user, passwd } as Register;
-          console.log('Soy el registro nuevo', newRegister);
           this.registerService.addUser(newRegister).subscribe(register => this.registers.push(register));
                 var body = document.getElementsByTagName('body')[0];
       body.classList.add('login-page');

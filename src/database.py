@@ -24,6 +24,19 @@ def register_users(data):
     # print(mycursor.rowcount, "record inserted.")
     return 'OK'
 
+def get_user(data):
+    mycursor.execute("SELECT user, passwd FROM register");
+    result = mycursor.fetchall()
+    print(data)
+    user_register = False
+    for r in result:
+        if (data.get('username') == r[0] and data.get('passwd') == r[1]):
+            user_register = True
+
+    return user_register
+
+
+
 
 def insert_dataHashtags(hashtag, data, text, analysis_score):
     analysis_score = _float64_to_mysql(analysis_score)

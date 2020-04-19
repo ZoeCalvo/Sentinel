@@ -15,10 +15,10 @@ import { RegisterComponent } from './register/register.component';
 import { ConfigComponent } from './config/config.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TableListComponent } from './table-list/table-list.component';
-import {DashboardService} from "./dashboard/dashboard.service";
-import {BrowserModule} from "@angular/platform-browser";
-import {AppRoutingModule} from "../app.routing";
-import {HttpClientModule} from "@angular/common/http";
+import {DashboardService} from './dashboard/dashboard.service';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppRoutingModule} from '../app.routing';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     imports: [

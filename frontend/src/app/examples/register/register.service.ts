@@ -10,7 +10,6 @@ export class RegisterService {
   constructor( private http: HttpClient) { }
 
   addUser(user: Register) {
-    console.log('Hola he entrado');
     var body = document.getElementsByTagName('body')[0];
     body.classList.remove('login-page');
 

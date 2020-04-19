@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from './login';
 import { LoginService } from './login.service';
-import {Register} from "../register/register";
+import { NotificationComponent} from '../../components/notification/notification.component';
+import {IAlert} from '../../components/notification/notification.component';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +14,11 @@ export class LoginComponent implements OnInit {
     data: Date = new Date();
     focus;
     focus1;
-    logins: Login[];
+    public alerts: Array<IAlert> = [];
 
     constructor( private loginService: LoginService ) { }
 
     ngOnInit() {
-        this.getLogins();
         var body = document.getElementsByTagName('body')[0];
         body.classList.add('login-page');
 
@@ -33,10 +33,6 @@ export class LoginComponent implements OnInit {
         navbar.classList.remove('navbar-transparent');
     }
 
-    getLogins() {
-      return this.logins;
-    }
-
     add(username: string, passwd: string): void {
       username = username.trim();
       passwd = passwd.trim();
@@ -48,9 +44,22 @@ export class LoginComponent implements OnInit {
         let booleano = login['resultado'];
 
         if (booleano == true){
-          console.log('Acceso permitido');
-        }else{
-          console.log('No existe la cuenta, registrese primero');
+          this.alerts.push({
+            id: 1,
+            type: 'success',
+            strong: 'Welcome back',
+            message: username,
+            icon: 'ui-2_like'
+          });
+
+        } else {
+          this.alerts.push({
+            id: 2,
+            type: 'warning',
+            strong: 'Warning!',
+            message: 'The username or password is not correct',
+            icon: 'ui-1_bell-53'
+          })
         }
       });
 
@@ -61,5 +70,8 @@ export class LoginComponent implements OnInit {
       navbar.classList.add('navbar-transparent');
     }
 
-
+    public closeAlert(alert: IAlert) {
+        const index: number = this.alerts.indexOf(alert);
+        this.alerts.splice(index, 1);
+    }
 }

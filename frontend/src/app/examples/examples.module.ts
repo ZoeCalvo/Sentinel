@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwBootstrapSwitchNg2Module } from 'jw-bootstrap-switch-ng2';
 import { AgmCoreModule } from '@agm/core';
 import { ChartsModule } from 'ng2-charts';
-
+import { RouterModule } from '@angular/router'
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -19,6 +19,7 @@ import {DashboardService} from './dashboard/dashboard.service';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from '../app.routing';
 import {HttpClientModule} from '@angular/common/http';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import {HttpClientModule} from '@angular/common/http';
         }),
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterModule
     ],
     declarations: [
         LandingComponent,
@@ -44,7 +46,8 @@ import {HttpClientModule} from '@angular/common/http';
         RegisterComponent,
         ConfigComponent,
         DashboardComponent,
-        TableListComponent
+        TableListComponent,
+        MenuComponent
     ],
   providers: [DashboardService]
 })

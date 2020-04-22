@@ -20,6 +20,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from '../app.routing';
 import {HttpClientModule} from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
+import { TwitterComponent } from './twitter/twitter.component';
 
 @NgModule({
     imports: [
@@ -47,7 +48,8 @@ import { MenuComponent } from './menu/menu.component';
         ConfigComponent,
         DashboardComponent,
         TableListComponent,
-        MenuComponent
+        MenuComponent,
+        TwitterComponent
     ],
   providers: [DashboardService]
 })

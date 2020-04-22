@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from './login';
 import { LoginService } from './login.service';
-import { NotificationComponent} from '../../components/notification/notification.component';
 import {IAlert} from '../../components/notification/notification.component';
 
 @Component({

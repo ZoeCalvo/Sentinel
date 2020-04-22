@@ -5,6 +5,9 @@ import {Dashboard} from './dashboard';
 import {element} from "protractor";
 import {Chart} from 'chart.js';
 import 'rxjs/add/operator/map';
+import {ActivatedRoute} from "@angular/router";
+import {Twitter} from "../twitter/twitter";
+import {Login} from "../login/login";
 
 @Component({
   selector: 'app-dashboard',
@@ -68,95 +71,101 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    let scores = [];
-    this.dashboardService.readAnalysis().subscribe(
-      response => {
-        let score = response['data'].map(response => response.analysis_score)
-        this.table_score = response['data'];
-        console.log(this.table_score)
-        score.forEach((response) => scores.push(response))
+      let id = this.route.snapshot.paramMap.get('id');
+      console.log(typeof id)
+      id = id.trim();
+      if (!id) { return ; }
+      const newId: Twitter = { id } as Twitter;
+      let scores = [];
 
-        this.chartColor = '#FFFFFF';
-        this.canvas = document.getElementById('prueba');
-        this.ctx = this.canvas.getContext('2d');
-        this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
-        this.gradientStroke.addColorStop(0, '#18ce0f');
-        this.gradientStroke.addColorStop(1, this.chartColor);
+      this.dashboardService.analysis(newId).subscribe(
+        response => {
+          let score = response['data'].map(response => response.analysis_score)
+          this.table_score = response['data'];
+          console.log(this.table_score)
+          score.forEach((response) => scores.push(response))
 
-        this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
-        this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
-        this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.6));
+          this.chartColor = '#FFFFFF';
+          this.canvas = document.getElementById('prueba');
+          this.ctx = this.canvas.getContext('2d');
+          this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
+          this.gradientStroke.addColorStop(0, '#18ce0f');
+          this.gradientStroke.addColorStop(1, this.chartColor);
 
-        this.chart = new Chart(this.ctx, {
-          type: 'bar',
-          data: {
-            labels : ['e', 'f', 'm', 'a', 'm', 'j', 'jl', 'a', 's', 'o', 'n', 'd'],
-            datasets: [
-              {
-                pointBorderWidth: 2,
-                pointHoverRadius: 4,
-                pointHoverBorderWidth: 1,
-                pointRadius: 4,
-                fill: true,
-                borderWidth: 1,
-                data: scores,
-                backgroundColor: this.gradientFill,
-                borderColor: '#2CA8FF',
-                pointBorderColor: '#FFF',
-                pointBackgroundColor: '#2CA8FF'
+          this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+          this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
+          this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.6));
+
+          this.chart = new Chart(this.ctx, {
+            type: 'bar',
+            data: {
+              labels : ['e', 'f', 'm', 'a', 'm', 'j', 'jl', 'a', 's', 'o', 'n', 'd'],
+              datasets: [
+                {
+                  pointBorderWidth: 2,
+                  pointHoverRadius: 4,
+                  pointHoverBorderWidth: 1,
+                  pointRadius: 4,
+                  fill: true,
+                  borderWidth: 1,
+                  data: scores,
+                  backgroundColor: this.gradientFill,
+                  borderColor: '#2CA8FF',
+                  pointBorderColor: '#FFF',
+                  pointBackgroundColor: '#2CA8FF'
+                }
+              ],
+            },
+            options: {
+              maintainAspectRatio: false,
+              legend: {
+              display: false
+              },
+              tooltips: {
+              bodySpacing: 4,
+              mode: 'nearest',
+              intersect: 0,
+              position: 'nearest',
+              xPadding: 10,
+              yPadding: 10,
+              caretPadding: 10
+              },
+              responsive: 1,
+              scales: {
+              yAxes: [{
+              gridLines: {
+              zeroLineColor: 'transparent',
+              drawBorder: false
               }
-            ],
-          },
-          options: {
-            maintainAspectRatio: false,
-            legend: {
-            display: false
-            },
-            tooltips: {
-            bodySpacing: 4,
-            mode: 'nearest',
-            intersect: 0,
-            position: 'nearest',
-            xPadding: 10,
-            yPadding: 10,
-            caretPadding: 10
-            },
-            responsive: 1,
-            scales: {
-            yAxes: [{
-            gridLines: {
-            zeroLineColor: 'transparent',
-            drawBorder: false
+              }],
+              xAxes: [{
+              display: 0,
+              ticks: {
+              display: false
+              },
+              gridLines: {
+              zeroLineColor: 'transparent',
+              drawTicks: false,
+              display: false,
+              drawBorder: false
+              }
+              }]
+              },
+              layout: {
+              padding: {
+              left: 0,
+              right: 0,
+              top: 15,
+              bottom: 15
+              }
+              }
             }
-            }],
-            xAxes: [{
-            display: 0,
-            ticks: {
-            display: false
-            },
-            gridLines: {
-            zeroLineColor: 'transparent',
-            drawTicks: false,
-            display: false,
-            drawBorder: false
-            }
-            }]
-            },
-            layout: {
-            padding: {
-            left: 0,
-            right: 0,
-            top: 15,
-            bottom: 15
-            }
-            }
-          }
-        })
+          })
 
-    })
+        })
 
 
     this.chartColor = '#FFFFFF';
@@ -508,6 +517,6 @@ export class DashboardComponent implements OnInit {
 
 
   }
+  }
 
-}
 

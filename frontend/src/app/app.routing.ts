@@ -11,6 +11,9 @@ import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.compo
 import {RegisterComponent} from './examples/register/register.component';
 import {DashboardComponent} from './examples/dashboard/dashboard.component';
 import {TableListComponent} from './examples/table-list/table-list.component';
+import {MenuComponent} from "./examples/menu/menu.component";
+import {TwitterComponent} from "./examples/twitter/twitter.component";
+import {InstagramComponent} from "./examples/instagram/instagram.component";
 
 const routes: Routes =[
     { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -20,8 +23,11 @@ const routes: Routes =[
     { path: 'examples/login',       component: LoginComponent },
     { path: 'examples/profile',     component: ProfileComponent },
     { path: 'examples/register',    component: RegisterComponent},
-    { path: 'examples/dashboard',   component: DashboardComponent},
-    { path: 'examples/table-list',  component: TableListComponent}
+    { path: 'examples/dashboard/:id/:since_date/:until_date/:is_tw',   component: DashboardComponent},
+    { path: 'examples/table-list',  component: TableListComponent},
+    { path: 'examples/menu',        component: MenuComponent},
+    { path: 'examples/twitter',     component: TwitterComponent},
+    { path: 'examples/instagram',   component: InstagramComponent}
 ];
 
 @NgModule({

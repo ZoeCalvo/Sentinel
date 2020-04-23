@@ -10,10 +10,11 @@ from src.database import *
 app = Flask(__name__)
 CORS(app)
 
+
+
 @app.route('/login', methods=['POST'])
 def login():
     result = get_user(request.json)
-    print(result)
     return jsonify({'resultado': result})
 
 @app.route('/register', methods=['POST'])
@@ -48,45 +49,61 @@ def init_ig():
 
     return jsonify({'userID' : userId_json, 'results_analysis' : results_analysis_json})
 
-@app.route('/twitter')
+@app.route('/twitter', methods=['POST'])
 def init_tw():
-    print("Selecciona una opción")
-    print("1. Buscar tweets en un hashtag")
-    print("2. Buscar tweets donde aparezca un usuario mencionado")
-    print("3. Buscar tweets relacionados con una palabra")
+    is_tw = True
+    # print(request.json)
 
-    option = input("Introduce el número de la opción deseada: ")
 
-    if option == "1":
-        hashtag = input("Introduzca el hashtag con #: ")
-        since_date = input("Introduce la fecha de comienzo de búsqueda: ")
-        until_date = input("Introduce la fecha de fin de búsqueda: ")
-        analysis_score_hashtag = searchHashtag(hashtag, since_date, until_date)
-        results_analysis_json = json.dumps(analysis_score_hashtag)
+    # intermediate(request.json.get('id'), is_tw)
+    return jsonify('ok')
 
-        return jsonify({'results_analysis' : results_analysis_json})
 
-    if option == "2":
-        user = input("Introduzca el nombre del usuario con @: ")
-        since_date = input("Introduce la fecha de comienzo de búsqueda: ")
-        until_date = input("Introduce la fecha de fin de búsqueda: ")
-        analysis_score_user =  searchUser(user, since_date, until_date)
-        results_analysis_json = json.dumps(analysis_score_user)
+    # option = input("Introduce el número de la opción deseada: ")
+    #
+    # if option == "1":
+    #     hashtag = input("Introduzca el hashtag con #: ")
+    #     since_date = input("Introduce la fecha de comienzo de búsqueda: ")
+    #     until_date = input("Introduce la fecha de fin de búsqueda: ")
+    #     analysis_score_hashtag = searchHashtag(hashtag, since_date, until_date)
+    #     results_analysis_json = json.dumps(analysis_score_hashtag)
+    #
+    #     return jsonify({'results_analysis' : results_analysis_json})
+    #
+    # if option == "2":
+    #     user = input("Introduzca el nombre del usuario con @: ")
+    #     since_date = input("Introduce la fecha de comienzo de búsqueda: ")
+    #     until_date = input("Introduce la fecha de fin de búsqueda: ")
+    #     analysis_score_user =  searchUser(user, since_date, until_date)
+    #     results_analysis_json = json.dumps(analysis_score_user)
+    #
+    #     return jsonify({'results_analysis' : results_analysis_json})
+    #
+    # if option == "3":
+    #     word = input("Introduce la palabra: ")
+    #     since_date = input("Introduce la fecha de comienzo de búsqueda: ")
+    #     until_date = input("Introduce la fecha de fin de búsqueda: ")
+    #     analysis_score_word = searchWord(word, since_date, until_date)
+    #     results_analysis_json = json.dumps(analysis_score_word)
+    #     return jsonify({'results_analysis': results_analysis_json})
 
-        return jsonify({'results_analysis' : results_analysis_json})
 
-    if option == "3":
-        word = input("Introduce la palabra: ")
-        since_date = input("Introduce la fecha de comienzo de búsqueda: ")
-        until_date = input("Introduce la fecha de fin de búsqueda: ")
-        analysis_score_word = searchWord(word, since_date, until_date)
-        results_analysis_json = json.dumps(analysis_score_word)
-        return jsonify({'results_analysis': results_analysis_json})
+@app.route('/getDataforDashboard', methods=['GET'])
+def getDataforDashboard():
+    print()
+    if request.args.get('is_tw') == 'true':
+        if request.args.get('id')[0] == '#':
+            print('hashtag')
+            analysis_score = select_dataHashtags(request.args.get('id'))
+        elif request.args.get('id')[0] == '@':
+            print('usuario')
+            analysis_score = select_dataUserTw(request.args.get('id'))
+        else:
+            print('palabra')
+            analysis_score = select_dataWord(request.args.get('id'))
+    else:
+        analysis_score = select_dataUserIg(request.args.get('id'))
 
-@app.route('/selecthashtag', methods=['GET'])
-def select_hashtag():
-    hashtag = '#viernes'
-    analysis_score = select_dataHashtags(hashtag)
     return jsonify({'data':analysis_score})
 
 if __name__ == '__main__':

@@ -14,13 +14,13 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  analysis (id: Twitter){
-    console.log(id);
-    return this.http.post<Twitter>(this.graphsUrl, id);
-  }
-  readAnalysis(id: string ) {
-    let params = new HttpParams().set('id', id);
-    return this.http.get<Twitter>(this.graphsUrl, {params: params})
+  readAnalysis(id: string, since_date: string, until_date: string) {
+    const params = new HttpParams()
+      .set('id', id)
+      .set('since_date', since_date)
+      .set('until_date', until_date);
+    console.log(params);
+    return this.http.get(this.graphsUrl, {params: params})
   }
 
 }

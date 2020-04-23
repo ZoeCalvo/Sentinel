@@ -75,13 +75,15 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
       let id = this.route.snapshot.paramMap.get('id');
-      console.log(typeof id)
+      let since_date = this.route.snapshot.paramMap.get('since_date');
+      let until_date = this.route.snapshot.paramMap.get('until_date');
+
       id = id.trim();
       if (!id) { return ; }
-      const newId: string = id;
+
       let scores = [];
 
-      this.dashboardService.readAnalysis(newId).subscribe(
+      this.dashboardService.readAnalysis(id, since_date, until_date).subscribe(
         response => {
           let score = response['data'].map(response => response.analysis_score)
           this.table_score = response['data'];

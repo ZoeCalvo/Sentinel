@@ -22,7 +22,7 @@ const routes: Routes =[
     { path: 'examples/login',       component: LoginComponent },
     { path: 'examples/profile',     component: ProfileComponent },
     { path: 'examples/register',    component: RegisterComponent},
-    { path: 'examples/dashboard/:id',   component: DashboardComponent},
+    { path: 'examples/dashboard/:id/:since_date/:until_date',   component: DashboardComponent},
     { path: 'examples/table-list',  component: TableListComponent},
     { path: 'examples/menu',        component: MenuComponent},
     { path: 'examples/twitter',     component: TwitterComponent}

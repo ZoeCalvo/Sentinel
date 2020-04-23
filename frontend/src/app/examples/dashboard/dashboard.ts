@@ -1,5 +1,5 @@
 
 export interface Dashboard {
-  id: any;
-
+  analysis_score: any;
+  text: any;
 }

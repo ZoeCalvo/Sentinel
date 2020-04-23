@@ -90,8 +90,7 @@ def init_tw():
 
 @app.route('/getDataforDashboard', methods=['GET'])
 def getDataforDashboard():
-    print('hola')
-    print(request.args.get('id'))
+
     # if is_tw == True:
     #     if id[0] == '#':
     analysis_score = select_dataHashtags(request.args.get('id'))

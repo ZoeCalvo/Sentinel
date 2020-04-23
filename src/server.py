@@ -90,16 +90,19 @@ def init_tw():
 
 @app.route('/getDataforDashboard', methods=['GET'])
 def getDataforDashboard():
-
-    # if is_tw == True:
-    #     if id[0] == '#':
-    analysis_score = select_dataHashtags(request.args.get('id'))
-    #     elif id[0] == '@':
-    #         analysis_score = select_dataUserTw(id)
-    #     else:
-    #         analysis_score = select_dataWord(id)
-    # else:
-    #     analysis_score = select_dataUserIg(id)
+    print()
+    if request.args.get('is_tw') == 'true':
+        if request.args.get('id')[0] == '#':
+            print('hashtag')
+            analysis_score = select_dataHashtags(request.args.get('id'))
+        elif request.args.get('id')[0] == '@':
+            print('usuario')
+            analysis_score = select_dataUserTw(request.args.get('id'))
+        else:
+            print('palabra')
+            analysis_score = select_dataWord(request.args.get('id'))
+    else:
+        analysis_score = select_dataUserIg(request.args.get('id'))
 
     return jsonify({'data':analysis_score})
 

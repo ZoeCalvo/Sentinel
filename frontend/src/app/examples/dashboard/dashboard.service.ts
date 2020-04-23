@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams} from '@angular/common/http';
 import { Dashboard } from './dashboard'
 import {Observable} from "rxjs";
-import {Twitter} from "../twitter/twitter";
 
 
 
@@ -14,11 +13,12 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  readAnalysis(id: string, since_date: string, until_date: string) {
+  readAnalysis(id: string, since_date: string, until_date: string, is_tw: string) {
     const params = new HttpParams()
       .set('id', id)
       .set('since_date', since_date)
-      .set('until_date', until_date);
+      .set('until_date', until_date)
+      .set('is_tw', is_tw);
     console.log(params);
     return this.http.get(this.graphsUrl, {params: params})
   }

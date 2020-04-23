@@ -6,8 +6,7 @@ import {element} from "protractor";
 import {Chart} from 'chart.js';
 import 'rxjs/add/operator/map';
 import {ActivatedRoute} from "@angular/router";
-import {Twitter} from "../twitter/twitter";
-import {Login} from "../login/login";
+
 
 @Component({
   selector: 'app-dashboard',
@@ -77,13 +76,14 @@ export class DashboardComponent implements OnInit {
       let id = this.route.snapshot.paramMap.get('id');
       let since_date = this.route.snapshot.paramMap.get('since_date');
       let until_date = this.route.snapshot.paramMap.get('until_date');
+      let is_tw = this.route.snapshot.paramMap.get('is_tw');
 
       id = id.trim();
       if (!id) { return ; }
 
       let scores = [];
 
-      this.dashboardService.readAnalysis(id, since_date, until_date).subscribe(
+      this.dashboardService.readAnalysis(id, since_date, until_date, is_tw).subscribe(
         response => {
           let score = response['data'].map(response => response.analysis_score)
           this.table_score = response['data'];

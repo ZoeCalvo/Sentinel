@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-twitter',
-  templateUrl: './twitter.component.html',
-  styleUrls: ['./twitter.component.scss']
+  selector: 'app-instagram',
+  templateUrl: './instagram.component.html',
+  styleUrls: ['./instagram.component.scss']
 })
-export class TwitterComponent implements OnInit {
+export class InstagramComponent implements OnInit {
   focus;
   focus1;
-  is_tw: boolean;
+  is_tw;
   constructor() { }
 
   ngOnInit() {
-    this.is_tw = true;
+    this.is_tw = false;
     var body = document.getElementsByTagName('body')[0];
     body.classList.add('login-page');
 

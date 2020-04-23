@@ -21,6 +21,7 @@ import {AppRoutingModule} from '../app.routing';
 import {HttpClientModule} from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
 import { TwitterComponent } from './twitter/twitter.component';
+import { InstagramComponent } from './instagram/instagram.component';
 
 @NgModule({
     imports: [
@@ -49,7 +50,8 @@ import { TwitterComponent } from './twitter/twitter.component';
         DashboardComponent,
         TableListComponent,
         MenuComponent,
-        TwitterComponent
+        TwitterComponent,
+        InstagramComponent
     ],
   providers: [DashboardService]
 })

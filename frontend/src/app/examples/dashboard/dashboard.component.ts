@@ -78,10 +78,10 @@ export class DashboardComponent implements OnInit {
       console.log(typeof id)
       id = id.trim();
       if (!id) { return ; }
-      const newId: Twitter = { id } as Twitter;
+      const newId: string = id;
       let scores = [];
 
-      this.dashboardService.analysis(newId).subscribe(
+      this.dashboardService.readAnalysis(newId).subscribe(
         response => {
           let score = response['data'].map(response => response.analysis_score)
           this.table_score = response['data'];

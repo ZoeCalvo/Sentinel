@@ -88,13 +88,13 @@ def init_tw():
     #     return jsonify({'results_analysis': results_analysis_json})
 
 
-@app.route('/getDataforDashboard', methods=['POST'])
+@app.route('/getDataforDashboard', methods=['GET'])
 def getDataforDashboard():
     print('hola')
-    print(request.json)
+    print(request.args.get('id'))
     # if is_tw == True:
     #     if id[0] == '#':
-    analysis_score = select_dataHashtags(request.json.get('id'))
+    analysis_score = select_dataHashtags(request.args.get('id'))
     #     elif id[0] == '@':
     #         analysis_score = select_dataUserTw(id)
     #     else:

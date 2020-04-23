@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpParams} from '@angular/common/http';
 import { Dashboard } from './dashboard'
 import {Observable} from "rxjs";
 import {Twitter} from "../twitter/twitter";
@@ -18,8 +18,9 @@ export class DashboardService {
     console.log(id);
     return this.http.post<Twitter>(this.graphsUrl, id);
   }
-  // readAnalysis(id: Twitter ) {
-  //   return this.http.get<Twitter>('http://127.0.0.1:5000/getDataforDashboard/:id', id)
-  // }
+  readAnalysis(id: string ) {
+    let params = new HttpParams().set('id', id);
+    return this.http.get<Twitter>(this.graphsUrl, {params: params})
+  }
 
 }

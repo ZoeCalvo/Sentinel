@@ -1,6 +1,6 @@
 import mysql.connector
 import os
-
+from datetime import datetime
 user_db = os.getenv('USER_DB')
 pass_db = os.getenv('PASSWD_DB')
 mydb = mysql.connector.connect(host="localhost", user=user_db, passwd=pass_db, database="telusko")
@@ -41,7 +41,7 @@ def get_user(data):
 def insert_dataHashtags(hashtag, data, text, analysis_score):
     analysis_score = _float64_to_mysql(analysis_score)
     sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = data._json['created_at']
+    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%d-%m-%Y')
     val = (hashtag, text, date, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -52,7 +52,7 @@ def insert_dataHashtags(hashtag, data, text, analysis_score):
 def insert_dataUsersTw(user, data, text, analysis_score):
     analysis_score = _float64_to_mysql(analysis_score)
     sql = ("INSERT INTO datausertw(user, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = data._json['created_at']
+    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%d-%m-%Y')
     val = (user, text, date, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -63,7 +63,7 @@ def insert_dataUsersTw(user, data, text, analysis_score):
 def insert_dataWord(word, data, text, analysis_score):
     analysis_score = _float64_to_mysql(analysis_score)
     sql = ("INSERT INTO dataword(word, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = data._json['created_at']
+    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%d-%m-%Y')
     val = (word, text, date, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()

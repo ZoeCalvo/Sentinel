@@ -42,7 +42,7 @@ translator = YandexTranslate(os.getenv('YANDEX_KEY'))
 
 def searchHashtag(hashtag, since_date=None, until_date=None):
     analysis_score = []
-    for tweet in tweepy.Cursor(api.search, q=hashtag, tweet_mode="extended", since=since_date, until=until_date).items(4):
+    for tweet in tweepy.Cursor(api.search, q=hashtag, tweet_mode="extended", since=since_date, until=until_date).items(20):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
@@ -56,7 +56,7 @@ def searchHashtag(hashtag, since_date=None, until_date=None):
 
 def searchUser(user, since_date=None, until_date=None):
     analysis_score = []
-    for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items(4):
+    for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items(20):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
@@ -70,7 +70,7 @@ def searchUser(user, since_date=None, until_date=None):
 
 def searchWord(word, since_date=None, until_date=None):
     analysis_score = []
-    for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items(4):
+    for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items(20):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
@@ -88,15 +88,15 @@ def deEmojify(inputString):
 def sentiment_analysis(tw_sinemoji):
 
     if not tw_sinemoji == '""' :
-        if translator.detect(tw_sinemoji) == 'en':
-            score = TextBlob(tw_sinemoji).sentiment.polarity
-
-        elif translator.detect(tw_sinemoji) == 'es':
+        # if translator.detect(tw_sinemoji) == 'en':
+        #     score = TextBlob(tw_sinemoji).sentiment.polarity
+        #
+        # elif translator.detect(tw_sinemoji) == 'es':
             # Primera opción, utilizar libreria en español
-            # score=clf.predict(tw_sinemoji)
+            score=clf.predict(tw_sinemoji)
 
             #Segunda opción traducir y utilizar librería en inglés
-            translate = translator.translate(tw_sinemoji, 'en')
-            score = TextBlob(translate["text"][0]).sentiment.polarity
+            # translate = translator.translate(tw_sinemoji, 'en')
+            # score = TextBlob(translate["text"][0]).sentiment.polarity
 
     return score

@@ -107,25 +107,43 @@ def select_dataHashtags(hashtag):
     return final
 
 def select_dataUserTw(user):
-    sql = ("SELECT analysis_score FROM datausertw WHERE user = %s")
+    sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s")
     val = (user,)
     mycursor.execute(sql, val)
-    result = mycursor.fetchall()
-    return result
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'text': result[1]}
+        final.append(content)
+        content = {}
+    return final
 
 def select_dataWord(word):
-    sql = ("SELECT analysis_score FROM dataword WHERE word = %s")
+    sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s")
     val = (word,)
     mycursor.execute(sql, val)
-    result = mycursor.fetchall()
-    return result
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'text': result[1]}
+        final.append(content)
+        content = {}
+    return final
 
 def select_dataUserIg(user):
-    sql = ("SELECT analysis_score FROM datauserig WHERE user = %s")
+    sql = ("SELECT analysis_score, comment FROM datauserig WHERE user = %s")
     val = (user,)
     mycursor.execute(sql, val)
-    result = mycursor.fetchall()
-    return result
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'text': result[1]}
+        final.append(content)
+        content = {}
+    return final
 
 def select_statistics(id):
     sql = ("SELECT * FROM statistics WHERE id = %s")

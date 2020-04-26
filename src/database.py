@@ -104,10 +104,24 @@ def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
     insert_statistics(user, analysis_score)
     return 'OK'
 
-def select_dataHashtags(hashtag):
-    sql = ("SELECT analysis_score, text FROM datahashtags WHERE hashtag = %s")
-    val = (hashtag,)
-    mycursor.execute(sql, val)
+def select_dataHashtags(hashtag, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, text FROM datahashtags WHERE hashtag = %s AND date<=%s")
+            val = (hashtag, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, text FROM datahashtags WHERE hashtag = %s AND date>=%s")
+            val = (hashtag, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, text FROM datahashtags WHERE hashtag = %s")
+            val = (hashtag,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, text FROM datahashtags WHERE hashtag = %s AND date BETWEEN %s AND %s")
+        val = (hashtag, since_date, until_date)
+        mycursor.execute(sql, val)
     rv = mycursor.fetchall()
     final = []
     content = {}
@@ -117,10 +131,24 @@ def select_dataHashtags(hashtag):
         content = {}
     return final
 
-def select_dataUserTw(user):
-    sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s")
-    val = (user,)
-    mycursor.execute(sql, val)
+def select_dataUserTw(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s AND date<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s AND date>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s AND date BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
     rv = mycursor.fetchall()
     final = []
     content = {}
@@ -130,10 +158,24 @@ def select_dataUserTw(user):
         content = {}
     return final
 
-def select_dataWord(word):
-    sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s")
-    val = (word,)
-    mycursor.execute(sql, val)
+def select_dataWord(word, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, text FROM datahashtags WHERE word = %s AND date<=%s")
+            val = (word, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, text FROM datahashtags WHERE word = %s AND date>=%s")
+            val = (word, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, text FROM datahashtags WHERE word = %s")
+            val = (word,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s AND date BETWEEN %s AND %s")
+        val = (word, since_date, until_date)
+        mycursor.execute(sql, val)
     rv = mycursor.fetchall()
     final = []
     content = {}

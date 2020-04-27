@@ -107,26 +107,26 @@ def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
 def select_dataHashtags(hashtag, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':
-            sql = ("SELECT analysis_score, text FROM datahashtags WHERE hashtag = %s AND date<=%s")
+            sql = ("SELECT analysis_score, text, date FROM datahashtags WHERE hashtag = %s AND date<=%s")
             val = (hashtag, until_date)
             mycursor.execute(sql, val)
         elif since_date is not '':
-            sql = ("SELECT analysis_score, text FROM datahashtags WHERE hashtag = %s AND date>=%s")
+            sql = ("SELECT analysis_score, text, date FROM datahashtags WHERE hashtag = %s AND date>=%s")
             val = (hashtag, since_date)
             mycursor.execute(sql, val)
         else:
-            sql = ("SELECT analysis_score, text FROM datahashtags WHERE hashtag = %s")
+            sql = ("SELECT analysis_score, text, date FROM datahashtags WHERE hashtag = %s")
             val = (hashtag,)
             mycursor.execute(sql, val)
     else:
-        sql = ("SELECT analysis_score, text FROM datahashtags WHERE hashtag = %s AND date BETWEEN %s AND %s")
+        sql = ("SELECT analysis_score, text, date FROM datahashtags WHERE hashtag = %s AND date BETWEEN %s AND %s")
         val = (hashtag, since_date, until_date)
         mycursor.execute(sql, val)
     rv = mycursor.fetchall()
     final = []
     content = {}
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
         final.append(content)
         content = {}
     return final

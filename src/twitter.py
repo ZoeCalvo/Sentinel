@@ -42,45 +42,37 @@ translator = YandexTranslate(os.getenv('YANDEX_KEY'))
 
 def searchHashtag(hashtag, since_date=None, until_date=None):
     analysis_score = []
-    for tweet in tweepy.Cursor(api.search, q=hashtag, tweet_mode="extended", since=since_date, until=until_date).items(4):
+    for tweet in tweepy.Cursor(api.search, q=hashtag, tweet_mode="extended", since=since_date, until=until_date).items(10):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
-        insert_dataHashtags(hashtag, tweet, tw_sinemoji, score)
         analysis_score.append(score)
+        insert_dataHashtags(hashtag, tweet, tw_sinemoji, score, analysis_score)
 
-    mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
-    insert_statistics(hashtag, mean, median, mode, variance, typical_deviation)
 
-    return analysis_score, mean, median, mode, variance, typical_deviation
+    return analysis_score
 
 def searchUser(user, since_date=None, until_date=None):
     analysis_score = []
-    for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items(4):
+    for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items(20):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
-        insert_dataUsersTw(user, tweet, tw_sinemoji, score)
         analysis_score.append(score)
+        insert_dataUsersTw(user, tweet, tw_sinemoji, score, analysis_score)
 
-    mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
-    insert_statistics(user, mean, median, mode, variance, typical_deviation)
-
-    return analysis_score, mean, median, mode, variance, typical_deviation
+    return analysis_score
 
 def searchWord(word, since_date=None, until_date=None):
     analysis_score = []
-    for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items(4):
+    for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items(20):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
-        insert_dataWord(word, tweet, tw_sinemoji, score)
         analysis_score.append(score)
+        insert_dataWord(word, tweet, tw_sinemoji, score, analysis_score)
 
-    mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
-    insert_statistics(word, mean, median, mode, variance, typical_deviation)
-
-    return analysis_score, mean, median, mode, variance, typical_deviation
+    return analysis_score
 
 def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')
@@ -88,15 +80,15 @@ def deEmojify(inputString):
 def sentiment_analysis(tw_sinemoji):
 
     if not tw_sinemoji == '""' :
-        if translator.detect(tw_sinemoji) == 'en':
-            score = TextBlob(tw_sinemoji).sentiment.polarity
-
-        elif translator.detect(tw_sinemoji) == 'es':
+        # if translator.detect(tw_sinemoji) == 'en':
+        #     score = TextBlob(tw_sinemoji).sentiment.polarity
+        #
+        # elif translator.detect(tw_sinemoji) == 'es':
             # Primera opción, utilizar libreria en español
-            # score=clf.predict(tw_sinemoji)
+            score=clf.predict(tw_sinemoji)
 
             #Segunda opción traducir y utilizar librería en inglés
-            translate = translator.translate(tw_sinemoji, 'en')
-            score = TextBlob(translate["text"][0]).sentiment.polarity
+            # translate = translator.translate(tw_sinemoji, 'en')
+            # score = TextBlob(translate["text"][0]).sentiment.polarity
 
     return score

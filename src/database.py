@@ -161,15 +161,15 @@ def select_dataUserTw(user, since_date, until_date):
 def select_dataWord(word, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':
-            sql = ("SELECT analysis_score, text FROM datahashtags WHERE word = %s AND date<=%s")
+            sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s AND date<=%s")
             val = (word, until_date)
             mycursor.execute(sql, val)
         elif since_date is not '':
-            sql = ("SELECT analysis_score, text FROM datahashtags WHERE word = %s AND date>=%s")
+            sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s AND date>=%s")
             val = (word, since_date)
             mycursor.execute(sql, val)
         else:
-            sql = ("SELECT analysis_score, text FROM datahashtags WHERE word = %s")
+            sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s")
             val = (word,)
             mycursor.execute(sql, val)
     else:
@@ -205,4 +205,32 @@ def select_statistics(id):
     result = mycursor.fetchall()
     return result
 
+def selectHashtagsGroupByDates(hashtag, since_date, until_date):
+
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT AVG(analysis_score), date FROM datahashtags WHERE hashtag = %s AND date<=%s GROUP BY date")
+            val = (hashtag, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT AVG(analysis_score), date FROM datahashtags WHERE hashtag = %s AND date>=%s GROUP BY date")
+            val = (hashtag, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT AVG(analysis_score), date FROM datahashtags WHERE hashtag = %s GROUP BY date")
+            val = (hashtag,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT AVG(analysis_score), date FROM datahashtags WHERE hashtag = %s AND date BETWEEN %s AND %s GROUP BY date")
+        val = (hashtag, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'date': result[1]}
+        final.append(content)
+        content = {}
+
+    return final
 

@@ -90,6 +90,7 @@ def init_ig():
 
 @app.route('/getDataforDashboard', methods=['GET'])
 def getDataforDashboard():
+
     if request.args.get('is_tw') == 'true':
         if request.args.get('id')[0] == '#':
             analysis_score = select_dataHashtags(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
@@ -99,6 +100,23 @@ def getDataforDashboard():
             analysis_score = select_dataWord(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
     else:
         analysis_score = select_dataUserIg(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+
+
+    return jsonify({'data':analysis_score})
+
+@app.route('/getDataforGraphs', methods=['GET'])
+def getDataforGraphs():
+
+    if request.args.get('is_tw') == 'true':
+        if request.args.get('id')[0] == '#':
+            analysis_score = selectHashtagsGroupByDates(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+        elif request.args.get('id')[0] == '@':
+            analysis_score = select_dataUserTw(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+        else:
+            analysis_score = select_dataWord(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+    else:
+        analysis_score = select_dataUserIg(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+
 
     return jsonify({'data':analysis_score})
 

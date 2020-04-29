@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
+
 export class DashboardService {
   graphsUrl = 'http://127.0.0.1:5000/getDataforDashboard';
 
@@ -19,8 +20,6 @@ export class DashboardService {
       .set('since_date', since_date)
       .set('until_date', until_date)
       .set('is_tw', is_tw);
-    console.log(params);
     return this.http.get(this.graphsUrl, {params: params})
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as Chartist from 'chartist';
 import {DashboardService} from './dashboard.service';
 import {Dashboard} from './dashboard';
@@ -6,6 +6,7 @@ import {element} from "protractor";
 import {Chart} from 'chart.js';
 import 'rxjs/add/operator/map';
 import {ActivatedRoute} from "@angular/router";
+import {GraphsService} from "./graphs.service";
 
 
 @Component({
@@ -14,7 +15,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./dashboard.component.scss']
 })
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   chart = [];
   table_score;
   headers = ['analysis_score', 'text'];
@@ -70,7 +71,93 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  constructor(private dashboardService: DashboardService, private route: ActivatedRoute) { }
+  constructor(private dashboardService: DashboardService, private route: ActivatedRoute, private graphsService: GraphsService) { }
+  getDataForGraph(id, since_date, until_date, is_tw){
+    this.graphsService.getforGraphs(id, since_date, until_date, is_tw).subscribe(
+      response => {
+        console.log(response);
+        let score = response['data'].map(response => response.analysis_score)
+        let date = response['data'].map(response=> response.date)
+
+        this.canvas = document.getElementById('lineChartExampleWithNumbersAndGrid');
+        this.ctx = this.canvas.getContext('2d');
+
+        this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
+        this.gradientStroke.addColorStop(0, '#18ce0f');
+        this.gradientStroke.addColorStop(1, this.chartColor);
+
+        this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+        this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
+        this.gradientFill.addColorStop(1, this.hexToRGB('#18ce0f', 0.4));
+
+        this.chart = new Chart(this.ctx, {
+          type: 'line',
+          data: {
+            labels: date,
+            datasets: [
+              {
+                pointBorderWidth: 2,
+                pointHoverRadius: 4,
+                pointHoverBorderWidth: 1,
+                pointRadius: 4,
+                fill: true,
+                borderWidth: 2,
+                data: score,
+                borderColor: '#18ce0f',
+                pointBorderColor: '#FFF',
+                pointBackgroundColor: '#18ce0f',
+                backgroundColor: this.gradientFill
+              }
+            ]
+          },
+          options: {
+
+            maintainAspectRatio: false,
+            legend: {
+              display: false
+            },
+            tooltips: {
+              bodySpacing: 4,
+              mode: 'nearest',
+              intersect: 0,
+              position: 'nearest',
+              xPadding: 10,
+              yPadding: 10,
+              caretPadding: 10
+            },
+            responsive: true,
+            scales: {
+              yAxes: [{
+                gridLines: {
+                  zeroLineColor: 'transparent',
+                  drawBorder: false
+                }
+              }],
+              xAxes: [{
+                display: 0,
+                ticks: {
+                  display: false
+                },
+                gridLines: {
+                  zeroLineColor: 'transparent',
+                  drawTicks: false,
+                  display: false,
+                  drawBorder: false
+                }
+              }]
+            },
+            layout: {
+              padding: {
+                left: 0,
+                right: 0,
+                top: 15,
+                bottom: 15
+              }
+            }
+          }
+        })
+    })
+  }
 
   ngOnInit() {
       let id = this.route.snapshot.paramMap.get('id');
@@ -80,14 +167,14 @@ export class DashboardComponent implements OnInit {
 
       id = id.trim();
       if (!id) { return ; }
-
       let scores = [];
+      console.log(id, since_date, until_date, is_tw)
 
       this.dashboardService.readAnalysis(id, since_date, until_date, is_tw).subscribe(
         response => {
           let score = response['data'].map(response => response.analysis_score)
           this.table_score = response['data'];
-          console.log(this.table_score)
+          let dates = response['data'].map(response => response.date)
           score.forEach((response) => scores.push(response))
 
           this.chartColor = '#FFFFFF';
@@ -104,7 +191,7 @@ export class DashboardComponent implements OnInit {
           this.chart = new Chart(this.ctx, {
             type: 'bar',
             data: {
-              labels : ['e', 'f', 'm', 'a', 'm', 'j', 'jl', 'a', 's', 'o', 'n', 'd'],
+              labels : dates,
               datasets: [
                 {
                   pointBorderWidth: 2,
@@ -168,8 +255,7 @@ export class DashboardComponent implements OnInit {
           })
 
         })
-
-
+    this.getDataForGraph(id, since_date, until_date, is_tw);
     this.chartColor = '#FFFFFF';
     this.canvas = document.getElementById('bigDashboardChart');
     this.ctx = this.canvas.getContext('2d');
@@ -402,41 +488,7 @@ export class DashboardComponent implements OnInit {
 
     this.lineChartType = 'line';
 
-    this.canvas = document.getElementById('lineChartExampleWithNumbersAndGrid');
-    this.ctx = this.canvas.getContext('2d');
 
-    this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
-    this.gradientStroke.addColorStop(0, '#18ce0f');
-    this.gradientStroke.addColorStop(1, this.chartColor);
-
-    this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
-    this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
-    this.gradientFill.addColorStop(1, this.hexToRGB('#18ce0f', 0.4));
-
-    this.lineChartWithNumbersAndGridData = [
-        {
-          label: 'Email Stats',
-           pointBorderWidth: 2,
-           pointHoverRadius: 4,
-           pointHoverBorderWidth: 1,
-           pointRadius: 4,
-           fill: true,
-           borderWidth: 2,
-          data: [40, 500, 650, 700, 1200, 1250, 1300, 1900]
-        }
-      ];
-      this.lineChartWithNumbersAndGridColors = [
-       {
-         borderColor: '#18ce0f',
-         pointBorderColor: '#FFF',
-         pointBackgroundColor: '#18ce0f',
-         backgroundColor: this.gradientFill
-       }
-     ];
-    this.lineChartWithNumbersAndGridLabels = ['12pm,', '3pm', '6pm', '9pm', '12am', '3am', '6am', '9am'];
-    this.lineChartWithNumbersAndGridOptions = this.gradientChartOptionsConfigurationWithNumbersAndGrid;
-
-    this.lineChartWithNumbersAndGridType = 'line';
 
 
 
@@ -519,6 +571,7 @@ export class DashboardComponent implements OnInit {
 
 
   }
+  ngOnDestroy() {}
   }
 
 

@@ -120,6 +120,21 @@ def getDataforGraphs():
 
     return jsonify({'data':analysis_score})
 
+@app.route('/intervalGraph', methods=['GET'])
+def getDataForIntervalGraph():
+    if request.args.get('is_tw') == 'true':
+        if request.args.get('id')[0] == '#':
+            analysis_score = selectHashtagsByIntervals(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+        elif request.args.get('id')[0] == '@':
+            analysis_score = select_dataUserTw(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+        else:
+            analysis_score = select_dataWord(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+    else:
+        analysis_score = select_dataUserIg(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+
+
+    return jsonify({'data':analysis_score})
+
 if __name__ == '__main__':
     app.run()
 

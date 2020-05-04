@@ -28,7 +28,7 @@
                       </div>
                     </div>
                     <div class="footer text-center">
-                        <a [routerLink]="['/examples/dashboard', id.value, since_date.value, until_date.value, is_tw]" class="btn btn-primary btn-round btn-lg btn-block" (click)=" id.value=''; since_date.value='';
+                        <a [routerLink]="['/examples/dashboard', id.value, since_date.value, until_date.value, is_tw]" class="btn btn-primary btn-round btn-lg btn-block" (click)="ngOnInit(); id.value=''; since_date.value='';
       until_date.value=''">Analizar</a>
                     </div>
                 </form>

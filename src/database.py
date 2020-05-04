@@ -234,3 +234,76 @@ def selectHashtagsGroupByDates(hashtag, since_date, until_date):
 
     return final
 
+def selectHashtagsByIntervals(hashtag, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score FROM datahashtags WHERE hashtag = %s AND date<=%s")
+            val = (hashtag, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score FROM datahashtags WHERE hashtag = %s AND date>=%s")
+            val = (hashtag, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score FROM datahashtags WHERE hashtag = %s")
+            val = (hashtag,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score FROM datahashtags WHERE hashtag = %s AND date BETWEEN %s AND %s")
+        val = (hashtag, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    min = 1
+    max = -1
+    int0=0
+    int1=0
+    int2=0
+    int3=0
+    int4=0
+    int5=0
+    int6=0
+    int7=0
+    int8=0
+    int9 = 0
+    for result in rv:
+        if min > result[0]:
+            min = result[0]
+        if max < result[0]:
+            max = result[0]
+
+    gap = (max - min)/10
+
+    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    for result in rv:
+        if min <= result[0] and result[0] <= min+gap:
+            int0 = int0 + 1
+        elif result[0] > min+gap and result[0] <= min+gap*2:
+            int1 = int1+1
+        elif result[0] > min+gap*2 and result[0] <= min+gap*3:
+            int2 = int2 + 1
+        elif result[0] > min+gap*3 and result[0] <= min+gap*4:
+            int3 = int3 + 1
+        elif result[0] > min+gap*4 and result[0] <= min+gap*5:
+            int4 = int4 + 1
+        elif result[0] > min+gap*5 and result[0] <= min+gap*6:
+            int5 = int5 + 1
+        elif result[0] > min+gap*6 and result[0] <= min+gap*7:
+            int6 = int6 + 1
+        elif result[0] > min+gap*7 and result[0] <= min+gap*8:
+            int7 = int7 + 1
+        elif result[0] > min+gap*8 and result[0] <= min+gap*9:
+            int8 = int8 + 1
+        elif result[0] > min+gap*9 and result[0] <= max:
+            int9 = int9 + 1
+
+    listacont = [int0, int1, int2, int3, int4, int5, int6, int7, int8, int9]
+
+    for obj in zip(intervals, listacont):
+        content = {'interval': obj[0], 'totalScore': obj[1]}
+        final.append(content)
+        content = {}
+
+    return final
+

@@ -64,19 +64,13 @@
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Email Statistics</h5>
-          <h4 class="card-title">24 Hours Performance</h4>
+          <h4 class="card-title">Interval Graph</h4>
         </div>
         <div class="card-body">
           <div class="chart-area">
-            <canvas baseChart id="barChartSimpleGradientsNumbers"
-                        [datasets]="lineChartGradientsNumbersData"
-                        [labels]="lineChartGradientsNumbersLabels"
-                        [colors]="lineChartGradientsNumbersColors"
-                        [options]="lineChartGradientsNumbersOptions"
-                        [chartType]="lineChartGradientsNumbersType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+            <div *ngIf="chart">
+                <canvas  id="barChartSimpleGradientsNumbers">{{chart}}</canvas>
+              </div>
           </div>
         </div>
         <div class="card-footer">

@@ -72,6 +72,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   constructor(private dashboardService: DashboardService, private route: ActivatedRoute,
               private graphsService: GraphsService, private intervalGraphService: IntervalgraphService) { }
 
@@ -84,8 +88,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       id = id.trim();
       if (!id) { return ; }
       this.showAnalysisScoreGraph(id, since_date, until_date, is_tw);
-      this.getDataForGraph(id, since_date, until_date, is_tw);
-      this.getforIntervalGraph(id, since_date, until_date, is_tw);
+      this.sleep(2000).then( () => {this.getDataForGraph(id, since_date, until_date, is_tw); })
+      this.sleep(2000).then( () => {this.getforIntervalGraph(id, since_date, until_date, is_tw); })
+
 
       this.chartColor = '#FFFFFF';
       this.canvas = document.getElementById('bigDashboardChart');

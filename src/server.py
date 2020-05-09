@@ -124,7 +124,7 @@ def getDataforGraphs():
 def getDataForIntervalGraph():
     if request.args.get('is_tw') == 'true':
         if request.args.get('id')[0] == '#':
-            analysis_score = selectHashtagsByIntervals(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+            analysis_score = selectHashtagsByFixedIntervals(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
         elif request.args.get('id')[0] == '@':
             analysis_score = select_dataUserTw(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
         else:

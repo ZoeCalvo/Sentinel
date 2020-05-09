@@ -88,8 +88,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       id = id.trim();
       if (!id) { return ; }
       this.showAnalysisScoreGraph(id, since_date, until_date, is_tw);
-      this.sleep(2000).then( () => {this.getDataForGraph(id, since_date, until_date, is_tw); })
-      this.sleep(2000).then( () => {this.getforIntervalGraph(id, since_date, until_date, is_tw); })
+      this.sleep(500).then( () => {this.getDataForGraph(id, since_date, until_date, is_tw); })
+      this.sleep(500).then( () => {this.getforIntervalGraph(id, since_date, until_date, is_tw); })
 
 
       this.chartColor = '#FFFFFF';

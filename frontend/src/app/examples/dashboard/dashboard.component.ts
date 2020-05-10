@@ -19,6 +19,11 @@ import {IntervalgraphService} from "./intervalgraph.service";
 export class DashboardComponent implements OnInit, OnDestroy {
   chart = [];
   table_score;
+  is_dynamic = false;
+  id;
+  since_date;
+  until_date;
+  is_tw;
   headers = ['analysis_score', 'text'];
   public lineBigDashboardChartType;
   public gradientStroke;
@@ -80,17 +85,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
               private graphsService: GraphsService, private intervalGraphService: IntervalgraphService) { }
 
   ngOnInit() {
-      let id = this.route.snapshot.paramMap.get('id');
-      let since_date = this.route.snapshot.paramMap.get('since_date');
-      let until_date = this.route.snapshot.paramMap.get('until_date');
-      let is_tw = this.route.snapshot.paramMap.get('is_tw');
+      this.id = this.route.snapshot.paramMap.get('id');
+      this.since_date = this.route.snapshot.paramMap.get('since_date');
+      this.until_date = this.route.snapshot.paramMap.get('until_date');
+      this.is_tw = this.route.snapshot.paramMap.get('is_tw');
 
-      id = id.trim();
-      if (!id) { return ; }
-      this.showAnalysisScoreGraph(id, since_date, until_date, is_tw);
-      this.sleep(500).then( () => {this.getDataForGraph(id, since_date, until_date, is_tw); })
-      this.sleep(500).then( () => {this.getforIntervalGraph(id, since_date, until_date, is_tw); })
-
+      this.id = this.id.trim();
+      if (!this.id) { return ; }
+      this.showAnalysisScoreGraph(this.id, this.since_date, this.until_date, this.is_tw);
+      this.sleep(500).then( () => {this.getDataForGraph(this.id, this.since_date, this.until_date, this.is_tw); })
+      this.sleep(1000).then( () => {this.getforIntervalGraph(this.id, this.since_date, this.until_date, this.is_tw, this.is_dynamic); })
+     
 
       this.chartColor = '#FFFFFF';
       this.canvas = document.getElementById('bigDashboardChart');
@@ -502,19 +507,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     })
   }
 
-  getforIntervalGraph(id, since_date, until_date, is_tw){
-
-    this.intervalGraphService.getIntervalGraphData(id, since_date, until_date, is_tw).subscribe(
+  getforIntervalGraph(id, since_date, until_date, is_tw, is_dynamic){
+    this.intervalGraphService.getIntervalGraphData(id, since_date, until_date, is_tw, is_dynamic).subscribe(
       response => {
         let intervals = response['data'].map(response => response.interval)
         let score = response['data'].map(response => response.totalScore)
-
         this.canvas = document.getElementById('barChartSimpleGradientsNumbers');
         this.ctx = this.canvas.getContext('2d');
 
         this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
         this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
         this.gradientFill.addColorStop(1, this.hexToRGB('#d782d9', 0.6));
+
 
 
         this.chart = new Chart(this.ctx, {
@@ -580,9 +584,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
             }
           }
         })
+        if (this.chart !== []) {
+          console.log('hola')
+          this.chart = [];
+        }
       }
     )
   }
+
+  changeIntervalGraph() {
+    if (this.is_dynamic === true) {
+      this.getforIntervalGraph(this.id, this.since_date, this.until_date, this.is_tw, this.is_dynamic);
+    }
+  }
+
   ngOnDestroy() {}
   }
 

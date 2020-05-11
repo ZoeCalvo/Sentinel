@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   until_date;
   is_tw;
   headers = ['analysis_score', 'text'];
+  graph = null;
   public lineBigDashboardChartType;
   public gradientStroke;
   public chartColor;
@@ -95,7 +96,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.showAnalysisScoreGraph(this.id, this.since_date, this.until_date, this.is_tw);
       this.sleep(500).then( () => {this.getDataForGraph(this.id, this.since_date, this.until_date, this.is_tw); })
       this.sleep(1000).then( () => {this.getforIntervalGraph(this.id, this.since_date, this.until_date, this.is_tw, this.is_dynamic); })
-     
+
 
       this.chartColor = '#FFFFFF';
       this.canvas = document.getElementById('bigDashboardChart');
@@ -508,10 +509,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   getforIntervalGraph(id, since_date, until_date, is_tw, is_dynamic){
+
     this.intervalGraphService.getIntervalGraphData(id, since_date, until_date, is_tw, is_dynamic).subscribe(
       response => {
         let intervals = response['data'].map(response => response.interval)
         let score = response['data'].map(response => response.totalScore)
+        if (this.graph != null) {
+          this.graph.clear();
+          this.graph.destroy();
+        }
         this.canvas = document.getElementById('barChartSimpleGradientsNumbers');
         this.ctx = this.canvas.getContext('2d');
 
@@ -521,7 +527,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 
 
-        this.chart = new Chart(this.ctx, {
+        this.graph = new Chart(this.ctx, {
           type: 'bar',
           data: {
             labels: intervals,
@@ -562,15 +568,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 }
               }],
               xAxes: [{
-                display: 0,
+                display: intervals,
                 ticks: {
-                  display: false
+                  display: true
                 },
                 gridLines: {
                   zeroLineColor: 'transparent',
                   drawTicks: false,
                   display: false,
-                  drawBorder: false
+                  drawBorder: false,
                 }
               }]
             },
@@ -584,10 +590,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             }
           }
         })
-        if (this.chart !== []) {
-          console.log('hola')
-          this.chart = [];
-        }
       }
     )
   }

@@ -111,9 +111,9 @@ def getDataforGraphs():
         if request.args.get('id')[0] == '#':
             analysis_score = selectHashtagsGroupByDates(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
         elif request.args.get('id')[0] == '@':
-            analysis_score = select_dataUserTw(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+            analysis_score = selectUserTwGroupByDates(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
         else:
-            analysis_score = select_dataWord(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+            analysis_score = selectWordGroupByDates(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
     else:
         analysis_score = select_dataUserIg(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
 
@@ -125,13 +125,25 @@ def getDataForIntervalGraph():
     if request.args.get('is_tw') == 'true':
         if request.args.get('id')[0] == '#':
             if request.args.get('is_dynamic') == 'true':
-                analysis_score = selectHashtagsByIntervals(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+                analysis_score = selectHashtagsByIntervals(request.args.get('id'), request.args.get('since_date'),
+                                                           request.args.get('until_date'))
             else:
-                analysis_score = selectHashtagsByFixedIntervals(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+                analysis_score = selectHashtagsByFixedIntervals(request.args.get('id'), request.args.get('since_date'),
+                                                                request.args.get('until_date'))
         elif request.args.get('id')[0] == '@':
-            analysis_score = select_dataUserTw(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+            if request.args.get('is_dynamic') == 'true':
+                analysis_score = selectUserTwByIntervals(request.args.get('id'), request.args.get('since_date'),
+                                                           request.args.get('until_date'))
+            else:
+                analysis_score = selectUserTwByFixedIntervals(request.args.get('id'), request.args.get('since_date'),
+                                                                request.args.get('until_date'))
         else:
-            analysis_score = select_dataWord(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+            if request.args.get('is_dynamic') == 'true':
+                analysis_score = selectWordByIntervals(request.args.get('id'), request.args.get('since_date'),
+                                                           request.args.get('until_date'))
+            else:
+                analysis_score = selectWordByFixedIntervals(request.args.get('id'), request.args.get('since_date'),
+                                                                request.args.get('until_date'))
     else:
         analysis_score = select_dataUserIg(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
 

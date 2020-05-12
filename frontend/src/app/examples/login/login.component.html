@@ -27,7 +27,10 @@
                       </div>
                     </div>
                     <div class="footer text-center">
-                        <a class="btn btn-primary btn-round btn-lg btn-block" (click)="add(username.value, passwd.value); username.value=''; passwd.value=''">Get Started</a>
+                        <a class="btn btn-primary btn-round btn-lg btn-block" (click)="add(username.value, passwd.value); username.value=''; passwd.value=''">
+                          Acceder
+                        </a>
+
                         <div *ngFor="let alert of alerts">
                           <ngb-alert [type]="alert.type"  [dismissible]="false" >
                               <div class="container">
@@ -52,7 +55,7 @@
                     </div>
                     <div class="pull-left">
                         <h6>
-                            <a href="/examples/register" class="link">Create Account</a>
+                            <a href="/examples/register" class="link">Crear cuenta</a>
                         </h6>
                     </div>
                     <div class="pull-right">

@@ -97,11 +97,12 @@ def insert_statistics(id, analysis_score):
 
 def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
     analysis_score = _float64_to_mysql(analysis_score)
+    datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%d-%m-%Y')
     sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
     val = (user, post, datepost, comment, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
-    insert_statistics(user, analysis_score)
+    
     return 'OK'
 
 def select_dataHashtags(hashtag, since_date, until_date):

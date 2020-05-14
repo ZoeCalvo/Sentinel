@@ -49,7 +49,7 @@ def research(api, user_id):
 
 def getMediaData(api, userId, username):
     list_results_analysis = []
-    until_date = '2019-01-01'
+    until_date = '2020-01-01'
     try:
         all_posts = api.getTotalUserFeed(userId)
 
@@ -68,28 +68,25 @@ def getMediaData(api, userId, username):
                 timestamp = str(post["taken_at"])
 
                 datePost = datetime.fromtimestamp(float(timestamp))
+                datePost = datePost.isoformat()
 
-            # print ("idpost: ", idPost)
-            # print("txt: ", text)
 
-            if datePost.isoformat() > until_date:
-                list_results_analysis.append(getComments(api, idPost, datePost, username))
-                # results = reconvert_results_ig(list_results_analysis)
-                # mean, median, mode, variance, typical_deviation = calculateStats(results)
+
+            if datePost > until_date:
+                list_results_analysis.append(getComments(idPost, datePost, username))
+
 
             else:
                 break
-                #
-            # print("date: ", datePost)
-            # getMediaHashtag(idPost, text)
+
 
         results = reconvert_results_ig(list_results_analysis)
-        mean, median, mode, variance, typical_deviation = calculateStats(results)
-        insert_statistics(username, mean, median, mode, variance, typical_deviation)
+        insert_statistics(username, results)
+
     except:
         pass
 
-    return results, mean, median, mode, variance, typical_deviation
+    return results
 
 
 def getMediaHashtag(media_id, text):
@@ -177,7 +174,7 @@ def explore(api):
                         getMediaHashtag(postId, text)
     return None
 
-def search_users(api,userName):
+def search_users(api, userName):
     _ = api.searchUsername(userName)
     userId = api.LastJson["user"]["pk"]
     #

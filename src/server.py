@@ -115,7 +115,7 @@ def getDataforGraphs():
         else:
             analysis_score = selectWordGroupByDates(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
     else:
-        analysis_score = select_dataUserIg(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+        analysis_score = selectDataUserIgByDates(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
 
 
     return jsonify({'data':analysis_score})
@@ -145,7 +145,12 @@ def getDataForIntervalGraph():
                 analysis_score = selectWordByFixedIntervals(request.args.get('id'), request.args.get('since_date'),
                                                                 request.args.get('until_date'))
     else:
-        analysis_score = select_dataUserIg(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'))
+        if request.args.get('is_dynamic') == 'true':
+            analysis_score = selectDataUserIgByIntervals(request.args.get('id'), request.args.get('since_date'),
+                                                         request.args.get('until_date'))
+        else:
+            analysis_score = selectDataUserIgByFixedIntervals(request.args.get('id'), request.args.get('since_date'),
+                                                         request.args.get('until_date'))
 
 
     return jsonify({'data':analysis_score})

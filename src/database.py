@@ -41,7 +41,7 @@ def get_user(data):
 def insert_dataHashtags(hashtag, data, text, score, list_scores):
     analysis_score = _float64_to_mysql(score)
     sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%d-%m-%Y')
+    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
     val = (hashtag, text, date, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -52,7 +52,7 @@ def insert_dataHashtags(hashtag, data, text, score, list_scores):
 def insert_dataUsersTw(user, data, text, score, list_score):
     analysis_score = _float64_to_mysql(score)
     sql = ("INSERT INTO datausertw(user, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%d-%m-%Y')
+    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
     val = (user, text, date, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -63,7 +63,7 @@ def insert_dataUsersTw(user, data, text, score, list_score):
 def insert_dataWord(word, data, text, score, list_score):
     analysis_score = _float64_to_mysql(score)
     sql = ("INSERT INTO dataword(word, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%d-%m-%Y')
+    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
     val = (word, text, date, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -97,7 +97,7 @@ def insert_statistics(id, analysis_score):
 
 def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
     analysis_score = _float64_to_mysql(analysis_score)
-    datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%d-%m-%Y')
+    datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
     sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
     val = (user, post, datepost, comment, analysis_score)
     mycursor.execute(sql, val)
@@ -300,26 +300,26 @@ def selectHashtagsByFixedIntervals(hashtag, since_date, until_date):
 def select_dataUserTw(user, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':
-            sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s AND date<=%s")
+            sql = ("SELECT analysis_score, text, date FROM datausertw WHERE user = %s AND date<=%s")
             val = (user, until_date)
             mycursor.execute(sql, val)
         elif since_date is not '':
-            sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s AND date>=%s")
+            sql = ("SELECT analysis_score, text, date FROM datausertw WHERE user = %s AND date>=%s")
             val = (user, since_date)
             mycursor.execute(sql, val)
         else:
-            sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s")
+            sql = ("SELECT analysis_score, text, date FROM datausertw WHERE user = %s")
             val = (user,)
             mycursor.execute(sql, val)
     else:
-        sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s AND date BETWEEN %s AND %s")
+        sql = ("SELECT analysis_score, text, date FROM datausertw WHERE user = %s AND date BETWEEN %s AND %s")
         val = (user, since_date, until_date)
         mycursor.execute(sql, val)
     rv = mycursor.fetchall()
     final = []
     content = {}
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
         final.append(content)
         content = {}
     return final
@@ -483,26 +483,26 @@ def selectUserTwByFixedIntervals(user, since_date, until_date):
 def select_dataWord(word, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':
-            sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s AND date<=%s")
+            sql = ("SELECT analysis_score, text, date FROM dataword WHERE word = %s AND date<=%s")
             val = (word, until_date)
             mycursor.execute(sql, val)
         elif since_date is not '':
-            sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s AND date>=%s")
+            sql = ("SELECT analysis_score, text, date FROM dataword WHERE word = %s AND date>=%s")
             val = (word, since_date)
             mycursor.execute(sql, val)
         else:
-            sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s")
+            sql = ("SELECT analysis_score, text, date FROM dataword WHERE word = %s")
             val = (word,)
             mycursor.execute(sql, val)
     else:
-        sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s AND date BETWEEN %s AND %s")
+        sql = ("SELECT analysis_score, text, date FROM dataword WHERE word = %s AND date BETWEEN %s AND %s")
         val = (word, since_date, until_date)
         mycursor.execute(sql, val)
     rv = mycursor.fetchall()
     final = []
     content = {}
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
         final.append(content)
         content = {}
     return final
@@ -666,26 +666,26 @@ def selectWordByFixedIntervals(word, since_date, until_date):
 def select_dataUserIg(user, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':
-            sql = ("SELECT analysis_score, comment FROM datauserig WHERE user = %s AND datepost<=%s")
+            sql = ("SELECT analysis_score, comment, datepost FROM datauserig WHERE user = %s AND datepost<=%s")
             val = (user, until_date)
             mycursor.execute(sql, val)
         elif since_date is not '':
-            sql = ("SELECT analysis_score, comment FROM datauserig WHERE user = %s AND datepost>=%s")
+            sql = ("SELECT analysis_score, comment, datepost FROM datauserig WHERE user = %s AND datepost>=%s")
             val = (user, since_date)
             mycursor.execute(sql, val)
         else:
-            sql = ("SELECT analysis_score, comment FROM datauserig WHERE user = %s")
+            sql = ("SELECT analysis_score, comment, datepost FROM datauserig WHERE user = %s")
             val = (user,)
             mycursor.execute(sql, val)
     else:
-        sql = ("SELECT analysis_score, comment FROM datauserig WHERE user = %s AND datepost BETWEEN %s AND %s")
+        sql = ("SELECT analysis_score, comment, datepost FROM datauserig WHERE user = %s AND datepost BETWEEN %s AND %s")
         val = (user, since_date, until_date)
         mycursor.execute(sql, val)
     rv = mycursor.fetchall()
     final = []
     content = {}
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
         final.append(content)
         content = {}
     return final

@@ -41,7 +41,7 @@ def get_user(data):
 def insert_dataHashtags(hashtag, data, text, score, list_scores):
     analysis_score = _float64_to_mysql(score)
     sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%d-%m-%Y')
+    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
     val = (hashtag, text, date, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -52,7 +52,7 @@ def insert_dataHashtags(hashtag, data, text, score, list_scores):
 def insert_dataUsersTw(user, data, text, score, list_score):
     analysis_score = _float64_to_mysql(score)
     sql = ("INSERT INTO datausertw(user, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%d-%m-%Y')
+    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
     val = (user, text, date, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -63,7 +63,7 @@ def insert_dataUsersTw(user, data, text, score, list_score):
 def insert_dataWord(word, data, text, score, list_score):
     analysis_score = _float64_to_mysql(score)
     sql = ("INSERT INTO dataword(word, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%d-%m-%Y')
+    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
     val = (word, text, date, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -97,11 +97,12 @@ def insert_statistics(id, analysis_score):
 
 def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
     analysis_score = _float64_to_mysql(analysis_score)
+    datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
     sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
     val = (user, post, datepost, comment, analysis_score)
     mycursor.execute(sql, val)
     mydb.commit()
-    insert_statistics(user, analysis_score)
+
     return 'OK'
 
 def select_dataHashtags(hashtag, since_date, until_date):
@@ -131,82 +132,8 @@ def select_dataHashtags(hashtag, since_date, until_date):
         content = {}
     return final
 
-def select_dataUserTw(user, since_date, until_date):
-    if since_date=='' or until_date=='':
-        if until_date is not '':
-            sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s AND date<=%s")
-            val = (user, until_date)
-            mycursor.execute(sql, val)
-        elif since_date is not '':
-            sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s AND date>=%s")
-            val = (user, since_date)
-            mycursor.execute(sql, val)
-        else:
-            sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s")
-            val = (user,)
-            mycursor.execute(sql, val)
-    else:
-        sql = ("SELECT analysis_score, text FROM datausertw WHERE user = %s AND date BETWEEN %s AND %s")
-        val = (user, since_date, until_date)
-        mycursor.execute(sql, val)
-    rv = mycursor.fetchall()
-    final = []
-    content = {}
-    for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1]}
-        final.append(content)
-        content = {}
-    return final
-
-def select_dataWord(word, since_date, until_date):
-    if since_date=='' or until_date=='':
-        if until_date is not '':
-            sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s AND date<=%s")
-            val = (word, until_date)
-            mycursor.execute(sql, val)
-        elif since_date is not '':
-            sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s AND date>=%s")
-            val = (word, since_date)
-            mycursor.execute(sql, val)
-        else:
-            sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s")
-            val = (word,)
-            mycursor.execute(sql, val)
-    else:
-        sql = ("SELECT analysis_score, text FROM dataword WHERE word = %s AND date BETWEEN %s AND %s")
-        val = (word, since_date, until_date)
-        mycursor.execute(sql, val)
-    rv = mycursor.fetchall()
-    final = []
-    content = {}
-    for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1]}
-        final.append(content)
-        content = {}
-    return final
-
-def select_dataUserIg(user):
-    sql = ("SELECT analysis_score, comment FROM datauserig WHERE user = %s")
-    val = (user,)
-    mycursor.execute(sql, val)
-    rv = mycursor.fetchall()
-    final = []
-    content = {}
-    for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1]}
-        final.append(content)
-        content = {}
-    return final
-
-def select_statistics(id):
-    sql = ("SELECT * FROM statistics WHERE id = %s")
-    val = (id,)
-    mycursor.execute(sql, val)
-    result = mycursor.fetchall()
-    return result
 
 def selectHashtagsGroupByDates(hashtag, since_date, until_date):
-
     if since_date=='' or until_date=='':
         if until_date is not '':
             sql = ("SELECT AVG(analysis_score), date FROM datahashtags WHERE hashtag = %s AND date<=%s GROUP BY date")
@@ -231,7 +158,6 @@ def selectHashtagsGroupByDates(hashtag, since_date, until_date):
         content = {'analysis_score': result[0], 'date': result[1]}
         final.append(content)
         content = {}
-
     return final
 
 def selectHashtagsByIntervals(hashtag, since_date, until_date):
@@ -370,3 +296,559 @@ def selectHashtagsByFixedIntervals(hashtag, since_date, until_date):
         content = {}
 
     return final
+
+def select_dataUserTw(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, text, date FROM datausertw WHERE user = %s AND date<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, text, date FROM datausertw WHERE user = %s AND date>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, text, date FROM datausertw WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, text, date FROM datausertw WHERE user = %s AND date BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        final.append(content)
+        content = {}
+    return final
+
+def selectUserTwGroupByDates(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT AVG(analysis_score), date FROM datausertw WHERE user = %s AND date<=%s GROUP BY date")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT AVG(analysis_score), date FROM datausertw WHERE user = %s AND date>=%s GROUP BY date")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT AVG(analysis_score), date FROM datausertw WHERE user = %s GROUP BY date")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT AVG(analysis_score), date FROM datausertw WHERE user = %s AND date BETWEEN %s AND %s GROUP BY date")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'date': result[1]}
+        final.append(content)
+        content = {}
+    return final
+
+def selectUserTwByIntervals(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score FROM datausertw WHERE user = %s AND date<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score FROM datausertw WHERE user = %s AND date>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score FROM datausertw WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score FROM datausertw WHERE user = %s AND date BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    min = 1
+    max = -1
+    int0=0
+    int1=0
+    int2=0
+    int3=0
+    int4=0
+    int5=0
+    int6=0
+    int7=0
+    int8=0
+    int9 = 0
+    for result in rv:
+        if min > result[0]:
+            min = result[0]
+        if max < result[0]:
+            max = result[0]
+    gap = (max - min)/10
+    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    for result in rv:
+        if min <= result[0] and result[0] <= min+gap:
+            int0 = int0 + 1
+        elif result[0] > min+gap and result[0] <= min+gap*2:
+            int1 = int1+1
+        elif result[0] > min+gap*2 and result[0] <= min+gap*3:
+            int2 = int2 + 1
+        elif result[0] > min+gap*3 and result[0] <= min+gap*4:
+            int3 = int3 + 1
+        elif result[0] > min+gap*4 and result[0] <= min+gap*5:
+            int4 = int4 + 1
+        elif result[0] > min+gap*5 and result[0] <= min+gap*6:
+            int5 = int5 + 1
+        elif result[0] > min+gap*6 and result[0] <= min+gap*7:
+            int6 = int6 + 1
+        elif result[0] > min+gap*7 and result[0] <= min+gap*8:
+            int7 = int7 + 1
+        elif result[0] > min+gap*8 and result[0] <= min+gap*9:
+            int8 = int8 + 1
+        elif result[0] > min+gap*9 and result[0] <= max:
+            int9 = int9 + 1
+    listacont = [int0, int1, int2, int3, int4, int5, int6, int7, int8, int9]
+
+    for obj in zip(intervals, listacont):
+        content = {'interval': obj[0], 'totalScore': obj[1]}
+        final.append(content)
+        content = {}
+    return final
+
+def selectUserTwByFixedIntervals(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score FROM datausertw WHERE user = %s AND date<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score FROM datausertw WHERE user = %s AND date>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score FROM datausertw WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score FROM datausertw WHERE user = %s AND date BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    int0=0
+    int1=0
+    int2=0
+    int3=0
+    int4=0
+    int5=0
+    int6=0
+    int7=0
+    int8=0
+    int9 = 0
+    intervals = [(0,0.1), (0.1,0.2), (0.2,0.3), (0.3,0.4), (0.4,0.5), (0.5,0.6), (0.6,0.7), (0.7,0.8), (0.8,0.9), (0.9,1)]
+    for result in rv:
+        if 0 <= result[0] and result[0] <= 0.1:
+            int0 = int0 + 1
+        elif result[0] > 0.1 and result[0] <= 0.2:
+            int1 = int1+1
+        elif result[0] > 0.2 and result[0] <= 0.3:
+            int2 = int2 + 1
+        elif result[0] > 0.3 and result[0] <= 0.4:
+            int3 = int3 + 1
+        elif result[0] > 0.4 and result[0] <= 0.5:
+            int4 = int4 + 1
+        elif result[0] > 0.5 and result[0] <= 0.6:
+            int5 = int5 + 1
+        elif result[0] > 0.6 and result[0] <= 0.7:
+            int6 = int6 + 1
+        elif result[0] > 0.7 and result[0] <= 0.8:
+            int7 = int7 + 1
+        elif result[0] > 0.8 and result[0] <= 0.9:
+            int8 = int8 + 1
+        elif result[0] > 0.9 and result[0] <= 1:
+            int9 = int9 + 1
+    listacont = [int0, int1, int2, int3, int4, int5, int6, int7, int8, int9]
+    for obj in zip(intervals, listacont):
+        content = {'interval': obj[0], 'totalScore': obj[1]}
+        final.append(content)
+        content = {}
+    return final
+
+def select_dataWord(word, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, text, date FROM dataword WHERE word = %s AND date<=%s")
+            val = (word, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, text, date FROM dataword WHERE word = %s AND date>=%s")
+            val = (word, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, text, date FROM dataword WHERE word = %s")
+            val = (word,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, text, date FROM dataword WHERE word = %s AND date BETWEEN %s AND %s")
+        val = (word, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        final.append(content)
+        content = {}
+    return final
+
+def selectWordGroupByDates(word, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT AVG(analysis_score), date FROM dataword WHERE word = %s AND date<=%s GROUP BY date")
+            val = (word, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT AVG(analysis_score), date FROM dataword WHERE word = %s AND date>=%s GROUP BY date")
+            val = (word, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT AVG(analysis_score), date FROM dataword WHERE word = %s GROUP BY date")
+            val = (word,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT AVG(analysis_score), date FROM dataword WHERE word = %s AND date BETWEEN %s AND %s GROUP BY date")
+        val = (word, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'date': result[1]}
+        final.append(content)
+        content = {}
+    return final
+
+def selectWordByIntervals(word, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score FROM dataword WHERE word = %s AND date<=%s")
+            val = (word, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score FROM dataword WHERE word = %s AND date>=%s")
+            val = (word, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score FROM dataword WHERE word = %s")
+            val = (word,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score FROM dataword WHERE word = %s AND date BETWEEN %s AND %s")
+        val = (word, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    min = 1
+    max = -1
+    int0=0
+    int1=0
+    int2=0
+    int3=0
+    int4=0
+    int5=0
+    int6=0
+    int7=0
+    int8=0
+    int9 = 0
+    for result in rv:
+        if min > result[0]:
+            min = result[0]
+        if max < result[0]:
+            max = result[0]
+    gap = (max - min)/10
+    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    for result in rv:
+        if min <= result[0] and result[0] <= min+gap:
+            int0 = int0 + 1
+        elif result[0] > min+gap and result[0] <= min+gap*2:
+            int1 = int1+1
+        elif result[0] > min+gap*2 and result[0] <= min+gap*3:
+            int2 = int2 + 1
+        elif result[0] > min+gap*3 and result[0] <= min+gap*4:
+            int3 = int3 + 1
+        elif result[0] > min+gap*4 and result[0] <= min+gap*5:
+            int4 = int4 + 1
+        elif result[0] > min+gap*5 and result[0] <= min+gap*6:
+            int5 = int5 + 1
+        elif result[0] > min+gap*6 and result[0] <= min+gap*7:
+            int6 = int6 + 1
+        elif result[0] > min+gap*7 and result[0] <= min+gap*8:
+            int7 = int7 + 1
+        elif result[0] > min+gap*8 and result[0] <= min+gap*9:
+            int8 = int8 + 1
+        elif result[0] > min+gap*9 and result[0] <= max:
+            int9 = int9 + 1
+    listacont = [int0, int1, int2, int3, int4, int5, int6, int7, int8, int9]
+
+    for obj in zip(intervals, listacont):
+        content = {'interval': obj[0], 'totalScore': obj[1]}
+        final.append(content)
+        content = {}
+    return final
+
+def selectWordByFixedIntervals(word, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score FROM dataword WHERE word = %s AND date<=%s")
+            val = (word, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score FROM dataword WHERE word = %s AND date>=%s")
+            val = (word, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score FROM dataword WHERE word = %s")
+            val = (word,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score FROM dataword WHERE word = %s AND date BETWEEN %s AND %s")
+        val = (word, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    int0=0
+    int1=0
+    int2=0
+    int3=0
+    int4=0
+    int5=0
+    int6=0
+    int7=0
+    int8=0
+    int9 = 0
+    intervals = [(0,0.1), (0.1,0.2), (0.2,0.3), (0.3,0.4), (0.4,0.5), (0.5,0.6), (0.6,0.7), (0.7,0.8), (0.8,0.9), (0.9,1)]
+    for result in rv:
+        if 0 <= result[0] and result[0] <= 0.1:
+            int0 = int0 + 1
+        elif result[0] > 0.1 and result[0] <= 0.2:
+            int1 = int1+1
+        elif result[0] > 0.2 and result[0] <= 0.3:
+            int2 = int2 + 1
+        elif result[0] > 0.3 and result[0] <= 0.4:
+            int3 = int3 + 1
+        elif result[0] > 0.4 and result[0] <= 0.5:
+            int4 = int4 + 1
+        elif result[0] > 0.5 and result[0] <= 0.6:
+            int5 = int5 + 1
+        elif result[0] > 0.6 and result[0] <= 0.7:
+            int6 = int6 + 1
+        elif result[0] > 0.7 and result[0] <= 0.8:
+            int7 = int7 + 1
+        elif result[0] > 0.8 and result[0] <= 0.9:
+            int8 = int8 + 1
+        elif result[0] > 0.9 and result[0] <= 1:
+            int9 = int9 + 1
+    listacont = [int0, int1, int2, int3, int4, int5, int6, int7, int8, int9]
+    for obj in zip(intervals, listacont):
+        content = {'interval': obj[0], 'totalScore': obj[1]}
+        final.append(content)
+        content = {}
+    return final
+
+def select_dataUserIg(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, comment, datepost FROM datauserig WHERE user = %s AND datepost<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, comment, datepost FROM datauserig WHERE user = %s AND datepost>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, comment, datepost FROM datauserig WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, comment, datepost FROM datauserig WHERE user = %s AND datepost BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        final.append(content)
+        content = {}
+    return final
+
+def selectDataUserIgByDates(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT AVG(analysis_score), datepost FROM datauserig WHERE user = %s AND datepost<=%s GROUP BY datepost")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT AVG(analysis_score), datepost FROM datauserig WHERE user = %s AND datepost>=%s GROUP BY datepost")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT AVG(analysis_score), datepost FROM datauserig WHERE user = %s GROUP BY datepost")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT AVG(analysis_score), datepost FROM datauserig WHERE user = %s AND datepost BETWEEN %s AND %s GROUP BY datepost")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'analysis_score': result[0], 'date': result[1]}
+        final.append(content)
+        content = {}
+    return final
+
+def selectDataUserIgByIntervals(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score FROM datauserig WHERE user = %s AND datepost<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score FROM datauserig WHERE user = %s AND datepost>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score FROM datauserig WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score FROM datauserig WHERE user = %s AND datepost BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    min = 1
+    max = -1
+    int0=0
+    int1=0
+    int2=0
+    int3=0
+    int4=0
+    int5=0
+    int6=0
+    int7=0
+    int8=0
+    int9 = 0
+    for result in rv:
+        if min > result[0]:
+            min = result[0]
+        if max < result[0]:
+            max = result[0]
+    gap = (max - min)/10
+    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    for result in rv:
+        if min <= result[0] and result[0] <= min+gap:
+            int0 = int0 + 1
+        elif result[0] > min+gap and result[0] <= min+gap*2:
+            int1 = int1+1
+        elif result[0] > min+gap*2 and result[0] <= min+gap*3:
+            int2 = int2 + 1
+        elif result[0] > min+gap*3 and result[0] <= min+gap*4:
+            int3 = int3 + 1
+        elif result[0] > min+gap*4 and result[0] <= min+gap*5:
+            int4 = int4 + 1
+        elif result[0] > min+gap*5 and result[0] <= min+gap*6:
+            int5 = int5 + 1
+        elif result[0] > min+gap*6 and result[0] <= min+gap*7:
+            int6 = int6 + 1
+        elif result[0] > min+gap*7 and result[0] <= min+gap*8:
+            int7 = int7 + 1
+        elif result[0] > min+gap*8 and result[0] <= min+gap*9:
+            int8 = int8 + 1
+        elif result[0] > min+gap*9 and result[0] <= max:
+            int9 = int9 + 1
+    listacont = [int0, int1, int2, int3, int4, int5, int6, int7, int8, int9]
+
+    for obj in zip(intervals, listacont):
+        content = {'interval': obj[0], 'totalScore': obj[1]}
+        final.append(content)
+        content = {}
+    return final
+
+def selectDataUserIgByFixedIntervals(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score FROM datauserig WHERE user = %s AND datepost<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score FROM datauserig WHERE user = %s AND datepost>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score FROM datauserig WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score FROM datauserig WHERE user = %s AND datepost BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    int0=0
+    int1=0
+    int2=0
+    int3=0
+    int4=0
+    int5=0
+    int6=0
+    int7=0
+    int8=0
+    int9 = 0
+    intervals = [(0,0.1), (0.1,0.2), (0.2,0.3), (0.3,0.4), (0.4,0.5), (0.5,0.6), (0.6,0.7), (0.7,0.8), (0.8,0.9), (0.9,1)]
+    for result in rv:
+        if 0 <= result[0] and result[0] <= 0.1:
+            int0 = int0 + 1
+        elif result[0] > 0.1 and result[0] <= 0.2:
+            int1 = int1+1
+        elif result[0] > 0.2 and result[0] <= 0.3:
+            int2 = int2 + 1
+        elif result[0] > 0.3 and result[0] <= 0.4:
+            int3 = int3 + 1
+        elif result[0] > 0.4 and result[0] <= 0.5:
+            int4 = int4 + 1
+        elif result[0] > 0.5 and result[0] <= 0.6:
+            int5 = int5 + 1
+        elif result[0] > 0.6 and result[0] <= 0.7:
+            int6 = int6 + 1
+        elif result[0] > 0.7 and result[0] <= 0.8:
+            int7 = int7 + 1
+        elif result[0] > 0.8 and result[0] <= 0.9:
+            int8 = int8 + 1
+        elif result[0] > 0.9 and result[0] <= 1:
+            int9 = int9 + 1
+    listacont = [int0, int1, int2, int3, int4, int5, int6, int7, int8, int9]
+    for obj in zip(intervals, listacont):
+        content = {'interval': obj[0], 'totalScore': obj[1]}
+        final.append(content)
+        content = {}
+    return final
+
+def select_statistics(id):
+    sql = ("SELECT * FROM statistics WHERE id = %s")
+    val = (id,)
+    mycursor.execute(sql, val)
+    result = mycursor.fetchall()
+    return result

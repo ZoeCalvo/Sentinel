@@ -23,6 +23,11 @@ export class LoginComponent implements OnInit {
 
         var navbar = document.getElementsByTagName('nav')[0];
         navbar.classList.add('navbar-transparent');
+
+        var user = (<HTMLTextAreaElement> (document.getElementById('username'))).value;
+        var passwd = (<HTMLTextAreaElement> (document.getElementById('passwd'))).value;
+        this.checkUser(user, passwd);
+
     }
     ngOnDestroy(){
         var body = document.getElementsByTagName('body')[0];
@@ -32,17 +37,20 @@ export class LoginComponent implements OnInit {
         navbar.classList.remove('navbar-transparent');
     }
 
-    add(username: string, passwd: string): void {
+    checkUser(username: string, passwd: string): void {
       username = username.trim();
       passwd = passwd.trim();
       if (!username && !passwd) {
           return;
       }
+
+
       const newLogin: Login = { username, passwd } as Login;
       this.loginService.login(newLogin).subscribe(login => {
         let booleano = login['resultado'];
 
         if (booleano == true){
+          window.location.assign('examples/menu')
           this.alerts.push({
             id: 1,
             type: 'success',
@@ -52,6 +60,7 @@ export class LoginComponent implements OnInit {
           });
 
         } else {
+          document.getElementById('passwd').remove();
           this.alerts.push({
             id: 2,
             type: 'warning',
@@ -60,6 +69,7 @@ export class LoginComponent implements OnInit {
             icon: 'ui-1_bell-53'
           })
         }
+
       });
 
       var body = document.getElementsByTagName('body')[0];

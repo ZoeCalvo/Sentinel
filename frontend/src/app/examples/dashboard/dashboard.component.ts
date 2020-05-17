@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import {ActivatedRoute} from "@angular/router";
 import {GraphsService} from "./graphs.service";
 import {IntervalgraphService} from "./intervalgraph.service";
+import {PiechartService} from "./piechart.service";
 
 
 @Component({
@@ -83,7 +84,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   constructor(private dashboardService: DashboardService, private route: ActivatedRoute,
-              private graphsService: GraphsService, private intervalGraphService: IntervalgraphService) { }
+              private graphsService: GraphsService, private intervalGraphService: IntervalgraphService, private pieChartService: PiechartService) { }
 
   ngOnInit() {
       this.id = this.route.snapshot.paramMap.get('id');
@@ -96,6 +97,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.showAnalysisScoreGraph(this.id, this.since_date, this.until_date, this.is_tw);
       this.sleep(500).then( () => {this.getDataForGraph(this.id, this.since_date, this.until_date, this.is_tw); })
       this.sleep(1000).then( () => {this.getforIntervalGraph(this.id, this.since_date, this.until_date, this.is_tw, this.is_dynamic); })
+      this.sleep(1500).then( () => {this.getforPieChart(this.id, this.since_date, this.until_date, this.is_tw); })
 
 
       this.chartColor = '#FFFFFF';
@@ -589,6 +591,53 @@ export class DashboardComponent implements OnInit, OnDestroy {
               }
             }
           }
+        })
+      }
+    )
+  }
+
+  getforPieChart(id, since_date, until_date, is_tw){
+    this.pieChartService.getPieChartData(id, since_date, until_date, is_tw).subscribe(
+      response => {
+        let ids = response['data'].map(response => response.hashtags);
+        let nmototal = response['data'].map(response => response.numero_filas);
+
+
+        this.canvas = document.getElementById('pieChart');
+        this.ctx = this.canvas.getContext('2d');
+
+        this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+        this.gradientFill.addColorStop(0, 'rgba(239, 158, 239, 1)');
+        this.gradientFill.addColorStop(1, this.hexToRGB('#d782d9', 0.6));
+
+        this.chart = new Chart(this.ctx, {
+            type: 'pie',
+            data: {
+              labels: ids,
+              datasets: [{
+                pointBorderWidth: 2,
+                pointHoverRadius: 4,
+                pointHoverBorderWidth: 1,
+                pointRadius: 4,
+                fill: true,
+                borderWidth: 1,
+                data: nmototal,
+                borderAlign: 'center',
+                backgroundColor: this.gradientFill,
+                borderColor: '#FFF',
+                pointBorderColor: '#FFF',
+                pointBackgroundColor: '#d782d9'
+              }]
+            },
+            options: {
+              maintainAspectRatio: false,
+              legend: {
+                display: true
+              },
+              animation: {
+                animateScale: true
+              }
+            }
         })
       }
     )

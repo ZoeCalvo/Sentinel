@@ -297,6 +297,32 @@ def selectHashtagsByFixedIntervals(hashtag, since_date, until_date):
 
     return final
 
+def selectHashtagsForPieChart(since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT hashtag, COUNT(*) FROM datahashtags WHERE date<=%s GROUP BY hashtag")
+            val = (until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT hashtag, COUNT(*) FROM datahashtags WHERE date>=%s GROUP BY hashtag")
+            val = (since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT hashtag, COUNT(*) FROM datahashtags GROUP BY hashtag")
+            mycursor.execute(sql)
+    else:
+        sql = ("SELECT hashtag, COUNT(*) FROM datahashtags WHERE date BETWEEN %s AND %s GROUP BY hashtag")
+        val = (since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        content = {'hashtags': result[0], 'numero_filas': result[1]}
+        final.append(content)
+        content = {}
+    return final
+
 def select_dataUserTw(user, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':

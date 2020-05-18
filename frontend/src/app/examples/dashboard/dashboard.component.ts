@@ -623,10 +623,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 borderWidth: 1,
                 data: nmototal,
                 borderAlign: 'center',
-                backgroundColor: this.gradientFill,
+                backgroundColor: [this.gradientFill, '#c7c7c7'],
                 borderColor: '#FFF',
                 pointBorderColor: '#FFF',
-                pointBackgroundColor: '#d782d9'
+                pointBackgroundColor: '#d782d9',
+                hoverBackgroundColor: ['#c875c9', '#b0b0b0']
               }]
             },
             options: {

@@ -159,7 +159,7 @@ def getDataForIntervalGraph():
 def getDataForPieChart():
     if request.args.get('is_tw') == 'true':
         if request.args.get('id')[0] == '#':
-            analysis_score = selectHashtagsForPieChart(request.args.get('since_date'),
+            analysis_score = selectHashtagsForPieChart(request.args.get('id'), request.args.get('since_date'),
                                                            request.args.get('until_date'))
 
 

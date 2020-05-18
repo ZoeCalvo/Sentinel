@@ -599,7 +599,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getforPieChart(id, since_date, until_date, is_tw){
     this.pieChartService.getPieChartData(id, since_date, until_date, is_tw).subscribe(
       response => {
-        let ids = response['data'].map(response => response.hashtags);
+        let ids = response['data'].map(response => response.id);
         let nmototal = response['data'].map(response => response.numero_filas);
 
 

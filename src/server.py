@@ -155,6 +155,24 @@ def getDataForIntervalGraph():
 
     return jsonify({'data':analysis_score})
 
+@app.route('/pieChart', methods=['GET'])
+def getDataForPieChart():
+    if request.args.get('is_tw') == 'true':
+        if request.args.get('id')[0] == '#':
+            analysis_score = selectHashtagsForPieChart(request.args.get('id'), request.args.get('since_date'),
+                                                           request.args.get('until_date'))
+        elif request.args.get('id')[0] == '@':
+            analysis_score = selectUserTwForPieChart(request.args.get('id'), request.args.get('since_date'),
+                                                      request.args.get('until_date'))
+        else:
+            analysis_score = selectWordForPieChart(request.args.get('id'), request.args.get('since_date'),
+                                                    request.args.get('until_date'))
+    else:
+        analysis_score = selectDataUserIgForPieChart(request.args.get('id'), request.args.get('since_date'),
+                                                 request.args.get('until_date'))
+
+    return jsonify({'data':analysis_score})
+
 if __name__ == '__main__':
     app.run()
 

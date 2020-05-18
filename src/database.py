@@ -297,6 +297,44 @@ def selectHashtagsByFixedIntervals(hashtag, since_date, until_date):
 
     return final
 
+def selectHashtagsForPieChart(hashtag, since_date, until_date):
+    mycursor.execute("SELECT count(*) FROM datahashtags");
+    for r in mycursor.fetchall():
+        nmofilas = r[0]
+
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT hashtag, COUNT(*) FROM datahashtags WHERE hashtag=%s AND date<=%s GROUP BY hashtag")
+            val = (hashtag, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT hashtag, COUNT(*) FROM datahashtags WHERE hashtag=%s AND date>=%s GROUP BY hashtag")
+            val = (hashtag, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT hashtag, COUNT(*) FROM datahashtags WHERE hashtag=%s GROUP BY hashtag")
+            val = (hashtag,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT hashtag, COUNT(*) FROM datahashtags WHERE hashtag=%s AND date BETWEEN %s AND %s GROUP BY hashtag")
+        val = (hashtag, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        nmofilas_id = result[1]
+
+    percentage = nmofilas_id/nmofilas
+
+    for result in rv:
+        content = {'id': result[0], 'numero_filas': percentage}
+        final.append(content)
+        content = {}
+    content = {'id': 'others', 'numero_filas': 1-percentage}
+    final.append(content)
+    return final
+
 def select_dataUserTw(user, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':
@@ -478,6 +516,44 @@ def selectUserTwByFixedIntervals(user, since_date, until_date):
         content = {'interval': obj[0], 'totalScore': obj[1]}
         final.append(content)
         content = {}
+    return final
+
+def selectUserTwForPieChart(user, since_date, until_date):
+    mycursor.execute("SELECT count(*) FROM datausertw");
+    for r in mycursor.fetchall():
+        nmofilas = r[0]
+
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT user, COUNT(*) FROM datausertw WHERE user=%s AND date<=%s GROUP BY user")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT user, COUNT(*) FROM datausertw WHERE user=%s AND date>=%s GROUP BY user")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT user, COUNT(*) FROM datausertw WHERE user=%s GROUP BY user")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT user, COUNT(*) FROM datausertw WHERE user=%s AND date BETWEEN %s AND %s GROUP BY user")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        nmofilas_id = result[1]
+
+    percentage = nmofilas_id/nmofilas
+
+    for result in rv:
+        content = {'id': result[0], 'numero_filas': percentage}
+        final.append(content)
+        content = {}
+    content = {'id': 'others', 'numero_filas': 1-percentage}
+    final.append(content)
     return final
 
 def select_dataWord(word, since_date, until_date):
@@ -663,6 +739,44 @@ def selectWordByFixedIntervals(word, since_date, until_date):
         content = {}
     return final
 
+def selectWordForPieChart(word, since_date, until_date):
+    mycursor.execute("SELECT count(*) FROM dataword");
+    for r in mycursor.fetchall():
+        nmofilas = r[0]
+
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT word, COUNT(*) FROM dataword WHERE word=%s AND date<=%s GROUP BY word")
+            val = (word, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT word, COUNT(*) FROM dataword WHERE word=%s AND date>=%s GROUP BY word")
+            val = (word, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT word, COUNT(*) FROM dataword WHERE word=%s GROUP BY word")
+            val = (word,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT word, COUNT(*) FROM dataword WHERE word=%s AND date BETWEEN %s AND %s GROUP BY word")
+        val = (word, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        nmofilas_id = result[1]
+
+    percentage = nmofilas_id/nmofilas
+
+    for result in rv:
+        content = {'id': result[0], 'numero_filas': percentage}
+        final.append(content)
+        content = {}
+    content = {'id': 'others', 'numero_filas': 1-percentage}
+    final.append(content)
+    return final
+
 def select_dataUserIg(user, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':
@@ -844,6 +958,44 @@ def selectDataUserIgByFixedIntervals(user, since_date, until_date):
         content = {'interval': obj[0], 'totalScore': obj[1]}
         final.append(content)
         content = {}
+    return final
+
+def selectDataUserIgForPieChart(user, since_date, until_date):
+    mycursor.execute("SELECT count(*) FROM datauserig");
+    for r in mycursor.fetchall():
+        nmofilas = r[0]
+
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT user, COUNT(*) FROM datauserig WHERE user=%s AND date<=%s GROUP BY user")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT user, COUNT(*) FROM datauserig WHERE user=%s AND date>=%s GROUP BY user")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT user, COUNT(*) FROM datauserig WHERE user=%s GROUP BY user")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT user, COUNT(*) FROM datauserig WHERE user=%s AND date BETWEEN %s AND %s GROUP BY user")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for result in rv:
+        nmofilas_id = result[1]
+
+    percentage = nmofilas_id/nmofilas
+
+    for result in rv:
+        content = {'id': result[0], 'numero_filas': percentage}
+        final.append(content)
+        content = {}
+    content = {'id': 'others', 'numero_filas': 1-percentage}
+    final.append(content)
     return final
 
 def select_statistics(id):

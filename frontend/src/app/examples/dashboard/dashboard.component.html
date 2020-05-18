@@ -94,6 +94,20 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h4 class="card-title">Sentinel trends</h4>
+          <div class="card-body">
+            <div class="chart-area">
+              <div *ngIf="chart">
+                <canvas  id="pieChart">{{chart}}</canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">

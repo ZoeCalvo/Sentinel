@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-twitter',
@@ -9,6 +10,8 @@ export class TwitterComponent implements OnInit {
   focus;
   focus1;
   is_tw: boolean;
+  model: NgbDateStruct;
+  model1: NgbDateStruct;
   constructor() { }
 
   ngOnInit() {

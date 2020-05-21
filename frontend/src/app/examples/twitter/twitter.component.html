@@ -1,41 +1,4 @@
-<!--<div class="page-header" filter-color="blue">-->
-<!--    <div class="page-header-image" style="background-image:url(assets/img/login.jpg)"></div>-->
-<!--    <div class="container">-->
-<!--        <div class="col-md-4 content-center">-->
-<!--            <div class="card card-login card-plain">-->
-<!--                <form class="form" method="" action="">-->
-<!--                    <div class="content">-->
 
-<!--                      <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">-->
-<!--                        <div class="input-group-prepend">-->
-<!--                            <span class="input-group-text">  <i class="now-ui-icons users_single-02"></i></span>-->
-<!--                        </div>-->
-<!--                          <input #id type="text" class="form-control" placeholder="Id..." (focus)="focus=true" (blur)="focus=false" >-->
-<!--                      </div>-->
-
-<!--                      <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">-->
-<!--                        <div class="input-group-prepend">-->
-<!--                            <span class="input-group-text">  <i class="now-ui-icons users_single-02"></i></span>-->
-<!--                        </div>-->
-<!--                          <input #since_date type="text" class="form-control" placeholder="Since date..." (focus)="focus=true" (blur)="focus=false" >-->
-<!--                      </div>-->
-
-<!--                      <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">-->
-<!--                        <div class="input-group-prepend">-->
-<!--                            <span class="input-group-text"><i class="now-ui-icons text_caps-small"></i></span>-->
-<!--                        </div>-->
-<!--                          <input #until_date type="text" placeholder="Until date..." class="form-control" (focus)="focus1=true" (blur)="focus1=false"/>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                    <div class="footer text-center">-->
-<!--                        <a [routerLink]="['/examples/dashboard', id.value, since_date.value, until_date.value, is_tw]" class="btn btn-primary btn-round btn-lg btn-block" (click)="ngOnInit(); id.value=''; since_date.value='';-->
-<!--      until_date.value=''">Analizar</a>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 <style>
   div { text-align: center;}
 </style>
@@ -48,47 +11,41 @@
   <br>
   <div class="title"><h1>Análisis en twitter</h1></div>
   <div class="content-center">
-<!--  <div class="section section-javascript" id="javascriptComponents">-->
 
-<!--  <div align="center"><h2>Análisis en twitter</h2></div>-->
     <div class="container">
+      <div class="row">
+        <div class="col-md-7">
 
-      <div class="col-md-6">
-<!--        <div class="row">-->
           <div class="form-group" [ngClass]="{'input-group-focus':focus===true}">
             <input #id type="text" class="form-control" placeholder="Id..." (focus)="focus=true" (blur)="focus=false" >
           </div>
-<!--        </div>-->
+        </div>
       </div>
 
-        <div class="col-md-10">
-          <div class="row">
-              <div class="col-md-7">
-                  <div class="datepicker-container">
-                      <div class="form-group">
-                        <input #since_date class="form-control datetimepicker" placeholder="06/07/2017"
-                             name="dp1" [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()" data-color="orange">
-                      </div>
-                  </div>
-                <div class="datepicker-container">
-                      <div class="form-group">
-                        <input #until_date class="form-control datetimepicker" placeholder="06/07/2017"
-                             name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" data-color="orange">
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="footer text-justify">
-            <div class="col-md-6">
-    <!--          <div class="row">-->
-              <a [routerLink]="['/examples/dashboard', id.value, since_date.value, until_date.value, is_tw]" class="btn btn-primary btn-round  btn-block" (click)="ngOnInit(); id.value=''; since_date.value='';
-              until_date.value=''">Analizar</a>
-    <!--            </div>-->
+      <div class="row">
+          <div class="col-md-7">
+            <div class="datepicker-container">
+              <div class="form-group">
+                <input #since_date class="form-control datetimepicker" placeholder="Desde..."
+                     name="dp1" [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()" data-color="orange">
               </div>
             </div>
+            <div class="datepicker-container">
+              <div class="form-group">
+                <input #until_date class="form-control datetimepicker" placeholder="Hasta..."
+                     name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" data-color="orange">
+              </div>
+            </div>
+          </div>
       </div>
-
-</div>
+      <div class="col-md-12">
+          <div class="footer text-center">
+            <div class="col-md-6">
+              <a [routerLink]="['/examples/dashboard', id.value, since_date.value, until_date.value, is_tw]" class="btn btn-primary btn-round btn-block " (click)="ngOnInit(); id.value=''; since_date.value='';
+              until_date.value=''">Analizar</a>
+            </div>
+          </div>
+      </div>
+    </div>
   </div>
-
 </div>

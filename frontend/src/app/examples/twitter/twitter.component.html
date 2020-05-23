@@ -17,7 +17,7 @@
         <div class="col-md-7">
 
           <div class="form-group" [ngClass]="{'input-group-focus':focus===true}">
-            <input #id type="text" class="form-control" placeholder="Id..." (focus)="focus=true" (blur)="focus=false" >
+            <input id="id" type="text" class="form-control" placeholder="Id..." (focus)="focus=true" (blur)="focus=false" >
           </div>
         </div>
       </div>
@@ -26,13 +26,13 @@
           <div class="col-md-7">
             <div class="datepicker-container">
               <div class="form-group">
-                <input #since_date class="form-control datetimepicker" placeholder="Desde..."
+                <input id="since_date" class="form-control datetimepicker" placeholder="Desde..."
                      name="dp1" [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()" data-color="orange">
               </div>
             </div>
             <div class="datepicker-container">
               <div class="form-group">
-                <input #until_date class="form-control datetimepicker" placeholder="Hasta..."
+                <input id="until_date" class="form-control datetimepicker" placeholder="Hasta..."
                      name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" data-color="orange">
               </div>
             </div>
@@ -41,9 +41,9 @@
       <div class="col-md-12">
           <div class="footer text-center">
             <div class="col-md-6">
-              <a [routerLink]="['/examples/dashboard', id.value, since_date.value, until_date.value, is_tw]" class="btn btn-primary btn-round btn-block " (click)="ngOnInit(); id.value=''; since_date.value='';
-              until_date.value=''">Analizar</a>
+              <button class="btn btn-primary btn-round btn-block " (click)="ngOnInit();">Analizar</button>
             </div>
+
           </div>
       </div>
     </div>

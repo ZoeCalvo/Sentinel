@@ -105,6 +105,31 @@ def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
 
     return 'OK'
 
+def checkIdinDBTw(id):
+    if id[0] == '#':
+        mycursor.execute("SELECT hashtag FROM datahashtags");
+        result = mycursor.fetchall()
+        id_register = False
+        for r in result:
+            if (id == r[0]):
+                id_register = True
+    elif id[0] == '@':
+        mycursor.execute("SELECT user FROM datausertw");
+        result = mycursor.fetchall()
+        id_register = False
+        for r in result:
+            if (id == r[0]):
+                id_register = True
+    else:
+        mycursor.execute("SELECT word FROM dataword");
+        result = mycursor.fetchall()
+        id_register = False
+        for r in result:
+            if (id == r[0]):
+                id_register = True
+
+    return id_register
+
 def select_dataHashtags(hashtag, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':

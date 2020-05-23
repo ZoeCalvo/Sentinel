@@ -87,6 +87,10 @@ def init_ig():
 #     #     results_analysis_json = json.dumps(analysis_score_word)
 #     #     return jsonify({'results_analysis': results_analysis_json})
 
+@app.route('/twitter', methods=['GET'])
+def checkIdInDBTw():
+    result = checkIdinDBTw(request.args.get('id'))
+    return jsonify({'id': result})
 
 @app.route('/getDataforDashboard', methods=['GET'])
 def getDataforDashboard():

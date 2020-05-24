@@ -96,8 +96,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (!this.id) { return ; }
       this.showAnalysisScoreGraph(this.id, this.since_date, this.until_date, this.is_tw);
       this.sleep(500).then( () => {this.getDataForGraph(this.id, this.since_date, this.until_date, this.is_tw); })
-      this.sleep(1000).then( () => {this.getforIntervalGraph(this.id, this.since_date, this.until_date, this.is_tw, this.is_dynamic); })
-      this.sleep(1500).then( () => {this.getforPieChart(this.id, this.since_date, this.until_date, this.is_tw); })
+      this.sleep(1500).then( () => {this.getforIntervalGraph(this.id, this.since_date, this.until_date, this.is_tw, this.is_dynamic); })
+      this.sleep(2000).then( () => {this.getforPieChart(this.id, this.since_date, this.until_date, this.is_tw); })
 
 
       this.chartColor = '#FFFFFF';

@@ -54,7 +54,7 @@ def searchHashtag(hashtag, since_date=None, until_date=None):
 
 def searchUser(user, since_date=None, until_date=None):
     analysis_score = []
-    for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items(20):
+    for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items(10):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
@@ -65,7 +65,7 @@ def searchUser(user, since_date=None, until_date=None):
 
 def searchWord(word, since_date=None, until_date=None):
     analysis_score = []
-    for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items(20):
+    for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items(10):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)

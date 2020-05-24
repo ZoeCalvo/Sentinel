@@ -87,10 +87,21 @@ def init_ig():
 #     #     results_analysis_json = json.dumps(analysis_score_word)
 #     #     return jsonify({'results_analysis': results_analysis_json})
 
-@app.route('/twitter', methods=['GET'])
+@app.route('/idTwitterInDB', methods=['GET'])
 def checkIdInDBTw():
     result = checkIdinDBTw(request.args.get('id'))
     return jsonify({'id': result})
+
+@app.route('/searchTwitter', methods=['GET'])
+def searchIdTw():
+    if request.args.get('id')[0] == '#':
+        searchHashtag(request.args.get('id'))
+    elif request.args.get('id')[0] == '@':
+        searchUser(request.args.get('id'))
+    else:
+        searchWord(request.args.get('id'))
+
+    return jsonify({'ok': True})
 
 @app.route('/getDataforDashboard', methods=['GET'])
 def getDataforDashboard():

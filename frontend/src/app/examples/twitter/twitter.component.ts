@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {NgbDateStruct, NgbModal, ModalDismissReasons} from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {TwitterService} from "./twitter.service";
 import {Router} from "@angular/router";
+import {IAlert} from "../../components/notification/notification.component";
 
 
 @Component({
@@ -9,14 +10,15 @@ import {Router} from "@angular/router";
   templateUrl: './twitter.component.html',
   styleUrls: ['./twitter.component.scss']
 })
-export class TwitterComponent implements OnInit {
+export class TwitterComponent implements OnInit{
   focus;
   focus1;
   is_tw: boolean;
   model: NgbDateStruct;
   model1: NgbDateStruct;
-  constructor(private twitterService: TwitterService, private router: Router) { }
+  public alerts: Array<IAlert> = [];
 
+  constructor(private twitterService: TwitterService, private router: Router) {  }
 
   ngOnInit() {
     this.is_tw = true;
@@ -25,14 +27,9 @@ export class TwitterComponent implements OnInit {
 
     var navbar = document.getElementsByTagName('nav')[0];
     navbar.classList.add('navbar-transparent');
-    var id = (<HTMLTextAreaElement> (document.getElementById('id'))).value;
-    var since_date = (<HTMLTextAreaElement> (document.getElementById('since_date'))).value;
-    var until_date = (<HTMLTextAreaElement> (document.getElementById('until_date'))).value;
-    this.checkId(id, since_date, until_date);
-
   }
 
-  checkId(id: string, since_date, until_date): boolean {
+  checkId(id: string, since_date, until_date) {
     id = id.trim()
     if (!id) {
       return ;
@@ -43,8 +40,31 @@ export class TwitterComponent implements OnInit {
 
       if (booleano == true) {
         this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
+      } else {
+        this.alerts.push({
+          id: 1,
+          type: 'info',
+          message: 'El id no se encuentra en la base de datos.\n Esta acción puede tardar varios minutos.',
+          icon: 'travel_info'
+        })
+
+        this.searchIdInTwitter(id, since_date, until_date);
+
       }
       })
 
   }
+
+  searchIdInTwitter(id: string, since_date, until_date) {
+    this.twitterService.searchIdInApi(id).subscribe(response => {
+      this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
+    });
+
+  }
+
+  public closeAlert(alert: IAlert) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
+  }
+
 }

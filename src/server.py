@@ -49,44 +49,34 @@ def init_ig():
 
     return jsonify({'userID' : userId_json, 'results_analysis' : results_analysis_json})
 
-# @app.route('/twitter', methods=['POST'])
-# def init_tw():
-#     is_tw = True
-#     # print(request.json)
-#
-#
-#     # intermediate(request.json.get('id'), is_tw)
-#     return jsonify('ok')
-#
-#
-#     # option = input("Introduce el número de la opción deseada: ")
-#     #
-#     # if option == "1":
-#     #     hashtag = input("Introduzca el hashtag con #: ")
-#     #     since_date = input("Introduce la fecha de comienzo de búsqueda: ")
-#     #     until_date = input("Introduce la fecha de fin de búsqueda: ")
-#     #     analysis_score_hashtag = searchHashtag(hashtag, since_date, until_date)
-#     #     results_analysis_json = json.dumps(analysis_score_hashtag)
-#     #
-#     #     return jsonify({'results_analysis' : results_analysis_json})
-#     #
-#     # if option == "2":
-#     #     user = input("Introduzca el nombre del usuario con @: ")
-#     #     since_date = input("Introduce la fecha de comienzo de búsqueda: ")
-#     #     until_date = input("Introduce la fecha de fin de búsqueda: ")
-#     #     analysis_score_user =  searchUser(user, since_date, until_date)
-#     #     results_analysis_json = json.dumps(analysis_score_user)
-#     #
-#     #     return jsonify({'results_analysis' : results_analysis_json})
-#     #
-#     # if option == "3":
-#     #     word = input("Introduce la palabra: ")
-#     #     since_date = input("Introduce la fecha de comienzo de búsqueda: ")
-#     #     until_date = input("Introduce la fecha de fin de búsqueda: ")
-#     #     analysis_score_word = searchWord(word, since_date, until_date)
-#     #     results_analysis_json = json.dumps(analysis_score_word)
-#     #     return jsonify({'results_analysis': results_analysis_json})
 
+@app.route('/idTwitterInDB', methods=['GET'])
+def checkIdInDBTw():
+    result = checkIdinDBTw(request.args.get('id'))
+    return jsonify({'id': result})
+
+@app.route('/searchTwitter', methods=['GET'])
+def searchIdTw():
+    if request.args.get('id')[0] == '#':
+        searchHashtag(request.args.get('id'))
+    elif request.args.get('id')[0] == '@':
+        searchUser(request.args.get('id'))
+    else:
+        searchWord(request.args.get('id'))
+
+    return jsonify({'ok': True})
+
+@app.route('/idInstagramInDB', methods=['GET'])
+def checkIdInDBIg():
+    result = checkIdInDBIG(request.args.get('id'))
+    return jsonify({'id': result})
+
+@app.route('/searchInstagram', methods=['GET'])
+def searchIdIg():
+    api_ig = main()
+    userId = search_users(api_ig, request.args.get('id'))
+    getMediaData(api_ig, userId, request.args.get('id'))
+    return jsonify({'ok': True})
 
 @app.route('/getDataforDashboard', methods=['GET'])
 def getDataforDashboard():

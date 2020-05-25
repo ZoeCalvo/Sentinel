@@ -73,7 +73,7 @@ def getMediaData(api, userId, username):
 
 
             if datePost > until_date:
-                list_results_analysis.append(getComments(idPost, datePost, username))
+                list_results_analysis.append(getComments(api, idPost, datePost, username))
 
 
             else:
@@ -134,16 +134,16 @@ def sentiment_analysis(comment):
     comment = html.unescape(comment)
 
     if not comment == '""':
-        if translator.detect(comment) == 'en':
-            score = TextBlob(comment).sentiment.polarity
-        elif translator.detect(comment) == 'es':
+        # if translator.detect(comment) == 'en':
+        #     score = TextBlob(comment).sentiment.polarity
+        # elif translator.detect(comment) == 'es':
             # Primera opción utilizar la librería en español
-            score = clf.predict(comment)
+        score = clf.predict(comment)
             # Segunda opción, traducir y utilizar librería en inglés
             # translate = translator.translate(comment, 'en')
             # score = TextBlob(translate["text"][0]).sentiment.polarity
-        else:
-            score = TextBlob(comment).sentiment
+        # else:
+        #     score = TextBlob(comment).sentiment
         return score
     else:
         return None

@@ -130,6 +130,16 @@ def checkIdinDBTw(id):
 
     return id_register
 
+def checkIdInDBIG(id):
+    mycursor.execute("SELECT user FROM datauserig");
+    result = mycursor.fetchall()
+    id_register = False
+    for r in result:
+        if (id == r[0]):
+            id_register = True
+
+    return id_register
+
 def select_dataHashtags(hashtag, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':

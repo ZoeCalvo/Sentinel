@@ -14,6 +14,7 @@ import {TableListComponent} from './examples/table-list/table-list.component';
 import {MenuComponent} from "./examples/menu/menu.component";
 import {TwitterComponent} from "./examples/twitter/twitter.component";
 import {InstagramComponent} from "./examples/instagram/instagram.component";
+import {InformationComponent} from "./examples/information/information.component";
 
 const routes: Routes =[
     { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -27,7 +28,8 @@ const routes: Routes =[
     { path: 'examples/table-list',  component: TableListComponent},
     { path: 'examples/menu',        component: MenuComponent},
     { path: 'examples/twitter',     component: TwitterComponent},
-    { path: 'examples/instagram',   component: InstagramComponent}
+    { path: 'examples/instagram',   component: InstagramComponent},
+    { path: 'examples/information', component: InformationComponent}
 ];
 
 @NgModule({

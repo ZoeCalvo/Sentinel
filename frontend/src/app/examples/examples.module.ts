@@ -22,6 +22,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
 import { TwitterComponent } from './twitter/twitter.component';
 import { InstagramComponent } from './instagram/instagram.component';
+import {InformationComponent} from "./information/information.component";
 
 @NgModule({
     imports: [
@@ -51,7 +52,8 @@ import { InstagramComponent } from './instagram/instagram.component';
         TableListComponent,
         MenuComponent,
         TwitterComponent,
-        InstagramComponent
+        InstagramComponent,
+        InformationComponent
     ],
   providers: [DashboardService]
 })

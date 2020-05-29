@@ -39,13 +39,25 @@ def get_user(data):
 
 
 def insert_dataHashtags(hashtag, data, text, score, list_scores):
-    analysis_score = _float64_to_mysql(score)
-    sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
     date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
-    val = (hashtag, text, date, analysis_score)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    insert_statistics(hashtag, list_scores)
+    sql = ("SELECT date FROM datahashtags WHERE hashtag = %s")
+    value = (hashtag,)
+    mycursor.execute(sql, value)
+    result = mycursor.fetchall();
+    last_date = '2020-01-01'
+    for d in result:
+        if last_date < d[0]:
+            last_date = d[0]
+
+    if date > last_date:
+        analysis_score = _float64_to_mysql(score)
+        sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
+
+        val = (hashtag, text, date, analysis_score)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        insert_statistics(hashtag, list_scores)
+
     return 'OK'
 
 

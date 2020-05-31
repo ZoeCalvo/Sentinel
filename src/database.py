@@ -156,13 +156,31 @@ def insert_statistics(id, analysis_score):
     return 'OK'
 
 def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
-    analysis_score = _float64_to_mysql(analysis_score)
-    datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
-    sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
-    val = (user, post, datepost, comment, analysis_score)
-    mycursor.execute(sql, val)
-    mydb.commit()
+    created_at = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').date()
+    sql = ("SELECT date FROM datauserig WHERE user = %s")
+    value = (user,)
+    mycursor.execute(sql, value)
+    result = mycursor.fetchall()
+    if result != []:
+        last_date = result[0][0]
+        for d in result:
+            if last_date < d[0]:
+                last_date = d[0]
 
+        if created_at > last_date:
+            analysis_score = _float64_to_mysql(analysis_score)
+            datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+            sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
+            val = (user, post, datepost, comment, analysis_score)
+            mycursor.execute(sql, val)
+            mydb.commit()
+    else:
+        analysis_score = _float64_to_mysql(analysis_score)
+        datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+        sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
+        val = (user, post, datepost, comment, analysis_score)
+        mycursor.execute(sql, val)
+        mydb.commit()
     return 'OK'
 
 def checkIdinDBTw(id):

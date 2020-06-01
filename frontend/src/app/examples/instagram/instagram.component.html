@@ -35,6 +35,18 @@
             </div>
           </div>
       </div>
+      <div class="row" id="checkRadios">
+        <div class="col-md-offset-9">
+          <div class="form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox">
+                <span class="form-check-sign" (click)= 'this.onItemSelect(this.update_db=true)'></span>
+                <span class="form-check-sign" *ngIf="this.update_db==true" (click)="OnItemDeSelect(this.update_db=false)"></span>
+                Actualizar base de datos
+            </label>
+          </div>
+        </div>
+      </div>
       <div class="col-md-12">
           <div class="footer text-center">
             <div class="col-md-6">

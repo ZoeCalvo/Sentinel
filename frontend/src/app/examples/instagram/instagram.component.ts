@@ -12,7 +12,8 @@ import {Router} from "@angular/router";
 export class InstagramComponent implements OnInit {
   focus;
   focus1;
-  is_tw;
+  is_tw: boolean;
+  update_db: boolean;
   model: NgbDateStruct;
   model1: NgbDateStruct;
   public alerts: Array<IAlert> = [];
@@ -38,7 +39,17 @@ export class InstagramComponent implements OnInit {
       let booleano = idInDB['id'];
 
       if (booleano == true) {
-        this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
+        if (this.update_db == true) {
+          this.alerts.push({
+            id: 1,
+            type: 'info',
+            message: 'Esta acción puede tardar varios minutos.',
+            icon: 'travel_info'
+          })
+          this.searchIdInInstagram(id, since_date, until_date);
+        } else {
+          this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
+        }
       } else {
         this.alerts.push({
           id: 1,
@@ -47,14 +58,14 @@ export class InstagramComponent implements OnInit {
           icon: 'travel_info'
         })
 
-        this.searchIdInTwitter(id, since_date, until_date);
+        this.searchIdInInstagram(id, since_date, until_date);
 
       }
       })
 
   }
 
-  searchIdInTwitter(id: string, since_date, until_date) {
+  searchIdInInstagram(id: string, since_date, until_date) {
     this.instagramService.searchIdInApi(id).subscribe(response => {
       this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
     });
@@ -66,4 +77,11 @@ export class InstagramComponent implements OnInit {
     this.alerts.splice(index, 1);
   }
 
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+
+  OnItemDeSelect(item: any) {
+    console.log(item);
+  }
 }

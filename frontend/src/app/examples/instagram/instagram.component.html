@@ -1,0 +1,69 @@
+<style>
+  div { text-align: center;}
+</style>
+<div class="page-header" filter-color="blue">
+  <div class="page-header-image" style="background-image:url(assets/img/login.jpg)"></div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="title"><h1>Análisis en instagram</h1></div>
+  <div class="content-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="form-group" [ngClass]="{'input-group-focus':focus===true}">
+            <input #id type="text" class="form-control" placeholder="Id..." (focus)="focus=true" (blur)="focus=false" >
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-7">
+            <div class="datepicker-container">
+              <div class="form-group">
+                <input #since_date class="form-control datetimepicker" placeholder="Desde..."
+                     name="dp1" [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()" data-color="orange">
+              </div>
+            </div>
+            <div class="datepicker-container">
+              <div class="form-group">
+                <input #until_date class="form-control datetimepicker" placeholder="Hasta..."
+                     name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" data-color="orange">
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-12">
+          <div class="footer text-center">
+            <div class="col-md-6">
+              <button  class="btn btn-primary btn-round btn-block " (click)="checkId(id.value, since_date.value, until_date.value)">Analizar</button>
+            </div>
+          </div>
+         <div *ngFor="let alert of alerts">
+          <ngb-alert [type]="alert.type"  [dismissible]="false" >
+              <div class="container">
+                  <div class="alert-wrapper">
+                      <button type="button" name="button" class="close" (click)="closeAlert(alert)">
+                        <span aria-hidden="true">
+                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                        </span>
+                      </button>
+                      <div class="message">
+                          <ng-container *ngIf="alert.icon">
+                            <div class="alert-icon">
+                                <i class="now-ui-icons {{alert.icon}}"></i>
+                            </div>
+                          </ng-container>
+                          <strong>{{alert.strong}} </strong>{{ alert.message }}
+                      </div>
+                  </div>
+              </div>
+          </ngb-alert>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

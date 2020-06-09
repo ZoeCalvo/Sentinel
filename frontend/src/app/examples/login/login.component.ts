@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
           });
 
         } else {
-          document.getElementById('passwd').remove();
+          
           this.alerts.push({
             id: 2,
             type: 'warning',

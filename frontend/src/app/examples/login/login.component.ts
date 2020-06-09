@@ -54,18 +54,18 @@ export class LoginComponent implements OnInit {
           this.alerts.push({
             id: 1,
             type: 'success',
-            strong: 'Welcome back',
+            strong: 'Bienvenido',
             message: username,
             icon: 'ui-2_like'
           });
 
         } else {
-          
+
           this.alerts.push({
             id: 2,
             type: 'warning',
             strong: 'Warning!',
-            message: 'The username or password is not correct',
+            message: 'El usuario o la contraseña no son correctos',
             icon: 'ui-1_bell-53'
           })
         }

@@ -314,7 +314,7 @@ def selectHashtagsByIntervals(hashtag, since_date, until_date):
 
     gap = (max - min)/10
 
-    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    intervals = [(round(min,2), round(min+gap,2)), (round(min+gap,2), round(min+gap*2,2)), (round(min+gap*2,2), round(min+gap*3,2)), (round(min+gap*3,2), round(min+gap*4,2)), (round(min+gap*4,2), round(min+gap*5,2)), (round(min+gap*5,2), round(min+gap*6,2)), (round(min+gap*6,2), round(min+gap*7,2)), (round(min+gap*7,2), round(min+gap*8,2)), (round(min+gap*8,2), round(min+gap*9,2)), (round(min+gap*9,2), round(max,2))]
     for result in rv:
         if min <= result[0] and result[0] <= min+gap:
             int0 = int0 + 1

@@ -81,7 +81,7 @@ def getMediaData(api, userId, username):
 
 
         results = reconvert_results_ig(list_results_analysis)
-        insert_statistics(username, results)
+        insert_statistics(username, results, True)
 
     except:
         pass

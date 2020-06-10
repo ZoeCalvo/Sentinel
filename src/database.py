@@ -132,7 +132,7 @@ def insert_dataWord(word, data, text, score, list_score):
     return 'OK'
 
 
-def insert_statistics(id, analysis_score):
+def insert_statistics(id, analysis_score, ig=False):
     mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
     mean = _float64_to_mysql(mean)
     median = _float64_to_mysql(median)
@@ -144,8 +144,25 @@ def insert_statistics(id, analysis_score):
     mycursor.execute(sql, val)
     r = mycursor.fetchall()
     if r == []:
-        sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation) VALUES (%s, %s, %s, %s, %s, %s)")
-        val = (id, mean, median, mode, variance, typical_deviation)
+        if ig==False:
+            print('holi')
+            if id[0]=='#':
+                print('holi2')
+                sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, hashtag)"
+                       " VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                val = (id, mean, median, mode, variance, typical_deviation, id)
+            elif id[0]=='@':
+                sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, usertw) "
+                       "VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                val = (id, mean, median, mode, variance, typical_deviation, id)
+            else:
+                sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, word)"
+                       " VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                val = (id, mean, median, mode, variance, typical_deviation, id)
+        else:
+            sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, userig)"
+                   " VALUES (%s, %s, %s, %s, %s, %s, %s)")
+            val = (id, mean, median, mode, variance, typical_deviation, id)
         mycursor.execute(sql, val)
     else:
         sql = ("UPDATE statistics SET mean=%s, median=%s, mode=%s, variance=%s, typical_deviation=%s WHERE idstatistics = %s")
@@ -157,7 +174,7 @@ def insert_statistics(id, analysis_score):
 
 def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
     created_at = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').date()
-    sql = ("SELECT date FROM datauserig WHERE user = %s")
+    sql = ("SELECT datepost FROM datauserig WHERE user = %s")
     value = (user,)
     mycursor.execute(sql, value)
     result = mycursor.fetchall()

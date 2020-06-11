@@ -132,7 +132,7 @@ def insert_dataWord(word, data, text, score, list_score):
     return 'OK'
 
 
-def insert_statistics(id, analysis_score):
+def insert_statistics(id, analysis_score, ig=False):
     mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
     mean = _float64_to_mysql(mean)
     median = _float64_to_mysql(median)
@@ -144,8 +144,25 @@ def insert_statistics(id, analysis_score):
     mycursor.execute(sql, val)
     r = mycursor.fetchall()
     if r == []:
-        sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation) VALUES (%s, %s, %s, %s, %s, %s)")
-        val = (id, mean, median, mode, variance, typical_deviation)
+        if ig==False:
+            print('holi')
+            if id[0]=='#':
+                print('holi2')
+                sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, hashtag)"
+                       " VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                val = (id, mean, median, mode, variance, typical_deviation, id)
+            elif id[0]=='@':
+                sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, usertw) "
+                       "VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                val = (id, mean, median, mode, variance, typical_deviation, id)
+            else:
+                sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, word)"
+                       " VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                val = (id, mean, median, mode, variance, typical_deviation, id)
+        else:
+            sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, userig)"
+                   " VALUES (%s, %s, %s, %s, %s, %s, %s)")
+            val = (id, mean, median, mode, variance, typical_deviation, id)
         mycursor.execute(sql, val)
     else:
         sql = ("UPDATE statistics SET mean=%s, median=%s, mode=%s, variance=%s, typical_deviation=%s WHERE idstatistics = %s")
@@ -157,7 +174,7 @@ def insert_statistics(id, analysis_score):
 
 def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
     created_at = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').date()
-    sql = ("SELECT date FROM datauserig WHERE user = %s")
+    sql = ("SELECT datepost FROM datauserig WHERE user = %s")
     value = (user,)
     mycursor.execute(sql, value)
     result = mycursor.fetchall()
@@ -239,6 +256,8 @@ def select_dataHashtags(hashtag, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[2])
+
     for result in rv:
         content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
         final.append(content)
@@ -267,6 +286,7 @@ def selectHashtagsGroupByDates(hashtag, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[1])
     for result in rv:
         content = {'analysis_score': result[0], 'date': result[1]}
         final.append(content)
@@ -314,7 +334,11 @@ def selectHashtagsByIntervals(hashtag, since_date, until_date):
 
     gap = (max - min)/10
 
-    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    intervals = [(round(min, 2), round(min + gap, 2)), (round(min + gap, 2), round(min + gap * 2, 2)),
+                 (round(min + gap * 2, 2), round(min + gap * 3, 2)), (round(min + gap * 3, 2), round(min + gap * 4, 2)),
+                 (round(min + gap * 4, 2), round(min + gap * 5, 2)), (round(min + gap * 5, 2), round(min + gap * 6, 2)),
+                 (round(min + gap * 6, 2), round(min + gap * 7, 2)), (round(min + gap * 7, 2), round(min + gap * 8, 2)),
+                 (round(min + gap * 8, 2), round(min + gap * 9, 2)), (round(min + gap * 9, 2), round(max, 2))]
     for result in rv:
         if min <= result[0] and result[0] <= min+gap:
             int0 = int0 + 1
@@ -469,6 +493,7 @@ def select_dataUserTw(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[2])
     for result in rv:
         content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
         final.append(content)
@@ -496,6 +521,7 @@ def selectUserTwGroupByDates(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[1])
     for result in rv:
         content = {'analysis_score': result[0], 'date': result[1]}
         final.append(content)
@@ -541,7 +567,11 @@ def selectUserTwByIntervals(user, since_date, until_date):
         if max < result[0]:
             max = result[0]
     gap = (max - min)/10
-    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    intervals = [(round(min, 2), round(min + gap, 2)), (round(min + gap, 2), round(min + gap * 2, 2)),
+                 (round(min + gap * 2, 2), round(min + gap * 3, 2)), (round(min + gap * 3, 2), round(min + gap * 4, 2)),
+                 (round(min + gap * 4, 2), round(min + gap * 5, 2)), (round(min + gap * 5, 2), round(min + gap * 6, 2)),
+                 (round(min + gap * 6, 2), round(min + gap * 7, 2)), (round(min + gap * 7, 2), round(min + gap * 8, 2)),
+                 (round(min + gap * 8, 2), round(min + gap * 9, 2)), (round(min + gap * 9, 2), round(max, 2))]
     for result in rv:
         if min <= result[0] and result[0] <= min+gap:
             int0 = int0 + 1
@@ -690,6 +720,7 @@ def select_dataWord(word, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[2])
     for result in rv:
         content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
         final.append(content)
@@ -717,6 +748,7 @@ def selectWordGroupByDates(word, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[1])
     for result in rv:
         content = {'analysis_score': result[0], 'date': result[1]}
         final.append(content)
@@ -762,7 +794,11 @@ def selectWordByIntervals(word, since_date, until_date):
         if max < result[0]:
             max = result[0]
     gap = (max - min)/10
-    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    intervals = [(round(min, 2), round(min + gap, 2)), (round(min + gap, 2), round(min + gap * 2, 2)),
+                 (round(min + gap * 2, 2), round(min + gap * 3, 2)), (round(min + gap * 3, 2), round(min + gap * 4, 2)),
+                 (round(min + gap * 4, 2), round(min + gap * 5, 2)), (round(min + gap * 5, 2), round(min + gap * 6, 2)),
+                 (round(min + gap * 6, 2), round(min + gap * 7, 2)), (round(min + gap * 7, 2), round(min + gap * 8, 2)),
+                 (round(min + gap * 8, 2), round(min + gap * 9, 2)), (round(min + gap * 9, 2), round(max, 2))]
     for result in rv:
         if min <= result[0] and result[0] <= min+gap:
             int0 = int0 + 1
@@ -911,6 +947,7 @@ def select_dataUserIg(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[2])
     for result in rv:
         content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
         final.append(content)
@@ -938,6 +975,7 @@ def selectDataUserIgByDates(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[1])
     for result in rv:
         content = {'analysis_score': result[0], 'date': result[1]}
         final.append(content)
@@ -983,7 +1021,11 @@ def selectDataUserIgByIntervals(user, since_date, until_date):
         if max < result[0]:
             max = result[0]
     gap = (max - min)/10
-    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    intervals = [(round(min, 2), round(min + gap, 2)), (round(min + gap, 2), round(min + gap * 2, 2)),
+                 (round(min + gap * 2, 2), round(min + gap * 3, 2)), (round(min + gap * 3, 2), round(min + gap * 4, 2)),
+                 (round(min + gap * 4, 2), round(min + gap * 5, 2)), (round(min + gap * 5, 2), round(min + gap * 6, 2)),
+                 (round(min + gap * 6, 2), round(min + gap * 7, 2)), (round(min + gap * 7, 2), round(min + gap * 8, 2)),
+                 (round(min + gap * 8, 2), round(min + gap * 9, 2)), (round(min + gap * 9, 2), round(max, 2))]
     for result in rv:
         if min <= result[0] and result[0] <= min+gap:
             int0 = int0 + 1

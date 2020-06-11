@@ -7,14 +7,11 @@ import { JwBootstrapSwitchNg2Module } from 'jw-bootstrap-switch-ng2';
 import { AgmCoreModule } from '@agm/core';
 import { ChartsModule } from 'ng2-charts';
 import { RouterModule } from '@angular/router'
-import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
 import { ExamplesComponent } from './examples.component';
 import { RegisterComponent } from './register/register.component';
 import { ConfigComponent } from './config/config.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { TableListComponent } from './table-list/table-list.component';
 import {DashboardService} from './dashboard/dashboard.service';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from '../app.routing';
@@ -42,14 +39,11 @@ import {InformationComponent} from "./information/information.component";
         RouterModule
     ],
     declarations: [
-        LandingComponent,
         LoginComponent,
         ExamplesComponent,
-        ProfileComponent,
         RegisterComponent,
         ConfigComponent,
         DashboardComponent,
-        TableListComponent,
         MenuComponent,
         TwitterComponent,
         InstagramComponent,

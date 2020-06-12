@@ -6,7 +6,7 @@ import json
 from src.instagram import *
 from src.twitter import *
 from src.database import *
-
+from src.time_series import *
 app = Flask(__name__)
 CORS(app)
 
@@ -162,6 +162,14 @@ def getDataForPieChart():
                                                  request.args.get('until_date'))
 
     return jsonify({'data':analysis_score})
+
+@app.route('/timeSerie', methods=['GET'])
+def getTimeSeries():
+    time_series_analysis = loading_data(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'),
+                                        request.args.get('is_tw'), request.args.get('trend_seasonal'),
+                                        request.args.get('forecast'))
+
+    return jsonify({'data':time_series_analysis})
 
 if __name__ == '__main__':
     app.run()

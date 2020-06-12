@@ -145,9 +145,7 @@ def insert_statistics(id, analysis_score, ig=False):
     r = mycursor.fetchall()
     if r == []:
         if ig==False:
-            print('holi')
             if id[0]=='#':
-                print('holi2')
                 sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, hashtag)"
                        " VALUES (%s, %s, %s, %s, %s, %s, %s)")
                 val = (id, mean, median, mode, variance, typical_deviation, id)
@@ -471,6 +469,31 @@ def selectHashtagsForPieChart(hashtag, since_date, until_date):
     content = {'id': 'others', 'numero_filas': 1-percentage}
     final.append(content)
     return final
+
+def selectHashtagsForTimeSeries(hashtag, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, text, date FROM datahashtags WHERE hashtag = %s AND date<=%s")
+            val = (hashtag, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, text, date FROM datahashtags WHERE hashtag = %s AND date>=%s")
+            val = (hashtag, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, text, date FROM datahashtags WHERE hashtag = %s")
+            val = (hashtag,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, text, date FROM datahashtags WHERE hashtag = %s AND date BETWEEN %s AND %s")
+        val = (hashtag, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    rv.sort(key=lambda r: r[2])
+
+    return rv
 
 def select_dataUserTw(user, since_date, until_date):
     if since_date=='' or until_date=='':
@@ -1159,3 +1182,5 @@ def select_statistics(id):
     mycursor.execute(sql, val)
     result = mycursor.fetchall()
     return result
+
+

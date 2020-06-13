@@ -1,6 +1,9 @@
 <div class="panel-header panel-header-lg" >
   <div class="header text-right">
-  <button class="btn-link">Acceder a las Series Temporales</button></div>
+  <button class="btn-link" (click)="goToTimeSeries(this.id, this.since_date, this.until_date);">
+    Acceder a las Series Temporales
+  </button>
+  </div>
         <div class="card-header">
           <h4 class="card-title" data-background-color="white">Analysis Score</h4>
           <div class="card-body">

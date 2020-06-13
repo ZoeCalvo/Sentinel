@@ -1,0 +1,55 @@
+<div class="panel-header panel-header-lg" >
+  <div class="container">
+    <h5 data-background-color="white">Elija qué serie temporal quiere representar</h5>
+    <div class="col-md-3">
+      <div class="button-dropdown"></div>
+        <div ngbDropdown>
+          <a class="dropdown-toggle" ngbDropdownToggle>
+              <span class="button-bar"></span>
+              <span class="button-bar"></span>
+              <span class="button-bar"></span>
+          </a>
+
+           <div ngbDropdownMenu>
+             <a class="dropdown-header">Series temporales</a>
+             <a class="dropdown-item" (click)="this.typeTimeSerie='simpsmoothing'">
+               Suavizado exponencial
+             </a>
+             <a class="dropdown-item" (click)="this.typeTimeSerie='holt'">
+               Método Holt
+             </a>
+             <a class="dropdown-item" (click)="this.typeTimeSerie='holtwinters'">
+               Método Holt Winters
+             </a>
+           </div>
+        </div>
+    </div>
+    <h5 data-background-color="">¿Qué tipo de esquema prefiere?</h5>
+    <div class="col-md-3">
+        <div ngbDropdown>
+          <a class="dropdown-toggle" ngbDropdownToggle>
+              <span class="button-bar"></span>
+              <span class="button-bar"></span>
+              <span class="button-bar"></span>
+          </a>
+
+           <div ngbDropdownMenu>
+             <a class="dropdown-header">Esquema</a>
+             <a class="dropdown-item" (click)="this.schema = 'add'">Aditivo</a>
+             <a class="dropdown-item" (click)="this.schema = 'mult'">Multiplicativo</a>
+           </div>
+      </div>
+    </div>
+    <h5 data-background-color="white">¿Cuántos valores quiere predecir?</h5>
+    <div class="col-md-3">
+      <div class="form-group">
+            <input #num_periods type="text" class="form-control" placeholder="Num valores...">
+      </div>
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-primary btn-round btn-block " (click)="this.periods = num_periods.value; ngOnInit()">
+          Calcular
+        </button>
+    </div>
+  </div>
+</div>

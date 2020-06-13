@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {TimeSeriesService} from "./time-series.service";
 
 @Component({
   selector: 'app-time-series',
@@ -14,7 +15,7 @@ export class TimeSeriesComponent implements OnInit {
   typeTimeSerie: string;
   schema: string;
   periods;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private timeSerieService: TimeSeriesService ) { }
 
   ngOnInit() {
       this.id = this.route.snapshot.paramMap.get('id');
@@ -37,5 +38,10 @@ export class TimeSeriesComponent implements OnInit {
       console.log(this.typeTimeSerie)
       console.log(this.schema)
       console.log(this.periods)
+      this.timeSerieService.timeSerieChart(this.id, this.since_date, this.until_date, this.is_tw,
+        this.typeTimeSerie, this.schema, this.periods).subscribe(response => {
+          console.log(response);
+      })
+
   }
 }

@@ -166,8 +166,8 @@ def getDataForPieChart():
 @app.route('/timeSerie', methods=['GET'])
 def getTimeSeries():
     time_series_analysis = loading_data(request.args.get('id'), request.args.get('since_date'), request.args.get('until_date'),
-                                        request.args.get('is_tw'), request.args.get('trend_seasonal'),
-                                        request.args.get('forecast'))
+                                        request.args.get('is_tw'),request.args.get('type'), request.args.get('schema'),
+                                        request.args.get('num_periods'))
 
     return jsonify({'data':time_series_analysis})
 

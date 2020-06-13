@@ -8,6 +8,7 @@ from scipy.fftpack import fft
 
 def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seasonal, forecast):
     num_intervalos = 0
+    analysis_score=[]
     content = {}
     list_total = []
     list_indv = []
@@ -19,35 +20,42 @@ def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seaso
 
     for d in data:
         num_intervalos = num_intervalos + 1
+        analysis_score.append(d[0])
         content = {'analysis_score': d[0], 'date': d[1]}
         list_indv.append(content)
         content = {}
 
-    obj_data = jsonify({'data_original':list_indv})
+
+    obj_data = {'data_original':list_indv}
     list_total.append(obj_data)
     list_indv = []
-    frequence = fft(data[0]) / num_intervalos
+
+    frequence = fft(analysis_score) / num_intervalos
     period = 1 / frequence
-    adf, pvalue, _, _, _, _ = adfuller(data[0], maxlag=1)
+    adf, pvalue, _, _, _, _ = adfuller(analysis_score, maxlag=1)
     if pvalue<nivel_significacion:
         estacionaria=True
+        print(estacionaria)
+    print(analysis_score)
+    data_time_serie, proyeccion = calculate_time_serie(analysis_score, time_serie_type, trend_seasonal, period, forecast)
+    # decomposed_time_serie(analysis_score, period, trend_seasonal)
 
-    data_time_serie, proyeccion = calculate_time_serie(data, time_serie_type, trend_seasonal, period, forecast)
-    decomposed_time_serie(data, period, trend_seasonal)
-
-    for d in data_time_serie:
-        content = {'analysis_score': d[0], 'date': d[1]}
+    for d, dt in zip(data, data_time_serie):
+        content = {'analysis_score': dt, 'date': d[1]}
         list_indv.append(content)
         content = {}
-    obj_data_time_serie = jsonify({'data_time_serie': list_indv})
+
+    obj_data_time_serie = {'data_time_serie': list_indv}
+
     list_total.append(obj_data_time_serie)
     list_indv=[]
 
     for d in proyeccion:
-        content = {'analysis_score': d[0], 'date': d[1]}
+        content = {'analysis_score': d}
         list_indv.append(content)
         content = {}
-    obj_proyeccion = jsonify({'proyeccion': list_indv})
+    obj_proyeccion = {'proyeccion': list_indv}
+
     list_total.append(obj_proyeccion)
 
     content = {'estacionaria': estacionaria}
@@ -57,14 +65,15 @@ def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seaso
 
 def calculate_time_serie(data, time_serie_type, trend_seasonal, period, forecast):
 
-    if time_serie_type == 'simple_exp_smoothing':
+
+    if time_serie_type == 'simpsmoothing':
         data_simp_exp = SimpleExpSmoothing(data).fit()
-        proyeccion = data_simp_exp.forecast(forecast)
-        return data_simp_exp, proyeccion
+        proyeccion = data_simp_exp.forecast(int(forecast))
+        return data_simp_exp.fittedvalues, proyeccion
     elif time_serie_type == 'holt':
         data_holt = Holt(data).fit()
-        proyeccion = data_holt.forecast(forecast)
-        return data_holt, proyeccion
+        proyeccion = data_holt.forecast(int(forecast))
+        return data_holt.fittedvalues, proyeccion
     elif time_serie_type == 'holt_winters':
         if trend_seasonal == 'add':
             data_holtwinters = ExponentialSmoothing(data, trend='add', seasonal='add', seasonal_periods=period).fit(
@@ -73,7 +82,7 @@ def calculate_time_serie(data, time_serie_type, trend_seasonal, period, forecast
             data_holtwinters = ExponentialSmoothing(data, trend='mul', seasonal='mul', seasonal_periods=period).fit(
                 use_boxcox=True)
         proyeccion = data_holtwinters.forecast(forecast)
-        return data_holtwinters, proyeccion
+        return data_holtwinters.fittedvalues, proyeccion
 
 def decomposed_time_serie(data, period, model):
     if model == 'add':

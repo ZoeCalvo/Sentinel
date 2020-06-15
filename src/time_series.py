@@ -4,11 +4,12 @@ from src.database import *
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing, Holt
 from statsmodels.tsa.seasonal import seasonal_decompose
-from scipy.fftpack import fft
+from datetime import datetime, timedelta
 
 def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seasonal, forecast, period):
     num_intervalos = 0
     analysis_score=[]
+    dates = []
     content = {}
     list_total = []
     list_indv = []
@@ -17,47 +18,52 @@ def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seaso
     if is_tw == 'true':
         if id[0] == '#':
             data = selectHashtagsForTimeSeries(id, since_date, until_date)
+        elif id[0] == '@':
+            data = selectUserTwForTimeSeries(id, since_date, until_date)
+        else:
+            data = selectWordForTimeSeries(id, since_date, until_date)
+    else:
+        data = selectUserIgForTimeSeries(id, since_date, until_date)
 
     for d in data:
         analysis_score.append(d[0])
+        dates.append(d[1])
         content = {'analysis_score': d[0], 'date': d[1]}
         list_indv.append(content)
         content = {}
 
-
+    fecha = dates[-1]
+    print(fecha)
     period = int(period)
     obj_data = list_indv
     list_total.append(obj_data)
     list_indv = []
     adf, pvalue, _, _, _, _ = adfuller(analysis_score, maxlag=1)
+
     if pvalue<nivel_significacion:
-        estacionaria=True
-        print(estacionaria)
-    print(analysis_score)
+        estacionaria = True
+
     data_time_serie, proyeccion = calculate_time_serie(analysis_score, time_serie_type, trend_seasonal, period, forecast)
     tendencia, estacionalidad, residuo = decomposed_time_serie(analysis_score, period, trend_seasonal)
 
-    print(tendencia)
-    print(estacionalidad)
-    print(residuo)
     for d, dt in zip(data, data_time_serie):
         content = {'analysis_score': dt, 'date': d[1]}
         list_indv.append(content)
         content = {}
 
     obj_data_time_serie = list_indv
-
-    list_total.append(obj_data_time_serie)
     list_indv=[]
 
     for p in proyeccion:
-        content = {'analysis_score': p}
+        date = fecha + timedelta(days = period)
+        print(date)
+        content = {'analysis_score': p, 'date': date}
         list_indv.append(content)
         content = {}
+        fecha = date
     obj_proyeccion = list_indv
     list_indv = []
 
-    list_total.append(obj_proyeccion)
 
     for e in estacionalidad:
         content = {'data': e}
@@ -79,9 +85,6 @@ def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seaso
         content = {}
     obj_residuo = list_indv
 
-
-    content = {'estacionaria': estacionaria}
-    list_total.append(content)
 
     return obj_data,obj_data_time_serie,obj_proyeccion,estacionaria, obj_estacionalidad, obj_tendencia, obj_residuo
 

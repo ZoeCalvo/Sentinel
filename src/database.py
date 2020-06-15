@@ -722,6 +722,31 @@ def selectUserTwForPieChart(user, since_date, until_date):
     final.append(content)
     return final
 
+def selectUserTwForTimeSeries(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, date FROM datausertw WHERE user = %s AND date<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, date FROM datausertw WHERE user = %s AND date>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, date FROM datausertw WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, date FROM datausertw WHERE user = %s AND date BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    rv.sort(key=lambda r: r[1])
+
+    return rv
+
 def select_dataWord(word, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':
@@ -949,6 +974,31 @@ def selectWordForPieChart(word, since_date, until_date):
     final.append(content)
     return final
 
+def selectWordForTimeSeries(word, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, date FROM dataword WHERE word = %s AND date<=%s")
+            val = (word, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, date FROM dataword WHERE word = %s AND date>=%s")
+            val = (word, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, date FROM dataword WHERE word = %s")
+            val = (word,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, date FROM dataword WHERE word = %s AND date BETWEEN %s AND %s")
+        val = (word, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    rv.sort(key=lambda r: r[1])
+
+    return rv
+
 def select_dataUserIg(user, since_date, until_date):
     if since_date=='' or until_date=='':
         if until_date is not '':
@@ -1175,6 +1225,31 @@ def selectDataUserIgForPieChart(user, since_date, until_date):
     content = {'id': 'others', 'numero_filas': 1-percentage}
     final.append(content)
     return final
+
+def selectUserIgForTimeSeries(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, datepost FROM datauserig WHERE user = %s AND date<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, datepost FROM datauserig WHERE user = %s AND date>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, datepost FROM datauserig WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, datepost FROM datauserig WHERE user = %s AND date BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    rv.sort(key=lambda r: r[1])
+
+    return rv
 
 def select_statistics(id):
     sql = ("SELECT * FROM statistics WHERE id = %s")

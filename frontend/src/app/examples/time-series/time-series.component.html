@@ -70,8 +70,10 @@
 </div>
 <div class="main-content">
   <div class="row">
-    <div class="col-lg-4 col-md-9">
+    <div class="col-lg-7 col-md-9">
       <div *ngIf="this.drawchart">
+        <div *ngIf="this.estacionaria==true; else elseBlock"><h5>La serie temporal es estacionaria</h5></div>
+        <ng-template #elseBlock><h5>La serie temporal no es estacionaria</h5></ng-template>
         <div class="card card-chart">
           <div class="card-header">
             <h4 class="card-title">Serie temporal</h4>
@@ -79,6 +81,42 @@
               <div class="chart-area">
                 <div *ngIf="chart">
                   <canvas  id="timeSerie">{{chart}}</canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card card-chart">
+          <div class="card-header">
+            <h4 class="card-title">Estacionalidad</h4>
+            <div class="card-body">
+              <div class="chart-area">
+                <div *ngIf="chart">
+                  <canvas  id="seasonal">{{chart}}</canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card card-chart">
+          <div class="card-header">
+            <h4 class="card-title">Tendencia</h4>
+            <div class="card-body">
+              <div class="chart-area">
+                <div *ngIf="chart">
+                  <canvas  id="trend">{{chart}}</canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card card-chart">
+          <div class="card-header">
+            <h4 class="card-title">Residuo</h4>
+            <div class="card-body">
+              <div class="chart-area">
+                <div *ngIf="chart">
+                  <canvas  id="residual">{{chart}}</canvas>
                 </div>
               </div>
             </div>

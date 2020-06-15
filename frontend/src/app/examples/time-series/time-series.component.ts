@@ -52,10 +52,8 @@ export class TimeSeriesComponent implements OnInit {
         this.schema = this.schema.trim();
         this.periods = this.periods.trim();
         this.period = this.period.trim();
-        if (!this.typeTimeSerie || !this.periods || !this.period) {
+        if (!this.typeTimeSerie || !this.periods || !this.period || !this.schema ) {
           return ;
-        } else if (this.typeTimeSerie === 'holt_winters' && !this.schema) {
-          return;
         } else {
           this.calculateTimeSeries(this.typeTimeSerie, this.schema, this.periods);
         }

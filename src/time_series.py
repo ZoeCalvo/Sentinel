@@ -5,6 +5,7 @@ from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing, Holt
 from statsmodels.tsa.seasonal import seasonal_decompose
 from datetime import datetime, timedelta
+import pmdarima
 
 def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seasonal, forecast, period):
     num_intervalos = 0
@@ -112,7 +113,13 @@ def calculate_time_serie(data, time_serie_type, trend_seasonal, period, forecast
         proyeccion = data_holtwinters.forecast(int(forecast))
 
         return data_holtwinters.fittedvalues, proyeccion
-
+    elif time_serie_type == 'arima':
+        arima = pmdarima.auto_arima(data, seasonal=False, error_action='ignore', suppress_warnings=True)
+        proyeccion, int_conf = arima.predict(n_periods = int(forecast), return_conf_int = True)
+        prediccion = arima.predict_in_sample()
+        print('pro', proyeccion)
+        print('pre', prediccion)
+        return prediccion, proyeccion
 def decomposed_time_serie(data, period, model):
     if model == 'add':
         data_decomposed = seasonal_decompose(data, model='additive', freq=period)

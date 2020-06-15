@@ -9,7 +9,7 @@ export class TimeSeriesService {
 
   constructor(private http: HttpClient) { }
 
-  timeSerieChart(id: string, since_date: string, until_date: string, is_tw: string, type: string, schema: string, num_periods){
+  timeSerieChart(id: string, since_date: string, until_date: string, is_tw: string, type: string, schema: string, num_periods, period){
     const params = new HttpParams()
       .set('id', id)
       .set('since_date', since_date)
@@ -17,7 +17,8 @@ export class TimeSeriesService {
       .set('is_tw', is_tw)
       .set('type', type)
       .set('schema', schema)
-      .set('num_periods', num_periods);
+      .set('num_periods', num_periods)
+      .set('period', period);
 
     return this.http.get(this.timeSeriesUrl, {params: params});
   }

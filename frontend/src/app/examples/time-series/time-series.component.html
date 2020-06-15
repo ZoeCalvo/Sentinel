@@ -1,6 +1,6 @@
 <div class="panel-header panel-header-lg" >
   <div class="container">
-    <h5 data-background-color="white">Elija qué serie temporal quiere representar</h5>
+    <h6 data-background-color="white">Elija qué serie temporal quiere representar</h6>
     <div class="col-md-3">
       <div class="button-dropdown"></div>
         <div ngbDropdown>
@@ -18,13 +18,13 @@
              <a class="dropdown-item" (click)="this.typeTimeSerie='holt'">
                Método Holt
              </a>
-             <a class="dropdown-item" (click)="this.typeTimeSerie='holtwinters'">
+             <a class="dropdown-item" (click)="this.typeTimeSerie='holt_winters'">
                Método Holt Winters
              </a>
            </div>
         </div>
     </div>
-    <h5 data-background-color="">¿Qué tipo de esquema prefiere?</h5>
+    <h6 data-background-color="">¿Qué tipo de esquema prefiere?</h6>
     <div class="col-md-3">
         <div ngbDropdown>
           <a class="dropdown-toggle" ngbDropdownToggle>
@@ -40,7 +40,22 @@
            </div>
       </div>
     </div>
-    <h5 data-background-color="white">¿Cuántos valores quiere predecir?</h5>
+    <h6 data-background-color="">Seleccione el periodo</h6>
+    <div class="col-md-3">
+        <div ngbDropdown>
+          <a class="dropdown-toggle" ngbDropdownToggle>
+              <span class="button-bar"></span>
+              <span class="button-bar"></span>
+              <span class="button-bar"></span>
+          </a>
+
+           <div ngbDropdownMenu>
+             <a class="dropdown-item" (click)="this.period = '1'">1</a>
+             <a class="dropdown-item" (click)="this.period = '7'">7</a>
+           </div>
+      </div>
+    </div>
+    <h6 data-background-color="white">¿Cuántos valores quiere predecir?</h6>
     <div class="col-md-3">
       <div class="form-group">
             <input #num_periods type="text" class="form-control" placeholder="Num valores...">
@@ -50,6 +65,26 @@
         <button class="btn btn-primary btn-round btn-block " (click)="this.periods = num_periods.value; ngOnInit()">
           Calcular
         </button>
+    </div>
+  </div>
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-lg-4 col-md-9">
+      <div *ngIf="this.drawchart">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h4 class="card-title">Serie temporal</h4>
+            <div class="card-body">
+              <div class="chart-area">
+                <div *ngIf="chart">
+                  <canvas  id="timeSerie">{{chart}}</canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

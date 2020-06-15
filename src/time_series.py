@@ -6,7 +6,7 @@ from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing
 from statsmodels.tsa.seasonal import seasonal_decompose
 from scipy.fftpack import fft
 
-def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seasonal, forecast):
+def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seasonal, forecast, period):
     num_intervalos = 0
     analysis_score=[]
     content = {}
@@ -19,49 +19,71 @@ def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seaso
             data = selectHashtagsForTimeSeries(id, since_date, until_date)
 
     for d in data:
-        num_intervalos = num_intervalos + 1
         analysis_score.append(d[0])
         content = {'analysis_score': d[0], 'date': d[1]}
         list_indv.append(content)
         content = {}
 
 
-    obj_data = {'data_original':list_indv}
+    period = int(period)
+    obj_data = list_indv
     list_total.append(obj_data)
     list_indv = []
-
-    frequence = fft(analysis_score) / num_intervalos
-    period = 1 / frequence
     adf, pvalue, _, _, _, _ = adfuller(analysis_score, maxlag=1)
     if pvalue<nivel_significacion:
         estacionaria=True
         print(estacionaria)
     print(analysis_score)
     data_time_serie, proyeccion = calculate_time_serie(analysis_score, time_serie_type, trend_seasonal, period, forecast)
-    # decomposed_time_serie(analysis_score, period, trend_seasonal)
+    tendencia, estacionalidad, residuo = decomposed_time_serie(analysis_score, period, trend_seasonal)
 
+    print(tendencia)
+    print(estacionalidad)
+    print(residuo)
     for d, dt in zip(data, data_time_serie):
         content = {'analysis_score': dt, 'date': d[1]}
         list_indv.append(content)
         content = {}
 
-    obj_data_time_serie = {'data_time_serie': list_indv}
+    obj_data_time_serie = list_indv
 
     list_total.append(obj_data_time_serie)
     list_indv=[]
 
-    for d in proyeccion:
-        content = {'analysis_score': d}
+    for p in proyeccion:
+        content = {'analysis_score': p}
         list_indv.append(content)
         content = {}
-    obj_proyeccion = {'proyeccion': list_indv}
+    obj_proyeccion = list_indv
+    list_indv = []
 
     list_total.append(obj_proyeccion)
+
+    for e in estacionalidad:
+        content = {'data': e}
+        list_indv.append(content)
+        content = {}
+    obj_estacionalidad = list_indv
+    list_indv = []
+
+    for t in tendencia:
+        content = {'data': t}
+        list_indv.append(content)
+        content = {}
+    obj_tendencia = list_indv
+    list_indv = []
+
+    for r in residuo:
+        content = {'data': r}
+        list_indv.append(content)
+        content = {}
+    obj_residuo = list_indv
+
 
     content = {'estacionaria': estacionaria}
     list_total.append(content)
 
-    return list_total
+    return obj_data,obj_data_time_serie,obj_proyeccion,estacionaria, obj_estacionalidad, obj_tendencia, obj_residuo
 
 def calculate_time_serie(data, time_serie_type, trend_seasonal, period, forecast):
 
@@ -75,19 +97,23 @@ def calculate_time_serie(data, time_serie_type, trend_seasonal, period, forecast
         proyeccion = data_holt.forecast(int(forecast))
         return data_holt.fittedvalues, proyeccion
     elif time_serie_type == 'holt_winters':
+        print(trend_seasonal)
         if trend_seasonal == 'add':
+            print('periodo',period)
             data_holtwinters = ExponentialSmoothing(data, trend='add', seasonal='add', seasonal_periods=period).fit(
                 use_boxcox=True)
-        elif trend_seasonal == 'mul':
+            print(data_holtwinters.fittedvalues)
+        elif trend_seasonal == 'mult':
             data_holtwinters = ExponentialSmoothing(data, trend='mul', seasonal='mul', seasonal_periods=period).fit(
                 use_boxcox=True)
-        proyeccion = data_holtwinters.forecast(forecast)
+        proyeccion = data_holtwinters.forecast(int(forecast))
+
         return data_holtwinters.fittedvalues, proyeccion
 
 def decomposed_time_serie(data, period, model):
     if model == 'add':
         data_decomposed = seasonal_decompose(data, model='additive', freq=period)
-    elif model == 'mul':
+    elif model == 'mult':
         data_decomposed = seasonal_decompose(data, model='multiplicative', freq=period)
 
     tendencia = data_decomposed.trend

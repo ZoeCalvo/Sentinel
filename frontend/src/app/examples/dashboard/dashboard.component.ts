@@ -5,7 +5,7 @@ import {Dashboard} from './dashboard';
 import {element} from "protractor";
 import {Chart} from 'chart.js';
 import 'rxjs/add/operator/map';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {GraphsService} from "./graphs.service";
 import {IntervalgraphService} from "./intervalgraph.service";
 import {PiechartService} from "./piechart.service";
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  constructor(private dashboardService: DashboardService, private route: ActivatedRoute,
+  constructor(private dashboardService: DashboardService, private route: ActivatedRoute, private router: Router,
               private graphsService: GraphsService, private intervalGraphService: IntervalgraphService, private pieChartService: PiechartService) { }
 
   ngOnInit() {
@@ -650,6 +650,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  goToTimeSeries(id, since_date, until_date) {
+    this.router.navigate(['examples/time-series/', id, since_date, until_date, this.is_tw])
+  }
   ngOnDestroy() {}
   }
 

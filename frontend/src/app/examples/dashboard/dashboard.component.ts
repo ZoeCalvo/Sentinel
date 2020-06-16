@@ -29,40 +29,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   is_tw;
   headers_analysis = ['Análisis', 'Texto'];
   header_analysis = ['analysis_score', 'text'];
-  // headers_statistics = [];
-  header_statistics = ['id','media',  'mediana', 'moda', 'varianza', 'desviación típica' ];
+  header_statistics = ['id', 'media',  'mediana', 'moda', 'varianza', 'desviación típica' ];
   graph = null;
-  public lineBigDashboardChartType;
   public gradientStroke;
   public chartColor;
   public canvas: any;
   public ctx;
   public gradientFill;
-  public lineBigDashboardChartData: Array<any>;
-  public lineBigDashboardChartOptions: any;
-  public lineBigDashboardChartLabels: Array<any>;
-  public lineBigDashboardChartColors: Array<any>
-
-  public gradientChartOptionsConfiguration: any;
-  public gradientChartOptionsConfigurationWithNumbersAndGrid: any;
-
-  public lineChartType;
-  public lineChartData: Array<any>;
-  public lineChartOptions: any;
-  public lineChartLabels: Array<any>;
-  public lineChartColors: Array<any>
-
-  public lineChartWithNumbersAndGridType;
-  public lineChartWithNumbersAndGridData: Array<any>;
-  public lineChartWithNumbersAndGridOptions: any;
-  public lineChartWithNumbersAndGridLabels: Array<any>;
-  public lineChartWithNumbersAndGridColors: Array<any>
-
-  public lineChartGradientsNumbersType;
-  public lineChartGradientsNumbersData: Array<any>;
-  public lineChartGradientsNumbersOptions: any;
-  public lineChartGradientsNumbersLabels: Array<any>;
-  public lineChartGradientsNumbersColors: Array<any>;
 
   // events
   public chartClicked(e: any): void {

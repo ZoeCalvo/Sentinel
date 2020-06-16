@@ -38,7 +38,7 @@ def get_user(data):
 
 
 
-def insert_dataHashtags(hashtag, data, text, score, list_scores):
+def insert_dataHashtags(hashtag, data, text, score):
     total_scores = []
     created_at = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').date()
     sql = ("SELECT date FROM datahashtags WHERE hashtag = %s")

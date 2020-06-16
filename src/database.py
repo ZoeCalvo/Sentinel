@@ -38,7 +38,8 @@ def get_user(data):
 
 
 
-def insert_dataHashtags(hashtag, data, text, score, list_scores):
+def insert_dataHashtags(hashtag, data, text, score):
+    total_scores = []
     created_at = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').date()
     sql = ("SELECT date FROM datahashtags WHERE hashtag = %s")
     value = (hashtag,)
@@ -57,7 +58,7 @@ def insert_dataHashtags(hashtag, data, text, score, list_scores):
             val = (hashtag, text, date, analysis_score)
             mycursor.execute(sql, val)
             mydb.commit()
-            insert_statistics(hashtag, list_scores)
+
     else:
         analysis_score = _float64_to_mysql(score)
         sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
@@ -65,12 +66,22 @@ def insert_dataHashtags(hashtag, data, text, score, list_scores):
         val = (hashtag, text, date, analysis_score)
         mycursor.execute(sql, val)
         mydb.commit()
-        insert_statistics(hashtag, list_scores)
+
+    sql = ("SELECT analysis_score FROM datahashtags WHERE hashtag = %s")
+    value = (hashtag,)
+    mycursor.execute(sql, value)
+    result = mycursor.fetchall()
+
+    for r in result:
+        total_scores.append(r[0])
+
+    insert_statistics(hashtag, total_scores)
 
     return 'OK'
 
 
-def insert_dataUsersTw(user, data, text, score, list_score):
+def insert_dataUsersTw(user, data, text, score):
+    total_scores = []
     created_at = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').date()
     sql = ("SELECT date FROM datausertw WHERE user = %s")
     value = (user,)
@@ -89,7 +100,7 @@ def insert_dataUsersTw(user, data, text, score, list_score):
             val = (user, text, date, analysis_score)
             mycursor.execute(sql, val)
             mydb.commit()
-            insert_statistics(user, list_score)
+
     else:
         analysis_score = _float64_to_mysql(score)
         sql = ("INSERT INTO datausertw(user, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
@@ -97,11 +108,21 @@ def insert_dataUsersTw(user, data, text, score, list_score):
         val = (user, text, date, analysis_score)
         mycursor.execute(sql, val)
         mydb.commit()
-        insert_statistics(user, list_score)
+
+    sql = ("SELECT analysis_score FROM datausertw WHERE user = %s")
+    value = (user,)
+    mycursor.execute(sql, value)
+    result = mycursor.fetchall()
+
+    for r in result:
+        total_scores.append(r[0])
+
+    insert_statistics(user, total_scores)
     return 'OK'
 
 
-def insert_dataWord(word, data, text, score, list_score):
+def insert_dataWord(word, data, text, score):
+    total_scores = []
     created_at = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').date()
     sql = ("SELECT date FROM dataword WHERE word = %s")
     value = (word,)
@@ -120,7 +141,8 @@ def insert_dataWord(word, data, text, score, list_score):
             val = (word, text, date, analysis_score)
             mycursor.execute(sql, val)
             mydb.commit()
-            insert_statistics(word, list_score)
+
+
     else:
         analysis_score = _float64_to_mysql(score)
         sql = ("INSERT INTO dataword(word, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
@@ -128,7 +150,17 @@ def insert_dataWord(word, data, text, score, list_score):
         val = (word, text, date, analysis_score)
         mycursor.execute(sql, val)
         mydb.commit()
-        insert_statistics(word, list_score)
+
+    sql = ("SELECT analysis_score FROM dataword WHERE word = %s")
+    value = (word,)
+    mycursor.execute(sql, value)
+    result = mycursor.fetchall()
+
+    for r in result:
+        total_scores.append(r[0])
+
+    insert_statistics(word, total_scores)
+
     return 'OK'
 
 
@@ -1252,10 +1284,18 @@ def selectUserIgForTimeSeries(user, since_date, until_date):
     return rv
 
 def select_statistics(id):
-    sql = ("SELECT * FROM statistics WHERE id = %s")
+    sql = ("SELECT idstatistics, mean, median, mode, variance, typical_deviation FROM statistics WHERE idstatistics = %s")
     val = (id,)
     mycursor.execute(sql, val)
-    result = mycursor.fetchall()
-    return result
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for r in rv:
+        content = {'id': r[0], 'media': r[1],
+                   'mediana': r[2], 'moda': r[3], 'varianza': r[4], 'desviación típica': r[5]}
+        final.append(content)
+        content = {}
+
+    return final
 
 

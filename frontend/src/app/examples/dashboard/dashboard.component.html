@@ -72,15 +72,40 @@
             <h4 class="card-title" > Analysis Score</h4>
           </div>
           <div class="card-body">
-            <div class="table-responsive">
+            <div class="table">
               <table class="table">
                   <thead class=" text-primary">
-                    <th *ngFor="let column of headers">
+                    <th *ngFor="let column of headers_analysis">
                       {{column}}
                     </th>
                   </thead>
                   <tbody *ngFor="let row of table_score">
-                    <td *ngFor="let col of headers">
+                    <td *ngFor="let col of header_analysis">
+                      {{row[col]}}
+                    </td>
+                  </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-plain">
+          <div class="card-header">
+            <h4 class="card-title" > Estadísticas </h4>
+          </div>
+          <div class="card-body">
+            <div class="table">
+              <table class="table">
+                  <thead class=" text-primary">
+                    <th *ngFor="let column of header_statistics">
+                      {{column}}
+                    </th>
+                  </thead>
+                  <tbody *ngFor="let row of table_statistics">
+                    <td *ngFor="let col of header_statistics">
                       {{row[col]}}
                     </td>
                   </tbody>
@@ -91,4 +116,9 @@
       </div>
     </div>
   </div>
+  <footer class="footer">
+    <div class="container-fluid">
+      <button class="btn-link" [routerLink]="['/examples/menu'] ">Volver al menú</button>
+    </div>
+  </footer>
 </div>

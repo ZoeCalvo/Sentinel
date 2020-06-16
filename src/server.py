@@ -163,6 +163,12 @@ def getDataForPieChart():
 
     return jsonify({'data':analysis_score})
 
+@app.route('/statistics', methods=['GET'])
+def getStatisticsForTable():
+    statistics = select_statistics(request.args.get('id'))
+
+    return jsonify({'data':statistics})
+
 @app.route('/timeSerie', methods=['GET'])
 def getTimeSeries():
     obj_data,obj_data_time_serie,proyeccion,estacionaria, estacionalidad, tendencia, residuo = loading_data(request.args.get('id'),

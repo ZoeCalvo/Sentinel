@@ -47,7 +47,7 @@ def searchHashtag(hashtag, since_date=None, until_date=None):
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
         analysis_score.append(score)
-        insert_dataHashtags(hashtag, tweet, tw_sinemoji, score, analysis_score)
+        insert_dataHashtags(hashtag, tweet, tw_sinemoji, score)
 
 
     return analysis_score
@@ -59,7 +59,7 @@ def searchUser(user, since_date=None, until_date=None):
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
         analysis_score.append(score)
-        insert_dataUsersTw(user, tweet, tw_sinemoji, score, analysis_score)
+        insert_dataUsersTw(user, tweet, tw_sinemoji, score)
 
     return analysis_score
 
@@ -70,7 +70,7 @@ def searchWord(word, since_date=None, until_date=None):
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
         analysis_score.append(score)
-        insert_dataWord(word, tweet, tw_sinemoji, score, analysis_score)
+        insert_dataWord(word, tweet, tw_sinemoji, score)
 
     return analysis_score
 

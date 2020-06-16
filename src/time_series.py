@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 import pmdarima
 
 def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seasonal, forecast, period):
-    num_intervalos = 0
     analysis_score=[]
     dates = []
     content = {}
@@ -29,7 +28,7 @@ def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seaso
     for d in data:
         analysis_score.append(d[0])
         dates.append(d[1])
-        content = {'analysis_score': d[0], 'date': d[1]}
+        content = {'analysis_score': d[0], 'date': d[1].strftime("%d/%m/%Y")}
         list_indv.append(content)
         content = {}
 
@@ -48,7 +47,7 @@ def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seaso
     tendencia, estacionalidad, residuo = decomposed_time_serie(analysis_score, period, trend_seasonal)
 
     for d, dt in zip(data, data_time_serie):
-        content = {'analysis_score': dt, 'date': d[1]}
+        content = {'analysis_score': dt, 'date': d[1].strftime("%d/%m/%Y")}
         list_indv.append(content)
         content = {}
 
@@ -57,8 +56,7 @@ def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seaso
 
     for p in proyeccion:
         date = fecha + timedelta(days = period)
-        print(date)
-        content = {'analysis_score': p, 'date': date}
+        content = {'analysis_score': p, 'date': date.strftime("%d/%m/%Y")}
         list_indv.append(content)
         content = {}
         fecha = date

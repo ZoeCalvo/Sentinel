@@ -257,7 +257,7 @@ def select_dataHashtags(hashtag, since_date, until_date):
     rv.sort(key=lambda r: r[2])
 
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -286,7 +286,7 @@ def selectHashtagsGroupByDates(hashtag, since_date, until_date):
     content = {}
     rv.sort(key=lambda r: r[1])
     for result in rv:
-        content = {'analysis_score': result[0], 'date': result[1]}
+        content = {'analysis_score': result[0], 'date': result[1].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -518,7 +518,7 @@ def select_dataUserTw(user, since_date, until_date):
     content = {}
     rv.sort(key=lambda r: r[2])
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -546,7 +546,7 @@ def selectUserTwGroupByDates(user, since_date, until_date):
     content = {}
     rv.sort(key=lambda r: r[1])
     for result in rv:
-        content = {'analysis_score': result[0], 'date': result[1]}
+        content = {'analysis_score': result[0], 'date': result[1].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -770,7 +770,7 @@ def select_dataWord(word, since_date, until_date):
     content = {}
     rv.sort(key=lambda r: r[2])
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -798,7 +798,7 @@ def selectWordGroupByDates(word, since_date, until_date):
     content = {}
     rv.sort(key=lambda r: r[1])
     for result in rv:
-        content = {'analysis_score': result[0], 'date': result[1]}
+        content = {'analysis_score': result[0], 'date': result[1].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -1022,7 +1022,7 @@ def select_dataUserIg(user, since_date, until_date):
     content = {}
     rv.sort(key=lambda r: r[2])
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -1050,7 +1050,7 @@ def selectDataUserIgByDates(user, since_date, until_date):
     content = {}
     rv.sort(key=lambda r: r[1])
     for result in rv:
-        content = {'analysis_score': result[0], 'date': result[1]}
+        content = {'analysis_score': result[0], 'date': result[1].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final

@@ -12,6 +12,7 @@ import {MenuComponent} from "./examples/menu/menu.component";
 import {TwitterComponent} from "./examples/twitter/twitter.component";
 import {InstagramComponent} from "./examples/instagram/instagram.component";
 import {InformationComponent} from "./examples/information/information.component";
+import {TimeSeriesComponent} from "./examples/time-series/time-series.component";
 
 const routes: Routes =[
     { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -23,7 +24,8 @@ const routes: Routes =[
     { path: 'examples/menu',        component: MenuComponent},
     { path: 'examples/twitter',     component: TwitterComponent},
     { path: 'examples/instagram',   component: InstagramComponent},
-    { path: 'examples/information', component: InformationComponent}
+    { path: 'examples/information', component: InformationComponent},
+    { path: 'examples/time-series/:id/:since_date/:until_date/:is_tw',   component: TimeSeriesComponent}
 ];
 
 @NgModule({

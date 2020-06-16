@@ -20,6 +20,7 @@ import { MenuComponent } from './menu/menu.component';
 import { TwitterComponent } from './twitter/twitter.component';
 import { InstagramComponent } from './instagram/instagram.component';
 import {InformationComponent} from "./information/information.component";
+import { TimeSeriesComponent } from './time-series/time-series.component';
 
 @NgModule({
     imports: [
@@ -47,7 +48,8 @@ import {InformationComponent} from "./information/information.component";
         MenuComponent,
         TwitterComponent,
         InstagramComponent,
-        InformationComponent
+        InformationComponent,
+        TimeSeriesComponent
     ],
   providers: [DashboardService]
 })

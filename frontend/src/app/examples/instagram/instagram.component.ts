@@ -46,7 +46,7 @@ export class InstagramComponent implements OnInit {
             type: 'info',
             message: 'Esta acción puede tardar varios minutos.',
             icon: 'travel_info'
-          })
+          });
           this.searchIdInInstagram(id, since_date, until_date);
         } else {
           this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
@@ -57,7 +57,7 @@ export class InstagramComponent implements OnInit {
           type: 'info',
           message: 'El id no se encuentra en la base de datos.\n Esta acción puede tardar varios minutos.',
           icon: 'travel_info'
-        })
+        });
 
         this.searchIdInInstagram(id, since_date, until_date);
 
@@ -69,14 +69,26 @@ export class InstagramComponent implements OnInit {
             type: 'warning',
             message: 'Ha introducido algún caracter no permitido.\n Solo se permiten números, letras o _.',
             icon: 'travel_info'
-          })
+          });
     }
 
   }
 
   searchIdInInstagram(id: string, since_date, until_date) {
     this.instagramService.searchIdInApi(id).subscribe(response => {
-      this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
+      const booleano = response['userExists']
+
+      if (booleano === false) {
+        this.alerts.push({
+            id: 1,
+            type: 'warning',
+            message: 'El usuario no existe.',
+            icon: 'travel_info'
+          })
+      } else {
+        this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
+      }
+
     });
 
   }

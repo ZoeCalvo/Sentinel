@@ -75,8 +75,11 @@ def checkIdInDBIg():
 def searchIdIg():
     api_ig = main()
     userId = search_users(api_ig, request.args.get('id'))
-    getMediaData(api_ig, userId, request.args.get('id'))
-    return jsonify({'ok': True})
+    if userId != False:
+        getMediaData(api_ig, userId, request.args.get('id'))
+    else:
+        return jsonify({'userExists': False})
+    return jsonify({'userExists': True})
 
 @app.route('/getDataforDashboard', methods=['GET'])
 def getDataforDashboard():

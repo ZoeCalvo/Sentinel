@@ -173,9 +173,11 @@ def deEmojify(inputString):
 #     return None
 
 def search_users(api, userName):
-    _ = api.searchUsername(userName)
-    userId = api.LastJson["user"]["pk"]
-    #
+    try:
+        _ = api.searchUsername(userName)
+        userId = api.LastJson["user"]["pk"]
+    except:
+        userId = False
 
     return userId
 

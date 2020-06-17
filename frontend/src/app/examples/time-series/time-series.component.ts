@@ -17,7 +17,7 @@ export class TimeSeriesComponent implements OnInit {
   typeTimeSerie: string;
   schema: string;
   periods;
-  period;
+  regexpPeriod = new RegExp('[0-9]+')
   estacionaria;
   chart = [];
   graph = null;
@@ -29,7 +29,7 @@ export class TimeSeriesComponent implements OnInit {
   public gradientFill;
 
   public hexToRGB(hex, alpha) {
-    let r = parseInt(hex.slice(1, 3), 16),
+    const r = parseInt(hex.slice(1, 3), 16),
       g = parseInt(hex.slice(3, 5), 16),
       b = parseInt(hex.slice(5, 7), 16);
 
@@ -47,12 +47,11 @@ export class TimeSeriesComponent implements OnInit {
       this.since_date = this.route.snapshot.paramMap.get('since_date');
       this.until_date = this.route.snapshot.paramMap.get('until_date');
       this.is_tw = this.route.snapshot.paramMap.get('is_tw');
-      if (this.typeTimeSerie !== undefined && this.schema !== undefined && this.periods !== undefined && this.period !== undefined) {
+      if (this.typeTimeSerie !== undefined && this.schema !== undefined && this.periods !== undefined) {
         this.typeTimeSerie = this.typeTimeSerie.trim();
         this.schema = this.schema.trim();
-        this.periods = this.periods.trim();
-        this.period = this.period.trim();
-        if (!this.typeTimeSerie || !this.periods || !this.period || !this.schema ) {
+
+        if (!this.typeTimeSerie || !this.periods || !this.schema || this.regexpPeriod.test(this.periods) === false ) {
           return ;
         } else {
           this.calculateTimeSeries(this.typeTimeSerie, this.schema, this.periods);
@@ -66,8 +65,7 @@ export class TimeSeriesComponent implements OnInit {
       const pred = [];
 
       this.timeSerieService.timeSerieChart(this.id, this.since_date, this.until_date, this.is_tw,
-        this.typeTimeSerie, this.schema, this.periods, this.period).subscribe(response => {
-          console.log(response);
+        type, schema, num_periods).subscribe(response => {
           this.estacionaria = response['estacionaria'];
           const score_original = response['data_original'].map(response => response.analysis_score)
           const date = response['data_original'].map(response => response.date)
@@ -78,11 +76,11 @@ export class TimeSeriesComponent implements OnInit {
           const tendencia = response['tendencia'].map(response => response.data)
           const residuo = response['residuo'].map(response => response.data)
 
-          for (let d of date) { date_total.push(d)}
-          for (let d of date_prediccion) { date_total.push(d)}
-          for (let d of score_original) { pred.push(null)}
-          for (let p of prediccion) {pred.push(p)}
-          console.log(pred)
+          for (const d of date) { date_total.push(d)}
+          for (const d of date_prediccion) { date_total.push(d)}
+          for (const d of score_original) { pred.push(null)}
+          for (const p of prediccion) {pred.push(p)}
+
           if (this.graph != null) {
             this.graph.clear();
             this.graph.destroy();

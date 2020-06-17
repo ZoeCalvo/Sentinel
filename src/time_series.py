@@ -7,7 +7,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 from datetime import datetime, timedelta
 import pmdarima
 
-def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seasonal, forecast, period):
+def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seasonal, forecast):
     analysis_score=[]
     dates = []
     content = {}
@@ -34,7 +34,7 @@ def loading_data(id, since_date, until_date, is_tw, time_serie_type, trend_seaso
 
     fecha = dates[-1]
     print(fecha)
-    period = int(period)
+    period = 1
     obj_data = list_indv
     list_total.append(obj_data)
     list_indv = []

@@ -18,22 +18,22 @@ export class LoginComponent implements OnInit {
     constructor( private loginService: LoginService ) { }
 
     ngOnInit() {
-        var body = document.getElementsByTagName('body')[0];
+        const body = document.getElementsByTagName('body')[0];
         body.classList.add('login-page');
 
-        var navbar = document.getElementsByTagName('nav')[0];
+        const navbar = document.getElementsByTagName('nav')[0];
         navbar.classList.add('navbar-transparent');
 
-        var user = (<HTMLTextAreaElement> (document.getElementById('username'))).value;
-        var passwd = (<HTMLTextAreaElement> (document.getElementById('passwd'))).value;
+        const user = (<HTMLTextAreaElement> (document.getElementById('username'))).value;
+        const passwd = (<HTMLTextAreaElement> (document.getElementById('passwd'))).value;
         this.checkUser(user, passwd);
 
     }
-    ngOnDestroy(){
-        var body = document.getElementsByTagName('body')[0];
+    ngOnDestroy() {
+        const body = document.getElementsByTagName('body')[0];
         body.classList.remove('login-page');
 
-        var navbar = document.getElementsByTagName('nav')[0];
+        const navbar = document.getElementsByTagName('nav')[0];
         navbar.classList.remove('navbar-transparent');
     }
 
@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
 
       const newLogin: Login = { username, passwd } as Login;
       this.loginService.login(newLogin).subscribe(login => {
-        let booleano = login['resultado'];
+        const booleano = login['resultado'];
 
-        if (booleano == true){
+        if (booleano === true) {
           window.location.assign('examples/menu')
           this.alerts.push({
             id: 1,
@@ -72,10 +72,10 @@ export class LoginComponent implements OnInit {
 
       });
 
-      var body = document.getElementsByTagName('body')[0];
+      const body = document.getElementsByTagName('body')[0];
       body.classList.add('login-page');
 
-      var navbar = document.getElementsByTagName('nav')[0];
+      const navbar = document.getElementsByTagName('nav')[0];
       navbar.classList.add('navbar-transparent');
     }
 

@@ -41,23 +41,26 @@ def get_user(data):
 def insert_dataHashtags(hashtag, data, text, score):
     total_scores = []
     created_at = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').date()
-    sql = ("SELECT date FROM datahashtags WHERE hashtag = %s")
+    sql = ("SELECT text, date FROM datahashtags WHERE hashtag = %s")
     value = (hashtag,)
     mycursor.execute(sql, value)
     result = mycursor.fetchall()
     if result != []:
-        last_date = result[0][0]
+        last_date = result[0][1]
+        last_text = result[0][0]
         for d in result:
-            if last_date < d[0]:
-                last_date = d[0]
+            if last_date < d[1]:
+                last_date = d[1]
+                last_text = d[0]
 
-        if created_at > last_date:
-            analysis_score = _float64_to_mysql(score)
-            sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-            date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
-            val = (hashtag, text, date, analysis_score)
-            mycursor.execute(sql, val)
-            mydb.commit()
+        if created_at >= last_date:
+            if text != last_text:
+                analysis_score = _float64_to_mysql(score)
+                sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
+                date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
+                val = (hashtag, text, date, analysis_score)
+                mycursor.execute(sql, val)
+                mydb.commit()
 
     else:
         analysis_score = _float64_to_mysql(score)
@@ -83,23 +86,26 @@ def insert_dataHashtags(hashtag, data, text, score):
 def insert_dataUsersTw(user, data, text, score):
     total_scores = []
     created_at = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').date()
-    sql = ("SELECT date FROM datausertw WHERE user = %s")
+    sql = ("SELECT text,date FROM datausertw WHERE user = %s")
     value = (user,)
     mycursor.execute(sql, value)
     result = mycursor.fetchall()
     if result != []:
-        last_date = result[0][0]
+        last_date = result[0][1]
+        last_text = result[0][0]
         for d in result:
-            if last_date < d[0]:
-                last_date = d[0]
+            if last_date < d[1]:
+                last_date = d[1]
+                last_text = d[0]
 
-        if created_at > last_date:
-            analysis_score = _float64_to_mysql(score)
-            sql = ("INSERT INTO datausertw(user, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-            date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
-            val = (user, text, date, analysis_score)
-            mycursor.execute(sql, val)
-            mydb.commit()
+        if created_at >= last_date:
+            if text != last_text:
+                analysis_score = _float64_to_mysql(score)
+                sql = ("INSERT INTO datausertw(user, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
+                date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
+                val = (user, text, date, analysis_score)
+                mycursor.execute(sql, val)
+                mydb.commit()
 
     else:
         analysis_score = _float64_to_mysql(score)
@@ -124,23 +130,26 @@ def insert_dataUsersTw(user, data, text, score):
 def insert_dataWord(word, data, text, score):
     total_scores = []
     created_at = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').date()
-    sql = ("SELECT date FROM dataword WHERE word = %s")
+    sql = ("SELECT text, date FROM dataword WHERE word = %s")
     value = (word,)
     mycursor.execute(sql, value)
     result = mycursor.fetchall()
     if result != []:
-        last_date = result[0][0]
+        last_date = result[0][1]
+        last_text = result[0][0]
         for d in result:
-            if last_date < d[0]:
-                last_date = d[0]
+            if last_date < d[1]:
+                last_date = d[1]
+                last_text = d[0]
 
-        if created_at > last_date:
-            analysis_score = _float64_to_mysql(score)
-            sql = ("INSERT INTO dataword(word, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-            date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
-            val = (word, text, date, analysis_score)
-            mycursor.execute(sql, val)
-            mydb.commit()
+        if created_at >= last_date:
+            if text != last_text:
+                analysis_score = _float64_to_mysql(score)
+                sql = ("INSERT INTO dataword(word, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
+                date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
+                val = (word, text, date, analysis_score)
+                mycursor.execute(sql, val)
+                mydb.commit()
 
 
     else:
@@ -204,23 +213,26 @@ def insert_statistics(id, analysis_score, ig=False):
 
 def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
     created_at = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').date()
-    sql = ("SELECT datepost FROM datauserig WHERE user = %s")
+    sql = ("SELECT datepost, comment FROM datauserig WHERE user = %s")
     value = (user,)
     mycursor.execute(sql, value)
     result = mycursor.fetchall()
     if result != []:
         last_date = result[0][0]
+        last_text = result[0][1]
         for d in result:
             if last_date < d[0]:
                 last_date = d[0]
+                last_text = d[1]
 
-        if created_at > last_date:
-            analysis_score = _float64_to_mysql(analysis_score)
-            datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
-            sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
-            val = (user, post, datepost, comment, analysis_score)
-            mycursor.execute(sql, val)
-            mydb.commit()
+        if created_at >= last_date:
+            if comment != last_text:
+                analysis_score = _float64_to_mysql(analysis_score)
+                datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+                sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
+                val = (user, post, datepost, comment, analysis_score)
+                mycursor.execute(sql, val)
+                mydb.commit()
     else:
         analysis_score = _float64_to_mysql(analysis_score)
         datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
-import {IAlert} from "../../components/notification/notification.component";
-import {InstagramService} from "./instagram.service";
-import {Router} from "@angular/router";
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {IAlert} from '../../components/notification/notification.component';
+import {InstagramService} from './instagram.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-instagram',
@@ -14,6 +14,7 @@ export class InstagramComponent implements OnInit {
   focus1;
   is_tw: boolean;
   update_db: boolean;
+  regexpId = new RegExp('[a-zA-Z0-9_]+')
   model: NgbDateStruct;
   model1: NgbDateStruct;
   public alerts: Array<IAlert> = [];
@@ -22,10 +23,10 @@ export class InstagramComponent implements OnInit {
 
   ngOnInit() {
     this.is_tw = false;
-    var body = document.getElementsByTagName('body')[0];
+    const body = document.getElementsByTagName('body')[0];
     body.classList.add('login-page');
 
-    var navbar = document.getElementsByTagName('nav')[0];
+    const navbar = document.getElementsByTagName('nav')[0];
     navbar.classList.add('navbar-transparent');
   }
 
@@ -34,18 +35,18 @@ export class InstagramComponent implements OnInit {
     if (!id) {
       return ;
     }
-
+    if (this.regexpId.test(id) === true) {
     this.instagramService.checkIdInDataBase(id).subscribe( idInDB => {
-      let booleano = idInDB['id'];
+      const booleano = idInDB['id'];
 
-      if (booleano == true) {
-        if (this.update_db == true) {
+      if (booleano === true) {
+        if (this.update_db === true) {
           this.alerts.push({
             id: 1,
             type: 'info',
             message: 'Esta acción puede tardar varios minutos.',
             icon: 'travel_info'
-          })
+          });
           this.searchIdInInstagram(id, since_date, until_date);
         } else {
           this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
@@ -56,18 +57,38 @@ export class InstagramComponent implements OnInit {
           type: 'info',
           message: 'El id no se encuentra en la base de datos.\n Esta acción puede tardar varios minutos.',
           icon: 'travel_info'
-        })
+        });
 
         this.searchIdInInstagram(id, since_date, until_date);
 
       }
       })
+    } else {
+       this.alerts.push({
+            id: 1,
+            type: 'warning',
+            message: 'Ha introducido algún caracter no permitido.\n Solo se permiten números, letras o _.',
+            icon: 'travel_info'
+          });
+    }
 
   }
 
   searchIdInInstagram(id: string, since_date, until_date) {
     this.instagramService.searchIdInApi(id).subscribe(response => {
-      this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
+      const booleano = response['userExists']
+
+      if (booleano === false) {
+        this.alerts.push({
+            id: 1,
+            type: 'warning',
+            message: 'El usuario no existe.',
+            icon: 'travel_info'
+          })
+      } else {
+        this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
+      }
+
     });
 
   }

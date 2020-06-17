@@ -18,9 +18,6 @@
              <a class="dropdown-item" (click)="this.typeTimeSerie='holt'">
                Método Holt
              </a>
-             <a class="dropdown-item" (click)="this.typeTimeSerie='holt_winters'">
-               Método Holt Winters
-             </a>
              <a class="dropdown-item" (click)="this.typeTimeSerie='arima'">
                Método Arima
              </a>
@@ -43,25 +40,10 @@
            </div>
       </div>
     </div>
-    <h6 data-background-color="">Seleccione el periodo</h6>
-    <div class="col-md-3">
-        <div ngbDropdown>
-          <a class="dropdown-toggle" ngbDropdownToggle>
-              <span class="button-bar"></span>
-              <span class="button-bar"></span>
-              <span class="button-bar"></span>
-          </a>
-
-           <div ngbDropdownMenu>
-             <a class="dropdown-item" (click)="this.period = '1'">1</a>
-             <a class="dropdown-item" (click)="this.period = '7'">7</a>
-           </div>
-      </div>
-    </div>
     <h6 data-background-color="white">¿Cuántos valores quiere predecir?</h6>
     <div class="col-md-3">
       <div class="form-group">
-            <input #num_periods type="text" class="form-control" placeholder="Num valores...">
+            <input #num_periods type="number" class="form-control" placeholder="Num valores...">
       </div>
     </div>
     <div class="col-md-3">

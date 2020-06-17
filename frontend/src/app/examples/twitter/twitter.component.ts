@@ -42,8 +42,8 @@ export class TwitterComponent implements OnInit {
       this.twitterService.checkIdInDataBase(id).subscribe(idInDB => {
         const booleano = idInDB['id'];
 
-        if (booleano == true) {
-          if (this.update_db == true) {
+        if (booleano === true) {
+          if (this.update_db === true) {
             this.alerts.push({
               id: 1,
               type: 'info',
@@ -70,7 +70,7 @@ export class TwitterComponent implements OnInit {
     } else {
       this.alerts.push({
             id: 1,
-            type: 'info',
+            type: 'warning',
             message: 'Ha introducido algún caracter no permitido.\n Solo se permiten al principio @ o # seguido de letras, números o _.',
             icon: 'travel_info'
           })

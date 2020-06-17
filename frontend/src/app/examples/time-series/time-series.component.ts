@@ -17,6 +17,7 @@ export class TimeSeriesComponent implements OnInit {
   typeTimeSerie: string;
   schema: string;
   periods;
+  regexpPeriod = new RegExp('[0-9]+')
   estacionaria;
   chart = [];
   graph = null;
@@ -28,7 +29,7 @@ export class TimeSeriesComponent implements OnInit {
   public gradientFill;
 
   public hexToRGB(hex, alpha) {
-    let r = parseInt(hex.slice(1, 3), 16),
+    const r = parseInt(hex.slice(1, 3), 16),
       g = parseInt(hex.slice(3, 5), 16),
       b = parseInt(hex.slice(5, 7), 16);
 
@@ -49,7 +50,8 @@ export class TimeSeriesComponent implements OnInit {
       if (this.typeTimeSerie !== undefined && this.schema !== undefined && this.periods !== undefined) {
         this.typeTimeSerie = this.typeTimeSerie.trim();
         this.schema = this.schema.trim();
-        if (!this.typeTimeSerie || !this.periods || !this.schema ) {
+
+        if (!this.typeTimeSerie || !this.periods || !this.schema || this.regexpPeriod.test(this.periods) === false ) {
           return ;
         } else {
           this.calculateTimeSeries(this.typeTimeSerie, this.schema, this.periods);
@@ -74,10 +76,10 @@ export class TimeSeriesComponent implements OnInit {
           const tendencia = response['tendencia'].map(response => response.data)
           const residuo = response['residuo'].map(response => response.data)
 
-          for (let d of date) { date_total.push(d)}
-          for (let d of date_prediccion) { date_total.push(d)}
-          for (let d of score_original) { pred.push(null)}
-          for (let p of prediccion) {pred.push(p)}
+          for (const d of date) { date_total.push(d)}
+          for (const d of date_prediccion) { date_total.push(d)}
+          for (const d of score_original) { pred.push(null)}
+          for (const p of prediccion) {pred.push(p)}
 
           if (this.graph != null) {
             this.graph.clear();

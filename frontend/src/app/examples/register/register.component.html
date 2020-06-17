@@ -10,8 +10,6 @@
                     <div class="header header-primary text-center">
                       <h1>Crear cuenta</h1>
                     </div>
-                  <br>
-                  <br>
                     <div class="content">
 
                       <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
@@ -32,8 +30,29 @@
 
                     </div>
                     <div class="footer text-center">
-                        <a href="/examples/login" class="btn btn-primary btn-round btn-lg btn-block" (click)="add(name.value, surname.value, user.value, passwd.value); name.value=''; surname.value='';
-      user.value=''; passwd.value=''">Registrarse</a>
+                        <button class="btn btn-primary btn-round btn-lg btn-block" (click)="add(name.value, surname.value, user.value, passwd.value); name.value=''; surname.value='';
+      user.value=''; passwd.value=''">Registrarse</button>
+                      <div *ngFor="let alert of alerts">
+                          <ngb-alert [type]="alert.type"  [dismissible]="false" >
+                              <div class="container">
+                                  <div class="alert-wrapper">
+                                      <button type="button" name="button" class="close" (click)="closeAlert(alert)">
+                                        <span aria-hidden="true">
+                                            <i class="now-ui-icons ui-1_simple-remove"></i>
+                                        </span>
+                                      </button>
+                                      <div class="message">
+                                          <ng-container *ngIf="alert.icon">
+                                            <div class="alert-icon">
+                                                <i class="now-ui-icons {{alert.icon}}"></i>
+                                            </div>
+                                          </ng-container>
+                                          <strong>{{alert.strong}} </strong>{{ alert.message }}
+                                      </div>
+                                  </div>
+                              </div>
+                          </ngb-alert>
+                      </div>
                     </div>
                 </form>
             </div>

@@ -174,7 +174,7 @@ def getTimeSeries():
     obj_data,obj_data_time_serie,proyeccion,estacionaria, estacionalidad, tendencia, residuo = loading_data(request.args.get('id'),
                                         request.args.get('since_date'), request.args.get('until_date'),
                                         request.args.get('is_tw'),request.args.get('type'), request.args.get('schema'),
-                                        request.args.get('num_periods'), request.args.get('period'))
+                                        request.args.get('num_periods'))
 
 
     return jsonify(data_original = obj_data, data_time_serie = obj_data_time_serie, proyeccion = proyeccion, estacionaria = estacionaria,

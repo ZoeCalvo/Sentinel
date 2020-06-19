@@ -1,27 +1,9 @@
 <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent" color-on-scroll="500">
     <div class="container">
-<!--      <div class="dropdown button-dropdown">-->
-<!--        <div ngbDropdown>-->
-<!--          <a class="dropdown-toggle" ngbDropdownToggle>-->
-<!--              <span class="button-bar"></span>-->
-<!--              <span class="button-bar"></span>-->
-<!--              <span class="button-bar"></span>-->
-<!--          </a>-->
-<!--           <div ngbDropdownMenu>-->
-<!--             <a class="dropdown-header">Dropdown header</a>-->
-<!--             <a class="dropdown-item" href="#">Action</a>-->
-<!--             <a class="dropdown-item" href="#">Another action</a>-->
-<!--             <a class="dropdown-item" href="#">Something else here</a>-->
-<!--             <div class="dropdown-divider"></div>-->
-<!--             <a class="dropdown-item" href="#">Separated link</a>-->
-<!--             <div class="dropdown-divider"></div>-->
-<!--             <a class="dropdown-item" href="#">One more separated link</a>-->
-<!--           </div>-->
-<!--         </div>-->
-<!--      </div>-->
+
         <div class="navbar-translate">
-            <a class="navbar-brand" [routerLink]="['/index']" placement="bottom" >
-                Sentinel
+            <a class="navbar-brand" [routerLink]="['/index']" placement="bottom" (click)="selectLanguage()">
+              {{'NAVBAR.TITLE' | translate }}
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" (click)="sidebarToggle()">
                 <span class="navbar-toggler-bar bar1"></span>
@@ -32,16 +14,26 @@
         <div class="collapse navbar-collapse" data-nav-image="assets/img/blurred-image-1.jpg" data-color="orange">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink] ="['/examples/information']" target="_self">
+                    <a class="nav-link" [routerLink] ="['/examples/information']" target="_self" >
                       <i class="now-ui-icons files_paper"></i>
-                      <p>Información</p>
+                      <p (click)="selectLanguage()">{{'NAVBAR.INFORMATION' | translate}}</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/examples/login']" target="_self">
-                        <p>Login</p>
+                    <a class="nav-link" [routerLink]="['/examples/login']" target="_self" >
+                        <p (click)="selectLanguage()">{{'NAVBAR.LOGIN' | translate}}</p>
                     </a>
                 </li>
+              <select
+                  [ngModel]="selectedLanguage"
+                  (ngModelChange)="selectLanguage($event)">
+                  <option value="es">
+                      {{ 'NAVBAR.SPANISH' | translate }}
+                  </option>
+                  <option value="en">
+                      {{ 'NAVBAR.ENGLISH' | translate }}
+                  </option>
+              </select>
             </ul>
         </div>
     </div>

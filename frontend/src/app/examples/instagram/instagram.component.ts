@@ -3,6 +3,8 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {IAlert} from '../../components/notification/notification.component';
 import {InstagramService} from './instagram.service';
 import {Router} from '@angular/router';
+import {TranslateService} from "@ngx-translate/core";
+
 
 @Component({
   selector: 'app-instagram',
@@ -17,9 +19,13 @@ export class InstagramComponent implements OnInit {
   regexpId = new RegExp('[a-zA-Z0-9_]+')
   model: NgbDateStruct;
   model1: NgbDateStruct;
+  selectedLanguage = 'es';
   public alerts: Array<IAlert> = [];
 
-  constructor(private instagramService: InstagramService, private router: Router) { }
+  constructor(private instagramService: InstagramService, private router: Router, private translateService: TranslateService) {
+    this.translateService.setDefaultLang(this.selectedLanguage);
+    this.translateService.use(this.selectedLanguage);
+  }
 
   ngOnInit() {
     this.is_tw = false;
@@ -104,5 +110,8 @@ export class InstagramComponent implements OnInit {
 
   OnItemDeSelect(item: any) {
     console.log(item);
+  }
+  selectLanguage(lang: string) {
+      this.translateService.use(lang);
   }
 }

@@ -5,10 +5,10 @@
     </div>
       <div class="container">
           <div class="content-center brand">
-              <h1 class="h1-seo">Sentinel</h1>
-              <h3>Analizador de sentimientos en textos</h3>
+              <h1 class="h1-seo" (click)="selectLanguage()">{{'HOME.TITLE' | translate}}</h1>
+              <h3 (click)="selectLanguage()">{{'HOME.SUBTITLE' | translate}}</h3>
           </div>
-          <h6 class="category category-absolute">Zoe Calvo</h6>
+          <h6 class="category category-absolute" (click)="selectLanguage()">{{'HOME.FOOTER' | translate}}</h6>
       </div>
   </div>
 </div>

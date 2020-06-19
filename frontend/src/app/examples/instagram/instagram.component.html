@@ -7,7 +7,7 @@
   <br>
   <br>
   <br>
-  <div class="title"><h1>Análisis en instagram</h1></div>
+  <div class="title"><h1 (click)="selectLanguage()">{{'INSTAGRAM.TITLE' | translate}}</h1></div>
   <div class="content-center">
 
     <div class="container">
@@ -41,8 +41,9 @@
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox">
                 <span class="form-check-sign" (click)= 'this.onItemSelect(this.update_db=true)'></span>
-                <span class="form-check-sign" *ngIf="this.update_db==true" (click)="OnItemDeSelect(this.update_db=false)"></span>
-                Actualizar base de datos
+                <span class="form-check-sign" *ngIf="this.update_db==true"
+                      (click)="OnItemDeSelect(this.update_db=false)" (click)="selectLanguage()"></span>
+                {{'INSTAGRAM.UPDATE' | translate}}
             </label>
           </div>
         </div>
@@ -50,7 +51,10 @@
       <div class="col-md-12">
           <div class="footer text-center">
             <div class="col-md-6">
-              <button  class="btn btn-primary btn-round btn-block " (click)="checkId(id.value, since_date.value, until_date.value)">Analizar</button>
+              <button  class="btn btn-primary btn-round btn-block "
+                       (click)="checkId(id.value, since_date.value, until_date.value)" (click)="selectLanguage()">
+                {{'INSTAGRAM.BUTTON' | translate}}
+              </button>
             </div>
           </div>
       </div>

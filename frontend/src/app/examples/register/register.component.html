@@ -8,7 +8,7 @@
                   <br>
                   <br>
                     <div class="header header-primary text-center">
-                      <h1>Crear cuenta</h1>
+                      <h1 (click)="selectLanguage()">{{'REGISTER.TITLE' | translate}}</h1>
                     </div>
                     <div class="content">
 
@@ -31,7 +31,7 @@
                     </div>
                     <div class="footer text-center">
                         <button class="btn btn-primary btn-round btn-lg btn-block" (click)="add(name.value, surname.value, user.value, passwd.value); name.value=''; surname.value='';
-      user.value=''; passwd.value=''">Registrarse</button>
+      user.value=''; passwd.value=''" (click)="selectLanguage()">{{'REGISTER.BUTTON' | translate}}</button>
                       <div *ngFor="let alert of alerts">
                           <ngb-alert [type]="alert.type"  [dismissible]="false" >
                               <div class="container">

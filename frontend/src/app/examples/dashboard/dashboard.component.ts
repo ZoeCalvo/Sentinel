@@ -10,6 +10,7 @@ import {GraphsService} from "./graphs.service";
 import {IntervalgraphService} from "./intervalgraph.service";
 import {PiechartService} from "./piechart.service";
 import {StatisticsService} from "./statistics.service";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -19,6 +20,7 @@ import {StatisticsService} from "./statistics.service";
 })
 
 export class DashboardComponent implements OnInit, OnDestroy {
+  selectedLanguage = 'es';
   chart = [];
   table_score;
   table_statistics;
@@ -63,7 +65,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(private dashboardService: DashboardService, private route: ActivatedRoute, private router: Router,
               private graphsService: GraphsService, private intervalGraphService: IntervalgraphService,
-              private pieChartService: PiechartService, private statisticsService: StatisticsService) { }
+              private pieChartService: PiechartService, private statisticsService: StatisticsService,
+              private translateService: TranslateService) {
+      this.translateService.setDefaultLang(this.selectedLanguage);
+      this.translateService.use(this.selectedLanguage);
+  }
 
   ngOnInit() {
       this.id = this.route.snapshot.paramMap.get('id');
@@ -411,6 +417,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['examples/time-series/', id, since_date, until_date, this.is_tw])
   }
   ngOnDestroy() {}
+  selectLanguage(lang: string) {
+    this.translateService.use(lang);
   }
+}
 
 

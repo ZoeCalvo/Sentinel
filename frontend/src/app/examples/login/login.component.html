@@ -6,7 +6,7 @@
             <div class="card card-login card-plain">
                 <form class="form" method="" action="">
                     <div class="header header-primary text-center">
-                      <h1>Login</h1>
+                      <h1 (click)="selectLanguage()">{{'LOGIN.TITLE' | translate}}</h1>
                     </div>
                   <br>
                   <br>
@@ -22,8 +22,8 @@
                       </div>
                     </div>
                     <div class="footer text-center">
-                        <a class="btn btn-primary btn-round btn-lg btn-block" (click)="ngOnInit()">
-                          Acceder
+                        <a class="btn btn-primary btn-round btn-lg btn-block" (click)="ngOnInit()" (click)="selectLanguage()">
+                          {{'LOGIN.BUTTON' | translate}}
                         </a>
 
                         <div *ngFor="let alert of alerts">
@@ -50,7 +50,9 @@
                     </div>
                     <div class="pull-left">
                         <h6>
-                            <a href="/examples/register" class="link">Crear cuenta</a>
+                            <a href="/examples/register" class="link" (click)="selectLanguage()">
+                              {{'LOGIN.REGISTER' | translate}}
+                            </a>
                         </h6>
                     </div>
                 </form>

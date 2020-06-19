@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer, OnDestroy } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as Rellax from 'rellax';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-components',
@@ -15,7 +16,7 @@ import * as Rellax from 'rellax';
 
 export class ComponentsComponent implements OnInit, OnDestroy {
     data : Date = new Date();
-
+    selectedLanguage = 'es';
     page = 4;
     page1 = 5;
     page2 = 3;
@@ -32,9 +33,11 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 
     state_icon_primary = true;
 
-    constructor( private renderer : Renderer, config: NgbAccordionConfig) {
+    constructor( private renderer : Renderer, config: NgbAccordionConfig, private translateService: TranslateService) {
         config.closeOthers = true;
         config.type = 'info';
+        this.translateService.setDefaultLang(this.selectedLanguage);
+        this.translateService.use(this.selectedLanguage);
     }
     isWeekend(date: NgbDateStruct) {
         const d = new Date(date.year, date.month - 1, date.day);
@@ -58,5 +61,8 @@ export class ComponentsComponent implements OnInit, OnDestroy {
         navbar.classList.remove('navbar-transparent');
         var body = document.getElementsByTagName('body')[0];
         body.classList.remove('index-page');
+    }
+    selectLanguage(lang: string) {
+      this.translateService.use(lang);
     }
 }

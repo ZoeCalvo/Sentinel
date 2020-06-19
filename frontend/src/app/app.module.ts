@@ -8,11 +8,15 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { ExamplesModule } from './examples/examples.module';
-import { HttpBackend, HttpClientModule } from '@angular/common/http';
-
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
     declarations: [
@@ -29,7 +33,14 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
         AppRoutingModule,
         ComponentsModule,
         ExamplesModule,
-        HttpClientModule
+        HttpClientModule,
+        TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [HttpClient]
+        }
+        })
     ],
     providers: [],
     bootstrap: [AppComponent]

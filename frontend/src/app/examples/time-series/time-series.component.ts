@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {TimeSeriesService} from './time-series.service';
 import {Chart} from 'chart.js';
 import 'rxjs/add/operator/map';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-time-series',
@@ -10,6 +11,7 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./time-series.component.scss']
 })
 export class TimeSeriesComponent implements OnInit {
+  selectedLanguage = 'es';
   id;
   since_date;
   until_date;
@@ -40,7 +42,10 @@ export class TimeSeriesComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private timeSerieService: TimeSeriesService ) { }
+  constructor(private route: ActivatedRoute, private timeSerieService: TimeSeriesService, private translateService: TranslateService) {
+    this.translateService.setDefaultLang(this.selectedLanguage);
+    this.translateService.use(this.selectedLanguage);
+  }
 
   ngOnInit() {
       this.id = this.route.snapshot.paramMap.get('id');
@@ -393,6 +398,8 @@ export class TimeSeriesComponent implements OnInit {
               }
             });
       })
-
+  }
+  selectLanguage(lang: string) {
+    this.translateService.use(lang);
   }
 }

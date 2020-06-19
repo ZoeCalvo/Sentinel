@@ -5,7 +5,7 @@
         </div>
         <div class="container">
             <div class="content-center">
-                <h1 class="title">Sentinel.</h1>
+                <h1 class="title" (click)="selectLanguage()">{{'INFORMATION.TITLE' | translate}}</h1>
             </div>
         </div>
     </div>
@@ -13,8 +13,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto text-center">
-                    <h2 class="title">¿Qué es?</h2>
-                    <h5 class="description">Sentinel es un analizador de sentimientos en textos que te permitirá tomar decisiones de marketing y ver el efecto que tienen en las personas.</h5>
+                    <h2 class="title" (click)="selectLanguage()">{{'INFORMATION.WHAT' | translate}}</h2>
+                    <h5 class="description" (click)="selectLanguage()">{{'INFORMATION.DESCRIP' | translate}}</h5>
                 </div>
             </div>
             <div class="separator separator-primary"></div>
@@ -24,11 +24,11 @@
                         <div class="image-container image-left" style="background-image: url('assets/img/login.jpg')">
                             <!-- First image on the left side -->
                             <p class="blockquote blockquote-primary text-center">
-                              <b>1. Regístrate.</b><br>
-                              <b>2. Accede con tu cuenta.</b><br>
-                              <b>3. Elige la red social donde buscar.</b><br>
-                              <b>4. Introduce el identificador a analizar.</b><br>
-                              <b>5. ¡Visualiza los resultados!</b>
+                              <b (click)="selectLanguage()">{{'INFORMATION.REGISTER' | translate}}</b><br>
+                              <b (click)="selectLanguage()">{{'INFORMATION.LOGIN' | translate}}</b><br>
+                              <b (click)="selectLanguage()">{{'INFORMATION.CHOOSE' | translate}}</b><br>
+                              <b (click)="selectLanguage()">{{'INFORMATION.WRITEID' | translate}}</b><br>
+                              <b (click)="selectLanguage()">{{'INFORMATION.RESULTS' | translate}}</b>
                                 <br>
                             </p>
 
@@ -39,18 +39,12 @@
                     <div class="col-md-5">
                         <!-- First image on the right side, above the article -->
                         <div class="image-container image-right" style="background-image: url('assets/img/graficosR.PNG')"></div>
-                        <h3>Imagina saber lo que la gente opina sobre una compañía o cómo afecta una noticia a una sociedad.</h3>
-                        <p>En la actualidad las redes sociales son un factor muy importante en la vida de las personas, todo el mundo tiene una opinión y la expresa sin tapujos en sus perfiles.
-          Como entidad que puede verse afectada por estos comentarios, es su responsabilidad saber sacarles provecho y poder mejorar gracias a ellos.
-                              </p>
-                        <p>
-                            De esta idea nace Sentinel, el análisis de sentimientos es una práctica que se lleva a cabo para realizar informes y gráficos de cómo reacciona la gente a diferentes temas.
-        Ya seas una empresa que quiere ver cómo ha sido recibido un producto nuevo en el mercado o qué piensa la gente sobre su compañía, o el gobierno si quiere realizar sondeos
-        de cómo ha afectado una nueva medida en la sociedad Sentinel es su aplicación.
-
+                        <h3 (click)="selectLanguage()">{{'INFORMATION.SUBTITLE1' | translate}}</h3>
+                        <p (click)="selectLanguage()">{{'INFORMATION.TEXT1' | translate}}</p>
+                        <p (click)="selectLanguage()">
+                            {{'INFORMATION.TEXT2' | translate}}
                         </p>
-                        <p>Sentinel utiliza las aplicaciones Twitter e Instagram para buscar sobre los temas que le interesen y realizar el análisis.
-         Estos resultados se le mostrarán en gráficos para que la experiencia sea más visual
+                        <p (click)="selectLanguage()">{{'INFORMATION.TEXT3' | translate}}
                         </p>
                     </div>
                 </div>

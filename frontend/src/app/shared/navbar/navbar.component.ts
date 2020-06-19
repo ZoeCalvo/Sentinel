@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-navbar',
@@ -9,9 +10,11 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
-
-    constructor(public location: Location, private element : ElementRef) {
+    selectedLanguage = 'es';
+    constructor(public location: Location, private element : ElementRef, private translateService: TranslateService) {
         this.sidebarVisible = false;
+        this.translateService.setDefaultLang(this.selectedLanguage);
+        this.translateService.use(this.selectedLanguage);
     }
 
     ngOnInit() {
@@ -44,14 +47,17 @@ export class NavbarComponent implements OnInit {
             this.sidebarClose();
         }
     };
-  
-    isDocumentation() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        if( titlee === '/documentation' ) {
-            return true;
-        }
-        else {
-            return false;
-        }
+
+    // isDocumentation() {
+    //     var titlee = this.location.prepareExternalUrl(this.location.path());
+    //     if( titlee === '/documentation' ) {
+    //         return true;
+    //     }
+    //     else {
+    //         return false;
+    //     }
+    // }
+    selectLanguage(lang: string) {
+      this.translateService.use(lang);
     }
 }

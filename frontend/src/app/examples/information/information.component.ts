@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Rellax from 'rellax';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-information',
@@ -7,12 +8,15 @@ import * as Rellax from 'rellax';
   styleUrls: ['./information.component.scss']
 })
 export class InformationComponent implements OnInit {
-
+  selectedLanguage = 'es';
   data : Date = new Date();
   focus;
   focus1;
 
-  constructor() { }
+  constructor(private translateService: TranslateService) {
+    this.translateService.setDefaultLang(this.selectedLanguage);
+    this.translateService.use(this.selectedLanguage);
+  }
 
   ngOnInit() {
     var rellaxHeader = new Rellax('.rellax-header');
@@ -29,4 +33,7 @@ export class InformationComponent implements OnInit {
     navbar.classList.remove('navbar-transparent');
   }
 
+  selectLanguage(lang: string) {
+      this.translateService.use(lang);
+    }
 }

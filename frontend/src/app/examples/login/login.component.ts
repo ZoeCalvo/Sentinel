@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Login } from './login';
 import { LoginService } from './login.service';
 import {IAlert} from '../../components/notification/notification.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +10,16 @@ import {IAlert} from '../../components/notification/notification.component';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+    selectedLanguage = 'es';
     data: Date = new Date();
     focus;
     focus1;
     public alerts: Array<IAlert> = [];
 
-    constructor( private loginService: LoginService ) { }
+    constructor( private loginService: LoginService, private translateService: TranslateService ) {
+      this.translateService.setDefaultLang(this.selectedLanguage);
+      this.translateService.use(this.selectedLanguage);
+    }
 
     ngOnInit() {
         const body = document.getElementsByTagName('body')[0];
@@ -82,5 +86,8 @@ export class LoginComponent implements OnInit {
     public closeAlert(alert: IAlert) {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
+    }
+    selectLanguage(lang: string) {
+        this.translateService.use(lang);
     }
 }

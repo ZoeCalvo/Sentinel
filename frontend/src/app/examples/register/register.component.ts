@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Register} from './register';
 import {RegisterService} from './register.service';
 import {IAlert} from '../../components/notification/notification.component';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-register',
@@ -9,6 +10,7 @@ import {IAlert} from '../../components/notification/notification.component';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  selectedLanguage = 'es';
   focus;
   focus1;
   regexpNombreApe = new RegExp('[a-zA-Z]+')
@@ -16,7 +18,10 @@ export class RegisterComponent implements OnInit {
   registers: Register[];
   public alerts: Array<IAlert> = [];
 
-  constructor(private registerService: RegisterService) { }
+  constructor(private registerService: RegisterService, private translateService: TranslateService) {
+    this.translateService.setDefaultLang(this.selectedLanguage);
+    this.translateService.use(this.selectedLanguage);
+  }
 
     ngOnInit() {
       this.getRegisters();
@@ -70,5 +75,7 @@ export class RegisterComponent implements OnInit {
       const index: number = this.alerts.indexOf(alert);
       this.alerts.splice(index, 1);
     }
-
+    selectLanguage(lang: string) {
+      this.translateService.use(lang);
+    }
 }

@@ -1,11 +1,12 @@
 <div class="panel-header panel-header-lg" >
   <div class="header text-right">
-  <button class="btn-link" (click)="goToTimeSeries(this.id, this.since_date, this.until_date);">
-    Acceder a las Series Temporales
+  <button class="btn-link" (click)="goToTimeSeries(this.id, this.since_date, this.until_date);" (click)="selectLanguage()">
+    {{'DASHBOARD.BUTTON_TIMESERIES' | translate}}
   </button>
   </div>
         <div class="card-header">
-          <h4 class="card-title" data-background-color="white">Analysis Score</h4>
+          <h4 class="card-title" data-background-color="white" (click)="selectLanguage()">
+            {{'DASHBOARD.SCORESCHART' | translate}}</h4>
           <div class="card-body">
             <div class="chart-area">
               <div *ngIf="chart">
@@ -21,7 +22,7 @@
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h4 class="card-title">Average for days</h4>
+          <h4 class="card-title" (click)="selectLanguage()">{{'DASHBOARD.AVERAGECHART' | translate}}</h4>
           <div class="card-body">
             <div class="chart-area">
               <div *ngIf="chart">
@@ -35,7 +36,7 @@
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h4 class="card-title">Interval Graph</h4>
+          <h4 class="card-title" (click)="selectLanguage()">{{'DASHBOARD.INTERVALCHART' | translate}}</h4>
         </div>
         <div class="card-body">
           <div class="chart-area">
@@ -46,7 +47,9 @@
         </div>
         <div class="card-footer">
           <div class="stats">
-            <i  class="now-ui-icons business_chart-bar-32"  (click)='chartClicked(is_dynamic=true); changeIntervalGraph()'></i> Dynamic intervals
+            <i  class="now-ui-icons business_chart-bar-32"
+                (click)='chartClicked(is_dynamic=true); changeIntervalGraph()'
+                (click)="selectLanguage()"></i> {{'DASHBOARD.BUTTON_DYNAMIC' | translate}}
           </div>
         </div>
       </div>
@@ -54,7 +57,7 @@
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h4 class="card-title">Sentinel trends</h4>
+          <h4 class="card-title" (click)="selectLanguage()">{{'DASHBOARD.PIECHART' | translate}}</h4>
           <div class="card-body">
             <div class="chart-area">
               <div *ngIf="chart">
@@ -69,7 +72,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title" > Analysis Score</h4>
+            <h4 class="card-title" (click)="selectLanguage()"> {{'DASHBOARD.TABLESCORES' | translate}}</h4>
           </div>
           <div class="card-body">
             <div class="table">
@@ -94,7 +97,7 @@
       <div class="col-md-12">
         <div class="card card-plain">
           <div class="card-header">
-            <h4 class="card-title" > Estadísticas </h4>
+            <h4 class="card-title" (click)="selectLanguage()"> {{'DASHBOARD.TABLESTATISTICS' | translate}} </h4>
           </div>
           <div class="card-body">
             <div class="table">
@@ -118,7 +121,8 @@
   </div>
   <footer class="footer">
     <div class="container-fluid">
-      <button class="btn-link" [routerLink]="['/examples/menu'] ">Volver al menú</button>
+      <button class="btn-link" [routerLink]="['/examples/menu'] " (click)="selectLanguage()">
+        {{'DASHBOARD.MENU' | translate}}</button>
     </div>
   </footer>
 </div>

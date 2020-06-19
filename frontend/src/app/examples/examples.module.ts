@@ -15,12 +15,18 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import {DashboardService} from './dashboard/dashboard.service';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from '../app.routing';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
 import { TwitterComponent } from './twitter/twitter.component';
 import { InstagramComponent } from './instagram/instagram.component';
 import {InformationComponent} from "./information/information.component";
 import { TimeSeriesComponent } from './time-series/time-series.component';
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
     imports: [
@@ -37,7 +43,14 @@ import { TimeSeriesComponent } from './time-series/time-series.component';
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        RouterModule
+        RouterModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: createTranslateLoader,
+            deps: [HttpClient]
+          }
+        })
     ],
     declarations: [
         LoginComponent,

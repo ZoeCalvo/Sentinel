@@ -3,6 +3,7 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {TwitterService} from './twitter.service';
 import {Router} from '@angular/router';
 import {IAlert} from '../../components/notification/notification.component';
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -11,6 +12,7 @@ import {IAlert} from '../../components/notification/notification.component';
   styleUrls: ['./twitter.component.scss']
 })
 export class TwitterComponent implements OnInit {
+  selectedLanguage = 'es';
   focus;
   focus1;
   is_tw: boolean;
@@ -20,7 +22,10 @@ export class TwitterComponent implements OnInit {
   regexpId = new RegExp('^[#@]{0,1}[a-zA-Z0-9_]+')
   public alerts: Array<IAlert> = [];
 
-  constructor(private twitterService: TwitterService, private router: Router) {  }
+  constructor(private twitterService: TwitterService, private router: Router, private translateService: TranslateService) {
+      this.translateService.setDefaultLang(this.selectedLanguage);
+      this.translateService.use(this.selectedLanguage);
+  }
 
   ngOnInit() {
     this.is_tw = true;
@@ -97,5 +102,7 @@ export class TwitterComponent implements OnInit {
   OnItemDeSelect(item: any) {
     console.log(item);
   }
-
+  selectLanguage(lang: string) {
+    this.translateService.use(lang);
+  }
 }

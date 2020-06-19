@@ -2,7 +2,7 @@
     <div class="container">
 
         <div class="navbar-translate">
-            <a class="navbar-brand" [routerLink]="['/index']" placement="bottom" (click)="selectLanguage()">
+            <a class="navbar-brand" [routerLink]="['/index']" placement="bottom" >
               {{'NAVBAR.TITLE' | translate }}
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" (click)="sidebarToggle()">
@@ -14,26 +14,27 @@
         <div class="collapse navbar-collapse" data-nav-image="assets/img/blurred-image-1.jpg" data-color="orange">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink] ="['/examples/information']" target="_self" >
+                    <a class="nav-link" [routerLink] ="['/examples/information', selectedLanguage]" target="_self" >
                       <i class="now-ui-icons files_paper"></i>
-                      <p (click)="selectLanguage()">{{'NAVBAR.INFORMATION' | translate}}</p>
+                      <p >{{'NAVBAR.INFORMATION' | translate}}</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/examples/login']" target="_self" >
-                        <p (click)="selectLanguage()">{{'NAVBAR.LOGIN' | translate}}</p>
+                    <a class="nav-link" [routerLink]="['/examples/login', selectedLanguage]" target="_self" >
+                        <p >{{'NAVBAR.LOGIN' | translate}}</p>
                     </a>
                 </li>
-              <select
-                  [ngModel]="selectedLanguage"
-                  (ngModelChange)="selectLanguage($event)">
-                  <option value="es">
-                      {{ 'NAVBAR.SPANISH' | translate }}
-                  </option>
-                  <option value="en">
-                      {{ 'NAVBAR.ENGLISH' | translate }}
-                  </option>
-              </select>
+                <select
+                    [ngModel]="selectedLanguage"
+                    (ngModelChange)="selectLanguage($event)">
+                    <option value="es">
+                        {{ 'NAVBAR.SPANISH' | translate }}
+                    </option>
+                    <option value="en">
+                        {{ 'NAVBAR.ENGLISH' | translate }}
+                    </option>
+                </select>
+
             </ul>
         </div>
     </div>

@@ -59,5 +59,6 @@ export class NavbarComponent implements OnInit {
     // }
     selectLanguage(lang: string) {
       this.translateService.use(lang);
+      this.selectedLanguage = lang;
     }
 }

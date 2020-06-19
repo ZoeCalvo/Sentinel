@@ -6,23 +6,23 @@
             <div class="card card-login card-plain">
                 <form class="form" method="" action="">
                     <div class="header header-primary text-center">
-                      <h1 (click)="selectLanguage()">{{'LOGIN.TITLE' | translate}}</h1>
+                      <h1 >{{'LOGIN.TITLE' | translate}}</h1>
                     </div>
                   <br>
                   <br>
                     <div class="content">
                       <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
 
-                          <input id="username" class="form-control" type="text" placeholder="Nombre..." (focus)="focus=true" (blur)="focus=false" >
+                          <input id="username" class="form-control" type="text" placeholder="Username..." (focus)="focus=true" (blur)="focus=false" >
                       </div>
 
                       <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
 
-                          <input id="passwd" placeholder="Contraseña..." type="password" class="form-control" (focus)="focus1=true" (blur)="focus1=false"/>
+                          <input id="passwd" placeholder="Password..." type="password" class="form-control" (focus)="focus1=true" (blur)="focus1=false"/>
                       </div>
                     </div>
                     <div class="footer text-center">
-                        <a class="btn btn-primary btn-round btn-lg btn-block" (click)="ngOnInit()" (click)="selectLanguage()">
+                        <a class="btn btn-primary btn-round btn-lg btn-block" (click)="ngOnInit()" >
                           {{'LOGIN.BUTTON' | translate}}
                         </a>
 
@@ -50,7 +50,7 @@
                     </div>
                     <div class="pull-left">
                         <h6>
-                            <a href="/examples/register" class="link" (click)="selectLanguage()">
+                            <a [routerLink]="['/examples/register', this.selectedLanguage]" class="link" >
                               {{'LOGIN.REGISTER' | translate}}
                             </a>
                         </h6>

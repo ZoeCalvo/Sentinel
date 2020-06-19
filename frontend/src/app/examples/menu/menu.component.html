@@ -11,14 +11,14 @@
                 <div class="col">
                   <img src="assets/img/twitter.png" alt="Image" class="img-raised">
                   <div class="footer text-center">
-                    <a [routerLink]="['/examples/twitter']" class="btn btn-simple btn-primary btn-round" (click)="selectLanguage()">
+                    <a [routerLink]="['/examples/twitter', this.selectedLanguage]" class="btn btn-simple btn-primary btn-round" >
                       {{'MENU.TWITTER' | translate}}</a>
                   </div>
                 </div>
                 <div class="col">
                   <img src="assets/img/instagram.png" alt="Image" class="img-raised">
                   <div class="footer text-center">
-                    <a [routerLink]="['/examples/instagram']" class="btn btn-simple btn-primary btn-round" (click)="selectLanguage()">
+                    <a [routerLink]="['/examples/instagram', this.selectedLanguage]" class="btn btn-simple btn-primary btn-round" >
                       {{'MENU.INSTAGRAM' | translate}}</a>
                   </div>
                 </div>

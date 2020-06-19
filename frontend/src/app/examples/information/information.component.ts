@@ -13,9 +13,11 @@ export class InformationComponent implements OnInit {
   focus;
   focus1;
 
-  constructor(private translateService: TranslateService) {
-    this.translateService.setDefaultLang(this.selectedLanguage);
-    this.translateService.use(this.selectedLanguage);
+  constructor(
+    // private translateService: TranslateService
+  ) {
+    // this.translateService.setDefaultLang(this.selectedLanguage);
+    // this.translateService.use(this.selectedLanguage);
   }
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class InformationComponent implements OnInit {
     navbar.classList.remove('navbar-transparent');
   }
 
-  selectLanguage(lang: string) {
-      this.translateService.use(lang);
-    }
+  // selectLanguage(lang: string) {
+  //     this.translateService.use(lang);
+  //   }
 }

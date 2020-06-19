@@ -1,6 +1,6 @@
 <div class="panel-header panel-header-lg" >
   <div class="container">
-    <h6 data-background-color="white" (click)="selectLanguage()">{{'TIME_SERIES.CHOOSE_TS' | translate}}</h6>
+    <h6 data-background-color="white">{{'TIME_SERIES.CHOOSE_TS' | translate}}</h6>
     <div class="col-md-3">
       <div class="button-dropdown"></div>
         <div ngbDropdown>
@@ -11,20 +11,20 @@
           </a>
 
            <div ngbDropdownMenu>
-             <a class="dropdown-header" (click)="selectLanguage()">{{'TIME_SERIES.TIT_TS_MENU' | translate}}</a>
-             <a class="dropdown-item" (click)="this.typeTimeSerie='simpsmoothing'" (click)="selectLanguage()">
+             <a class="dropdown-header">{{'TIME_SERIES.TIT_TS_MENU' | translate}}</a>
+             <a class="dropdown-item" (click)="this.typeTimeSerie='simpsmoothing'">
                {{'TIME_SERIES.OPTION1_TS' | translate}}
              </a>
-             <a class="dropdown-item" (click)="this.typeTimeSerie='holt'" (click)="selectLanguage()">
+             <a class="dropdown-item" (click)="this.typeTimeSerie='holt'">
                {{'TIME_SERIES.OPTION2_TS' | translate}}
              </a>
-             <a class="dropdown-item" (click)="this.typeTimeSerie='arima'" (click)="selectLanguage()">
+             <a class="dropdown-item" (click)="this.typeTimeSerie='arima'">
                {{'TIME_SERIES.OPTION3_TS' | translate}}
              </a>
            </div>
         </div>
     </div>
-    <h6 data-background-color="" (click)="selectLanguage()">{{'TIME_SERIES.CHOOSE_SCHEMA' | translate}}</h6>
+    <h6 data-background-color="">{{'TIME_SERIES.CHOOSE_SCHEMA' | translate}}</h6>
     <div class="col-md-3">
         <div ngbDropdown>
           <a class="dropdown-toggle" ngbDropdownToggle>
@@ -34,24 +34,24 @@
           </a>
 
            <div ngbDropdownMenu>
-             <a class="dropdown-header" (click)="selectLanguage()">{{'TIME_SERIES.TIT_MODEL_MENU' | translate}}</a>
-             <a class="dropdown-item" (click)="this.schema = 'add'" (click)="selectLanguage()">
+             <a class="dropdown-header">{{'TIME_SERIES.TIT_MODEL_MENU' | translate}}</a>
+             <a class="dropdown-item" (click)="this.schema = 'add'">
                {{'TIME_SERIES.OPTION1_SCHEMA' | translate}}
              </a>
-             <a class="dropdown-item" (click)="this.schema = 'mult'" (click)="selectLanguage()">
+             <a class="dropdown-item" (click)="this.schema = 'mult'">
                {{'TIME_SERIES.OPTION2_SCHEMA' | translate}}
              </a>
            </div>
       </div>
     </div>
-    <h6 data-background-color="white" (click)="selectLanguage()">{{'TIME_SERIES.CHOOSE_PRED' | translate}}</h6>
+    <h6 data-background-color="white">{{'TIME_SERIES.CHOOSE_PRED' | translate}}</h6>
     <div class="col-md-3">
       <div class="form-group">
             <input #num_periods type="number" class="form-control" placeholder="Num valores...">
       </div>
     </div>
     <div class="col-md-3">
-        <button class="btn btn-primary btn-round btn-block " (click)="this.periods = num_periods.value; ngOnInit()" (click)="selectLanguage()">
+        <button class="btn btn-primary btn-round btn-block " (click)="this.periods = num_periods.value; ngOnInit()">
           {{'TIME_SERIES.BUTTON' | translate}}
         </button>
     </div>
@@ -61,11 +61,11 @@
   <div class="row">
     <div class="col-lg-7 col-md-9">
       <div *ngIf="this.drawchart">
-        <div *ngIf="this.estacionaria==true; else elseBlock"><h5 (click)="selectLanguage()">{{'TIME_SERIES.STATIONARY' | translate}}</h5></div>
-        <ng-template #elseBlock><h5 (click)="selectLanguage()">{{'TIME_SERIES.NOSTATIONARY' | translate}}</h5></ng-template>
+        <div *ngIf="this.estacionaria==true; else elseBlock"><h5>{{'TIME_SERIES.STATIONARY' | translate}}</h5></div>
+        <ng-template #elseBlock><h5>{{'TIME_SERIES.NOSTATIONARY' | translate}}</h5></ng-template>
         <div class="card card-chart">
           <div class="card-header">
-            <h4 class="card-title" (click)="selectLanguage()">{{'TIME_SERIES.TIMESERIE' | translate}}</h4>
+            <h4 class="card-title">{{'TIME_SERIES.TIMESERIE' | translate}}</h4>
             <div class="card-body">
               <div class="chart-area">
                 <div *ngIf="chart">
@@ -77,7 +77,7 @@
         </div>
         <div class="card card-chart">
           <div class="card-header">
-            <h4 class="card-title" (click)="selectLanguage()">{{'TIME_SERIES.SEASONALITY' | translate}}</h4>
+            <h4 class="card-title">{{'TIME_SERIES.SEASONALITY' | translate}}</h4>
             <div class="card-body">
               <div class="chart-area">
                 <div *ngIf="chart">
@@ -89,7 +89,7 @@
         </div>
         <div class="card card-chart">
           <div class="card-header">
-            <h4 class="card-title" (click)="selectLanguage()">{{'TIME_SERIES.TREND' | translate}}</h4>
+            <h4 class="card-title">{{'TIME_SERIES.TREND' | translate}}</h4>
             <div class="card-body">
               <div class="chart-area">
                 <div *ngIf="chart">
@@ -101,7 +101,7 @@
         </div>
         <div class="card card-chart">
           <div class="card-header">
-            <h4 class="card-title" (click)="selectLanguage()">{{'TIME_SERIES.RESIDUE' | translate}}</h4>
+            <h4 class="card-title">{{'TIME_SERIES.RESIDUE' | translate}}</h4>
             <div class="card-body">
               <div class="chart-area">
                 <div *ngIf="chart">
@@ -116,7 +116,7 @@
   </div>
   <footer class="footer">
     <div class="container-fluid">
-      <button class="btn-link" [routerLink]="['/examples/menu']" (click)="selectLanguage()">{{'TIME_SERIES.MENU' | translate}}</button>
+      <button class="btn-link" [routerLink]="['/examples/menu', this.selectedLanguage]" >{{'TIME_SERIES.MENU' | translate}}</button>
     </div>
   </footer>
 </div>

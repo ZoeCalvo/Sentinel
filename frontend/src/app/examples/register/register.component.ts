@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
           this.alerts.push({
             id: 1,
             type: 'warning',
-            message: 'Caracter no permitido.',
+            message: 'Carácter no permitido.',
             icon: 'ui-1_bell-53'
           })
         } else if (this.selectedLanguage === 'en') {

@@ -86,17 +86,11 @@ export class InstagramComponent implements OnInit {
       }
       })
     } else {
-       this.alerts.push({
-            id: 1,
-            type: 'warning',
-            message: 'Ha introducido algún caracter no permitido.\n Solo se permiten números, letras o _.',
-            icon: 'travel_info'
-          });
        if (this.selectedLanguage === 'es') {
           this.alerts.push({
               id: 1,
               type: 'warning',
-              message: 'Ha introducido algún caracter no permitido.\n Solo se permiten números, letras o _.',
+              message: 'Ha introducido algún carácter no permitido.\n Solo se permiten números, letras o _.',
               icon: 'travel_info'
           })
         } else if (this.selectedLanguage === 'en') {

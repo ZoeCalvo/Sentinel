@@ -18,7 +18,7 @@ export class TwitterComponent implements OnInit {
   update_db: boolean;
   model: NgbDateStruct;
   model1: NgbDateStruct;
-  regexpId = new RegExp('^[#@]{0,1}[a-zA-Z0-9_]+')
+  regexpId = new RegExp('^[#@]{0,1}[a-zA-Z0-9_]+$')
   public alerts: Array<IAlert> = [];
 
   constructor(private twitterService: TwitterService, private router: Router, private route: ActivatedRoute) {  }

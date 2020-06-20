@@ -16,7 +16,7 @@ export class InstagramComponent implements OnInit {
   focus1;
   is_tw: boolean;
   update_db: boolean;
-  regexpId = new RegExp('[a-zA-Z0-9_]+')
+  regexpId = new RegExp('^[a-zA-Z0-9_]+$')
   model: NgbDateStruct;
   model1: NgbDateStruct;
   selectedLanguage;

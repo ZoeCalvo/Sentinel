@@ -19,7 +19,7 @@ export class TimeSeriesComponent implements OnInit {
   typeTimeSerie: string;
   schema: string;
   periods;
-  regexpPeriod = new RegExp('[0-9]+')
+  regexpPeriod = new RegExp('^[0-9]+$')
   estacionaria;
   chart = [];
   graph = null;

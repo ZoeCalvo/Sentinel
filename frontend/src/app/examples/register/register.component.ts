@@ -14,8 +14,8 @@ export class RegisterComponent implements OnInit {
   selectedLanguage;
   focus;
   focus1;
-  regexpNombreApe = new RegExp('[a-zA-Z]+')
-  regexpUsuPass = new RegExp('[a-zA-Z0-9_]+')
+  regexpNombreApe = new RegExp('^[a-zA-Z ]+$')
+  regexpUsuPass = new RegExp('^[a-zA-Z0-9_]+$')
   registers: Register[];
   public alerts: Array<IAlert> = [];
 
@@ -24,7 +24,6 @@ export class RegisterComponent implements OnInit {
     ngOnInit() {
       this.selectedLanguage = this.route.snapshot.paramMap.get('lang');
       this.getRegisters();
-      console.log(this.selectedLanguage)
       var body = document.getElementsByTagName('body')[0];
       body.classList.add('login-page');
 
@@ -64,7 +63,7 @@ export class RegisterComponent implements OnInit {
             message: 'Caracter no permitido.',
             icon: 'ui-1_bell-53'
           })
-        } else if (this.selectedLanguage === 'en'){
+        } else if (this.selectedLanguage === 'en') {
           this.alerts.push({
             id: 1,
             type: 'warning',

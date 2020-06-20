@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Login } from './login';
 import { LoginService } from './login.service';
 import {IAlert} from '../../components/notification/notification.component';
+import {TranslateService} from '@ngx-translate/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,15 +11,20 @@ import {IAlert} from '../../components/notification/notification.component';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+    selectedLanguage;
     data: Date = new Date();
     focus;
     focus1;
     public alerts: Array<IAlert> = [];
 
-    constructor( private loginService: LoginService ) { }
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    constructor( private loginService: LoginService, private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
+        this.selectedLanguage = this.route.snapshot.paramMap.get('lang');
+        console.log(this.selectedLanguage)
         const body = document.getElementsByTagName('body')[0];
         body.classList.add('login-page');
 
@@ -50,24 +57,43 @@ export class LoginComponent implements OnInit {
         const booleano = login['resultado'];
 
         if (booleano === true) {
-          window.location.assign('examples/menu')
-          this.alerts.push({
-            id: 1,
-            type: 'success',
-            strong: 'Bienvenido',
-            message: username,
-            icon: 'ui-2_like'
-          });
+          if (this.selectedLanguage === 'es') {
+            this.alerts.push({
+              id: 1,
+              type: 'success',
+              strong: 'Bienvenido',
+              message: username,
+              icon: 'ui-2_like'
+            });
+          } else if (this.selectedLanguage === 'en') {
+            this.alerts.push({
+              id: 1,
+              type: 'success',
+              strong: 'Welcome',
+              message: username,
+              icon: 'ui-2_like'
+            });
+          }
 
+          this.sleep(500).then( () => {this.router.navigate(['examples/menu/', this.selectedLanguage])})
         } else {
-
-          this.alerts.push({
-            id: 2,
-            type: 'warning',
-            strong: 'Warning!',
-            message: 'El usuario o la contraseña no son correctos',
-            icon: 'ui-1_bell-53'
-          })
+          if (this.selectedLanguage === 'es') {
+            this.alerts.push({
+              id: 2,
+              type: 'warning',
+              strong: 'Warning!',
+              message: 'El usuario o la contraseña no son correctos',
+              icon: 'ui-1_bell-53'
+            })
+          } else if (this.selectedLanguage === 'en') {
+            this.alerts.push({
+              id: 2,
+              type: 'warning',
+              strong: 'Warning!',
+              message: 'Username or password is not correct',
+              icon: 'ui-1_bell-53'
+            })
+            }
         }
 
       });
@@ -83,4 +109,5 @@ export class LoginComponent implements OnInit {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
     }
+
 }

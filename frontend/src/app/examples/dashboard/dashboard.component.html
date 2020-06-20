@@ -1,11 +1,12 @@
 <div class="panel-header panel-header-lg" >
   <div class="header text-right">
-  <button class="btn-link" (click)="goToTimeSeries(this.id, this.since_date, this.until_date);">
-    Acceder a las Series Temporales
+  <button class="btn-link" (click)="goToTimeSeries(this.id, this.since_date, this.until_date);" >
+    {{'DASHBOARD.BUTTON_TIMESERIES' | translate}}
   </button>
   </div>
         <div class="card-header">
-          <h4 class="card-title" data-background-color="white">Analysis Score</h4>
+          <h4 class="card-title" data-background-color="white" >
+            {{'DASHBOARD.SCORESCHART' | translate}}</h4>
           <div class="card-body">
             <div class="chart-area">
               <div *ngIf="chart">
@@ -21,7 +22,7 @@
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h4 class="card-title">Average for days</h4>
+          <h4 class="card-title" >{{'DASHBOARD.AVERAGECHART' | translate}}</h4>
           <div class="card-body">
             <div class="chart-area">
               <div *ngIf="chart">
@@ -35,7 +36,7 @@
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h4 class="card-title">Interval Graph</h4>
+          <h4 class="card-title" >{{'DASHBOARD.INTERVALCHART' | translate}}</h4>
         </div>
         <div class="card-body">
           <div class="chart-area">
@@ -46,7 +47,9 @@
         </div>
         <div class="card-footer">
           <div class="stats">
-            <i  class="now-ui-icons business_chart-bar-32"  (click)='chartClicked(is_dynamic=true); changeIntervalGraph()'></i> Dynamic intervals
+            <i  class="now-ui-icons business_chart-bar-32"
+                (click)='chartClicked(is_dynamic=true); changeIntervalGraph()'></i>
+            {{'DASHBOARD.BUTTON_DYNAMIC' | translate}}
           </div>
         </div>
       </div>
@@ -54,7 +57,7 @@
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h4 class="card-title">Sentinel trends</h4>
+          <h4 class="card-title">{{'DASHBOARD.PIECHART' | translate}}</h4>
           <div class="card-body">
             <div class="chart-area">
               <div *ngIf="chart">
@@ -69,15 +72,22 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title" > Analysis Score</h4>
+            <h4 class="card-title"> {{'DASHBOARD.TABLESCORES' | translate}}</h4>
           </div>
           <div class="card-body">
             <div class="table">
               <table class="table">
                   <thead class=" text-primary">
-                    <th *ngFor="let column of headers_analysis">
-                      {{column}}
-                    </th>
+                    <div *ngIf="selectedLanguage == 'es'; else elseBlock">
+                      <th *ngFor="let column of headers_analysis_es">
+                          {{column}}
+                      </th>
+                    </div>
+                    <ng-template #elseBlock>
+                      <th *ngFor="let column of headers_analysis_en">
+                          {{column}}
+                      </th>
+                    </ng-template>
                   </thead>
                   <tbody *ngFor="let row of table_score">
                     <td *ngFor="let col of header_analysis">
@@ -94,18 +104,25 @@
       <div class="col-md-12">
         <div class="card card-plain">
           <div class="card-header">
-            <h4 class="card-title" > Estadísticas </h4>
+            <h4 class="card-title" > {{'DASHBOARD.TABLESTATISTICS' | translate}} </h4>
           </div>
           <div class="card-body">
             <div class="table">
               <table class="table">
                   <thead class=" text-primary">
-                    <th *ngFor="let column of header_statistics">
-                      {{column}}
-                    </th>
+                    <div *ngIf="selectedLanguage=='es'; else elseBlock2">
+                      <th *ngFor="let column of header_statistics_es">
+                        {{column}}
+                      </th>
+                    </div>
+                    <ng-template #elseBlock2>
+                      <th *ngFor="let column of header_statistics_en">
+                        {{column}}
+                      </th>
+                    </ng-template>
                   </thead>
                   <tbody *ngFor="let row of table_statistics">
-                    <td *ngFor="let col of header_statistics">
+                    <td *ngFor="let col of header_statistics_es">
                       {{row[col]}}
                     </td>
                   </tbody>
@@ -118,7 +135,8 @@
   </div>
   <footer class="footer">
     <div class="container-fluid">
-      <button class="btn-link" [routerLink]="['/examples/menu'] ">Volver al menú</button>
+      <button class="btn-link" [routerLink]="['/examples/menu', this.selectedLanguage] ">
+        {{'DASHBOARD.MENU' | translate}}</button>
     </div>
   </footer>
 </div>

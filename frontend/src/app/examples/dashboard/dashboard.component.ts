@@ -10,6 +10,7 @@ import {GraphsService} from "./graphs.service";
 import {IntervalgraphService} from "./intervalgraph.service";
 import {PiechartService} from "./piechart.service";
 import {StatisticsService} from "./statistics.service";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -19,6 +20,7 @@ import {StatisticsService} from "./statistics.service";
 })
 
 export class DashboardComponent implements OnInit, OnDestroy {
+  selectedLanguage;
   chart = [];
   table_score;
   table_statistics;
@@ -27,9 +29,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   since_date;
   until_date;
   is_tw;
-  headers_analysis = ['Análisis', 'Texto'];
+  headers_analysis_es = ['Análisis', 'Texto'];
+  headers_analysis_en = ['Analysis', 'Text'];
   header_analysis = ['analysis_score', 'text'];
-  header_statistics = ['id', 'media',  'mediana', 'moda', 'varianza', 'desviación típica' ];
+  header_statistics_es = ['id', 'media',  'mediana', 'moda', 'varianza', 'desviación típica' ];
+  header_statistics_en = ['id', 'mean',  'median', 'mode', 'variance', 'typical deviation' ];
   graph = null;
   public gradientStroke;
   public chartColor;
@@ -63,13 +67,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(private dashboardService: DashboardService, private route: ActivatedRoute, private router: Router,
               private graphsService: GraphsService, private intervalGraphService: IntervalgraphService,
-              private pieChartService: PiechartService, private statisticsService: StatisticsService) { }
+              private pieChartService: PiechartService, private statisticsService: StatisticsService) {  }
 
   ngOnInit() {
       this.id = this.route.snapshot.paramMap.get('id');
       this.since_date = this.route.snapshot.paramMap.get('since_date');
       this.until_date = this.route.snapshot.paramMap.get('until_date');
       this.is_tw = this.route.snapshot.paramMap.get('is_tw');
+      this.selectedLanguage = this.route.snapshot.paramMap.get('lang');
 
       this.id = this.id.trim();
       if (!this.id) { return ; }
@@ -408,9 +413,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   goToTimeSeries(id, since_date, until_date) {
-    this.router.navigate(['examples/time-series/', id, since_date, until_date, this.is_tw])
+    this.router.navigate(['examples/time-series/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
   }
   ngOnDestroy() {}
-  }
+}
 
 

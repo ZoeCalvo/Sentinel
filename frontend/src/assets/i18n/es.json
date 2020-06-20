@@ -1,0 +1,83 @@
+{
+    "HOME": {
+        "TITLE": "Sentinel",
+        "SUBTITLE": "Analizador de sentimientos en textos",
+        "FOOTER": "Zoe Calvo"
+    },
+    "NAVBAR": {
+        "TITLE": "Sentinel",
+        "INFORMATION": "Información",
+        "LOGIN": "Login",
+        "ENGLISH": "Inglés",
+        "SPANISH": "Español"
+    },
+    "LOGIN": {
+        "TITLE": "Login",
+        "BUTTON": "Acceder",
+        "REGISTER": "Crear cuenta"
+    },
+    "REGISTER": {
+        "TITLE": "Crear cuenta",
+        "BUTTON": "Registrarse"
+    },
+    "MENU": {
+        "TWITTER": "Analizar Twitter",
+        "INSTAGRAM": "Analizar Instagram"
+    },
+    "TWITTER": {
+        "TITLE": "Análisis en twitter",
+        "UPDATE": "Actualizar base de datos",
+        "BUTTON": "Analizar"
+    },
+    "INSTAGRAM": {
+        "TITLE": "Análisis en Instagram",
+        "UPDATE": "Actualizar base de datos",
+        "BUTTON": "Analizar"
+    },
+    "DASHBOARD": {
+        "BUTTON_TIMESERIES": "Acceder a las series temporales",
+        "SCORESCHART": "Resultados del análisis",
+        "AVERAGECHART": "Media por días",
+        "INTERVALCHART": "Gráfico de intervalos",
+        "BUTTON_DYNAMIC": "Intervalos dinámicos",
+        "PIECHART": "Sentinel Trends",
+        "TABLESCORES": "Resultados del análisis",
+        "TABLESTATISTICS": "Statistics",
+        "MENU": "Volver al menú"
+    },
+    "TIME_SERIES": {
+        "CHOOSE_TS": "Elija qué serie temporal quiere representar",
+        "TIT_TS_MENU": "Series temporales",
+        "OPTION1_TS": "Suavizado exponencial",
+        "OPTION2_TS": "Método Holt",
+        "OPTION3_TS": "Método Arima",
+        "CHOOSE_SCHEMA": "¿Qué tipo de modelo prefiere?",
+        "TIT_MODEL_MENU": "Modelo",
+        "OPTION1_SCHEMA": "Aditivo",
+        "OPTION2_SCHEMA": "Multiplicativo",
+        "CHOOSE_PRED": "¿Cuántos valores quiere predecir?",
+        "BUTTON": "Calcular",
+        "STATIONARY": "La serie temporal es estacionaria",
+        "NOSTATIONARY": "La serie temporal no es estacionaria",
+        "TIMESERIE": "Serie temporal",
+        "SEASONALITY": "Estacionalidad",
+        "TREND": "Tendencia",
+        "RESIDUE": "Residuo",
+        "MENU": "Volver al menú"
+    },
+    "INFORMATION": {
+        "TITLE": "Sentinel",
+        "WHAT": "¿Qué es?",
+        "DESCRIP": "Sentinel es un analizador de sentimientos en textos que te permitirá tomar decisiones de marketing y ver el efecto que tienen en las personas.",
+        "REGISTER": "1. Regístrate.",
+        "LOGIN": "2. Accede con tu cuenta.",
+        "CHOOSE": "3. Elige la red social donde buscar.",
+        "WRITEID": "4. Introduce el identificador a analizar.",
+        "RESULTS": "5. ¡Visualiza los resultados!",
+        "SUBTITLE1": "Imagina saber lo que la gente opina sobre una compañía o cómo afecta una noticia a una sociedad.",
+        "TEXT1": "En la actualidad las redes sociales son un factor muy importante en la vida de las personas, todo el mundo tiene una opinión y la expresa sin tapujos en sus perfiles. Como entidad que puede verse afectada por estos comentarios, es su responsabilidad saber sacarles provecho y poder mejorar gracias a ellos.",
+        "TEXT2": "De esta idea nace Sentinel, el análisis de sentimientos es una práctica que se lleva a cabo para realizar informes y gráficos de cómo reacciona la gente a diferentes temas. Ya seas una empresa que quiere ver cómo ha sido recibido un producto nuevo en el mercado o qué piensa la gente sobre su compañía, o el gobierno si quiere realizar sondeos de cómo ha afectado una nueva medida en la sociedad Sentinel es su aplicación.",
+        "TEXT3": "Sentinel utiliza las aplicaciones Twitter e Instagram para buscar sobre los temas que le interesen y realizar el análisis. Estos resultados se le mostrarán en gráficos para que la experiencia sea más visual."
+
+    }
+}

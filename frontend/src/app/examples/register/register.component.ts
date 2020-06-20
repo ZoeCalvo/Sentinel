@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Register} from './register';
 import {RegisterService} from './register.service';
 import {IAlert} from '../../components/notification/notification.component';
+import {TranslateService} from "@ngx-translate/core";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -9,6 +11,7 @@ import {IAlert} from '../../components/notification/notification.component';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  selectedLanguage;
   focus;
   focus1;
   regexpNombreApe = new RegExp('[a-zA-Z]+')
@@ -16,10 +19,12 @@ export class RegisterComponent implements OnInit {
   registers: Register[];
   public alerts: Array<IAlert> = [];
 
-  constructor(private registerService: RegisterService) { }
+  constructor(private registerService: RegisterService, private router: Router, private route: ActivatedRoute) { }
 
     ngOnInit() {
+      this.selectedLanguage = this.route.snapshot.paramMap.get('lang');
       this.getRegisters();
+      console.log(this.selectedLanguage)
       var body = document.getElementsByTagName('body')[0];
       body.classList.add('login-page');
 
@@ -49,15 +54,25 @@ export class RegisterComponent implements OnInit {
       if ( this.regexpNombreApe.test(name) && this.regexpNombreApe.test(surname)
         && this.regexpUsuPass.test(user) && this.regexpUsuPass.test(passwd)) {
         const newRegister: Register = { name, surname, user, passwd } as Register;
-        this.registerService.addUser(newRegister).subscribe(register => this.registers.push(register));
-        window.location.assign('examples/login')
+        this.registerService.addUser(newRegister).subscribe();
+        this.router.navigate(['examples/login/', this.selectedLanguage])
       } else {
-        this.alerts.push({
+        if (this.selectedLanguage === 'es') {
+          this.alerts.push({
             id: 1,
             type: 'warning',
             message: 'Caracter no permitido.',
             icon: 'ui-1_bell-53'
           })
+        } else if (this.selectedLanguage === 'en'){
+          this.alerts.push({
+            id: 1,
+            type: 'warning',
+            message: 'Character not allowed.',
+            icon: 'ui-1_bell-53'
+          })
+        }
+
       }
       var body = document.getElementsByTagName('body')[0];
       body.classList.add('login-page');
@@ -70,5 +85,4 @@ export class RegisterComponent implements OnInit {
       const index: number = this.alerts.indexOf(alert);
       this.alerts.splice(index, 1);
     }
-
 }

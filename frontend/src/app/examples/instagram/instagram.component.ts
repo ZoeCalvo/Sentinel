@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {IAlert} from '../../components/notification/notification.component';
 import {InstagramService} from './instagram.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+
+
 
 @Component({
   selector: 'app-instagram',
@@ -17,11 +19,13 @@ export class InstagramComponent implements OnInit {
   regexpId = new RegExp('[a-zA-Z0-9_]+')
   model: NgbDateStruct;
   model1: NgbDateStruct;
+  selectedLanguage;
   public alerts: Array<IAlert> = [];
 
-  constructor(private instagramService: InstagramService, private router: Router) { }
+  constructor(private instagramService: InstagramService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.selectedLanguage = this.route.snapshot.paramMap.get('lang');
     this.is_tw = false;
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('login-page');
@@ -41,23 +45,41 @@ export class InstagramComponent implements OnInit {
 
       if (booleano === true) {
         if (this.update_db === true) {
-          this.alerts.push({
-            id: 1,
-            type: 'info',
-            message: 'Esta acción puede tardar varios minutos.',
-            icon: 'travel_info'
-          });
+          if (this.selectedLanguage === 'es') {
+              this.alerts.push({
+                id: 1,
+                type: 'info',
+                message: 'Esta acción puede tardar varios minutos.',
+                icon: 'travel_info'
+              })
+          } else if (this.selectedLanguage === 'en') {
+              this.alerts.push({
+                id: 1,
+                type: 'info',
+                message: 'This action may take several minutes.',
+                icon: 'travel_info'
+              })
+          }
           this.searchIdInInstagram(id, since_date, until_date);
         } else {
-          this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
+          this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
         }
       } else {
-        this.alerts.push({
-          id: 1,
-          type: 'info',
-          message: 'El id no se encuentra en la base de datos.\n Esta acción puede tardar varios minutos.',
-          icon: 'travel_info'
-        });
+        if (this.selectedLanguage === 'es') {
+              this.alerts.push({
+              id: 1,
+              type: 'info',
+              message: 'El id no se encuentra en la base de datos.\n Esta acción puede tardar varios minutos.',
+              icon: 'travel_info'
+            })
+        } else if (this.selectedLanguage === 'en') {
+            this.alerts.push({
+              id: 1,
+              type: 'info',
+              message: 'The id is not in the database.\n This action may take several minutes.',
+              icon: 'travel_info'
+            })
+        }
 
         this.searchIdInInstagram(id, since_date, until_date);
 
@@ -70,6 +92,22 @@ export class InstagramComponent implements OnInit {
             message: 'Ha introducido algún caracter no permitido.\n Solo se permiten números, letras o _.',
             icon: 'travel_info'
           });
+       if (this.selectedLanguage === 'es') {
+          this.alerts.push({
+              id: 1,
+              type: 'warning',
+              message: 'Ha introducido algún caracter no permitido.\n Solo se permiten números, letras o _.',
+              icon: 'travel_info'
+          })
+        } else if (this.selectedLanguage === 'en') {
+          this.alerts.push({
+              id: 1,
+              type: 'warning',
+              message: 'You have entered some illegal character.\n' +
+                ' Only are allowed letters, numbers or _.',
+              icon: 'travel_info'
+          })
+        }
     }
 
   }
@@ -79,14 +117,24 @@ export class InstagramComponent implements OnInit {
       const booleano = response['userExists']
 
       if (booleano === false) {
-        this.alerts.push({
+        if (this.selectedLanguage === 'es') {
+          this.alerts.push({
             id: 1,
             type: 'warning',
             message: 'El usuario no existe.',
             icon: 'travel_info'
           })
+        } else if (this.selectedLanguage === 'en') {
+          this.alerts.push({
+            id: 1,
+            type: 'warning',
+            message: 'Username does not exist.',
+            icon: 'travel_info'
+          })
+        }
+
       } else {
-        this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw])
+        this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
       }
 
     });

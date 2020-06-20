@@ -20,7 +20,7 @@ def login():
 @app.route('/register', methods=['POST'])
 def register_db():
     register_users(request.json)
-    return 'OK'
+    return jsonify({'ok': True})
 
 @app.route('/')
 def titulo():

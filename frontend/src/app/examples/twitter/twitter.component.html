@@ -9,7 +9,7 @@
   <br>
   <br>
   <br>
-  <div class="title"><h1>Análisis en twitter</h1></div>
+  <div class="title"><h1 >{{'TWITTER.TITLE' | translate}}</h1></div>
   <div class="content-center">
 
     <div class="container">
@@ -26,13 +26,13 @@
           <div class="col-md-7">
             <div class="datepicker-container">
               <div class="form-group">
-                <input #since_date class="form-control datetimepicker" placeholder="Desde..."
+                <input #since_date class="form-control datetimepicker" placeholder="Since..."
                      name="dp1" [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()" data-color="orange">
               </div>
             </div>
             <div class="datepicker-container">
               <div class="form-group">
-                <input #until_date class="form-control datetimepicker" placeholder="Hasta..."
+                <input #until_date class="form-control datetimepicker" placeholder="Until..."
                      name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" data-color="orange">
               </div>
             </div>
@@ -44,8 +44,8 @@
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox">
                 <span class="form-check-sign" (click)= 'this.onItemSelect(this.update_db=true)'></span>
-                <span class="form-check-sign" *ngIf="this.update_db==true" (click)="OnItemDeSelect(this.update_db=false)"></span>
-                Actualizar base de datos
+                <span class="form-check-sign" *ngIf="this.update_db==true" (click)="OnItemDeSelect(this.update_db=false)" ></span>
+                {{'TWITTER.UPDATE' | translate}}
             </label>
           </div>
         </div>
@@ -53,7 +53,8 @@
       <div class="col-md-12">
           <div class="footer text-center">
             <div class="col-md-6">
-              <button class="btn btn-primary btn-round btn-block " (click)="checkId(id.value, since_date.value, until_date.value); ">Analizar</button>
+              <button class="btn btn-primary btn-round btn-block " (click)="checkId(id.value, since_date.value, until_date.value); "
+                      >{{'TWITTER.BUTTON' | translate}}</button>
             </div>
           </div>
       </div>

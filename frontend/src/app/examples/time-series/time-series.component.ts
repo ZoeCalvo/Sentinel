@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {TimeSeriesService} from './time-series.service';
 import {Chart} from 'chart.js';
 import 'rxjs/add/operator/map';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-time-series',
@@ -10,6 +11,7 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./time-series.component.scss']
 })
 export class TimeSeriesComponent implements OnInit {
+  selectedLanguage;
   id;
   since_date;
   until_date;
@@ -40,13 +42,14 @@ export class TimeSeriesComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private timeSerieService: TimeSeriesService ) { }
+  constructor(private route: ActivatedRoute, private timeSerieService: TimeSeriesService) {  }
 
   ngOnInit() {
       this.id = this.route.snapshot.paramMap.get('id');
       this.since_date = this.route.snapshot.paramMap.get('since_date');
       this.until_date = this.route.snapshot.paramMap.get('until_date');
       this.is_tw = this.route.snapshot.paramMap.get('is_tw');
+      this.selectedLanguage = this.route.snapshot.paramMap.get('lang');
       if (this.typeTimeSerie !== undefined && this.schema !== undefined && this.periods !== undefined) {
         this.typeTimeSerie = this.typeTimeSerie.trim();
         this.schema = this.schema.trim();
@@ -85,6 +88,18 @@ export class TimeSeriesComponent implements OnInit {
             this.graph.clear();
             this.graph.destroy();
           }
+          let leyenda_original;
+          let leyenda_ts;
+          let leyenda_prediccion;
+          if (this.selectedLanguage === 'es') {
+            leyenda_original = 'original';
+            leyenda_ts = 'serie temporal';
+            leyenda_prediccion = 'predicción';
+          } else if (this.selectedLanguage === 'en') {
+            leyenda_original = 'original';
+            leyenda_ts = 'time serie';
+            leyenda_prediccion = 'predicted data';
+          }
           this.chartColor = '#FFFFFF';
           this.canvas = document.getElementById('timeSerie');
           this.ctx = this.canvas.getContext('2d');
@@ -103,7 +118,7 @@ export class TimeSeriesComponent implements OnInit {
                 labels: date_total,
                 datasets: [
                   {
-                    label: 'datos reales',
+                    label: leyenda_original,
                     backgroundColor: ['#18ce0f', '#8187f7'],
                     data: score_original,
                     pointBorderWidth: 2,
@@ -117,7 +132,7 @@ export class TimeSeriesComponent implements OnInit {
                     pointBackgroundColor: '#18ce0f'
 
                   }, {
-                    label: 'serie temporal',
+                    label: leyenda_ts,
                     backgroundColor: '#ce680f',
                     data: score_time_serie,
                     pointBorderWidth: 2,
@@ -130,7 +145,7 @@ export class TimeSeriesComponent implements OnInit {
                     pointBorderColor: '#FFF',
                     pointBackgroundColor: '#ce680f'
                   }, {
-                    label: 'predicción',
+                    label: leyenda_prediccion,
                     backgroundColor: '#8187f7',
                     data: pred,
                     pointBorderWidth: 2,
@@ -393,6 +408,6 @@ export class TimeSeriesComponent implements OnInit {
               }
             });
       })
-
   }
+
 }

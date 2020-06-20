@@ -8,30 +8,30 @@
                   <br>
                   <br>
                     <div class="header header-primary text-center">
-                      <h1>Crear cuenta</h1>
+                      <h1 >{{'REGISTER.TITLE' | translate}}</h1>
                     </div>
                     <div class="content">
 
                       <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
-                          <input #name type="text" class="form-control" placeholder="Nombre..." (focus)="focus=true" (blur)="focus=false" >
+                          <input #name type="text" class="form-control" placeholder="Name..." (focus)="focus=true" (blur)="focus=false" >
                       </div>
 
                       <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
-                          <input #surname type="text" class="form-control" placeholder="Apellido..." (focus)="focus=true" (blur)="focus=false" >
+                          <input #surname type="text" class="form-control" placeholder="Surname..." (focus)="focus=true" (blur)="focus=false" >
                       </div>
 
                       <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
-                          <input #user type="text" class="form-control" placeholder="Nombre de usuario..." (focus)="focus=true" (blur)="focus=false" >
+                          <input #user type="text" class="form-control" placeholder="Username..." (focus)="focus=true" (blur)="focus=false" >
                       </div>
 
                       <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
-                          <input #passwd type="password" placeholder="Contraseña..." class="form-control" (focus)="focus1=true" (blur)="focus1=false"/>
+                          <input #passwd type="password" placeholder="Password..." class="form-control" (focus)="focus1=true" (blur)="focus1=false"/>
                       </div>
 
                     </div>
                     <div class="footer text-center">
-                        <button class="btn btn-primary btn-round btn-lg btn-block" (click)="add(name.value, surname.value, user.value, passwd.value); name.value=''; surname.value='';
-      user.value=''; passwd.value=''">Registrarse</button>
+                        <button class="btn btn-primary btn-round btn-lg btn-block" type="button" (click)="add(name.value, surname.value, user.value, passwd.value); name.value=''; surname.value='';
+      user.value=''; passwd.value=''" >{{'REGISTER.BUTTON' | translate}}</button>
                       <div *ngFor="let alert of alerts">
                           <ngb-alert [type]="alert.type"  [dismissible]="false" >
                               <div class="container">

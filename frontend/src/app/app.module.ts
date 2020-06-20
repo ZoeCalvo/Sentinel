@@ -6,32 +6,79 @@ import { RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app.routing';
-import { ComponentsModule } from './components/components.module';
-import { ExamplesModule } from './examples/examples.module';
-import { HttpBackend, HttpClientModule } from '@angular/common/http';
-
+// import { ComponentsModule } from './components/components.module';
+// import { ExamplesModule } from './examples/examples.module';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import {LoginComponent} from './examples/login/login.component';
+import {ExamplesComponent} from './examples/examples.component';
+import {RegisterComponent} from './examples/register/register.component';
+import {ConfigComponent} from './examples/config/config.component';
+import {DashboardComponent} from './examples/dashboard/dashboard.component';
+import {MenuComponent} from './examples/menu/menu.component';
+import {TwitterComponent} from './examples/twitter/twitter.component';
+import {InstagramComponent} from './examples/instagram/instagram.component';
+import {InformationComponent} from './examples/information/information.component';
+import {TimeSeriesComponent} from './examples/time-series/time-series.component';
+import {CommonModule} from '@angular/common';
+import {NouisliderModule} from 'ng2-nouislider';
+import {JwBootstrapSwitchNg2Module} from 'jw-bootstrap-switch-ng2';
+import {AgmCoreModule} from '@agm/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {ComponentsComponent} from './components/components.component';
+import {NucleoiconsComponent} from './components/nucleoicons/nucleoicons.component';
 
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
     declarations: [
         AppComponent,
-        NavbarComponent
+        NavbarComponent,
+        LoginComponent,
+        ExamplesComponent,
+        RegisterComponent,
+        ConfigComponent,
+        DashboardComponent,
+        MenuComponent,
+        TwitterComponent,
+        InstagramComponent,
+        InformationComponent,
+        TimeSeriesComponent,
+        ComponentsComponent,
+        NucleoiconsComponent
     ],
     imports: [
+        CommonModule,
+        FormsModule,
+        NouisliderModule,
+        JwBootstrapSwitchNg2Module,
+        AgmCoreModule.forRoot({
+            apiKey: 'YOUR_KEY_HERE',
+            libraries: ['places']
+        }),
+        BrowserModule,
         BrowserAnimationsModule,
         NgbModule.forRoot(),
-        FormsModule,
         RouterModule,
         ChartsModule,
         ToastrModule.forRoot(),
         AppRoutingModule,
-        ComponentsModule,
-        ExamplesModule,
-        HttpClientModule
+        HttpClientModule,
+        TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: createTranslateLoader,
+          deps: [HttpClient]
+        }
+        })
     ],
     providers: [],
+    exports : [ComponentsComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

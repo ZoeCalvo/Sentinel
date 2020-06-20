@@ -78,11 +78,13 @@
             <div class="table">
               <table class="table">
                   <thead class=" text-primary">
-                    <div *ngIf="selectedLanguage == 'es'; else elseBlock">
+                    <div *ngIf="selectedLanguage == 'es'; then thenBlock; else elseBlock">
+                    </div>
+                    <ng-template #thenBlock>
                       <th *ngFor="let column of headers_analysis_es">
                           {{column}}
                       </th>
-                    </div>
+                    </ng-template>
                     <ng-template #elseBlock>
                       <th *ngFor="let column of headers_analysis_en">
                           {{column}}
@@ -110,11 +112,13 @@
             <div class="table">
               <table class="table">
                   <thead class=" text-primary">
-                    <div *ngIf="selectedLanguage=='es'; else elseBlock2">
+                    <div *ngIf="selectedLanguage=='es'; then  thenBlock2; else elseBlock2">
+                    </div>
+                    <ng-template #thenBlock2>
                       <th *ngFor="let column of header_statistics_es">
                         {{column}}
                       </th>
-                    </div>
+                    </ng-template>
                     <ng-template #elseBlock2>
                       <th *ngFor="let column of header_statistics_en">
                         {{column}}

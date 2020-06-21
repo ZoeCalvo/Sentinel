@@ -16,7 +16,6 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import {LoginComponent} from './examples/login/login.component';
 import {ExamplesComponent} from './examples/examples.component';
 import {RegisterComponent} from './examples/register/register.component';
-import {ConfigComponent} from './examples/config/config.component';
 import {DashboardComponent} from './examples/dashboard/dashboard.component';
 import {MenuComponent} from './examples/menu/menu.component';
 import {TwitterComponent} from './examples/twitter/twitter.component';
@@ -42,7 +41,6 @@ export function createTranslateLoader(http: HttpClient) {
         LoginComponent,
         ExamplesComponent,
         RegisterComponent,
-        ConfigComponent,
         DashboardComponent,
         MenuComponent,
         TwitterComponent,

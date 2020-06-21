@@ -149,29 +149,6 @@ def sentiment_analysis(comment):
 def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')
 
-# def explore(api):
-#     explore = []
-#     captions = []
-#     _ = api.explore()
-#     for post in api.LastJson['items']:
-#         explore.append(post)
-#
-#     for post in explore:
-#         if "media" in post:
-#             if post["media"]:
-#                 if "id" in post["media"]:
-#                     postId = str(post["media"]["id"])
-#
-#                 if "caption" in post["media"]:
-#                     captions.append(post["media"]["caption"])
-#                     for txt in captions:
-#                         if txt is not None:
-#                             if "text" in txt:
-#                                 text = str(txt["text"])
-#                                 print(text)
-#                         getMediaHashtag(postId, text)
-#     return None
-
 def search_users(api, userName):
     try:
         _ = api.searchUsername(userName)

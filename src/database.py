@@ -756,8 +756,13 @@ def selectUserTwForPieChart(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
-    for result in rv:
-        nmofilas_id = result[1]
+    if rv != []:
+        for result in rv:
+            nmofilas_id = result[1]
+
+        percentage = nmofilas_id / nmofilas
+    else:
+        percentage = 0
 
     percentage = nmofilas_id/nmofilas
 
@@ -1008,8 +1013,13 @@ def selectWordForPieChart(word, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
-    for result in rv:
-        nmofilas_id = result[1]
+    if rv != []:
+        for result in rv:
+            nmofilas_id = result[1]
+
+        percentage = nmofilas_id / nmofilas
+    else:
+        percentage = 0
 
     percentage = nmofilas_id/nmofilas
 
@@ -1260,8 +1270,13 @@ def selectDataUserIgForPieChart(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
-    for result in rv:
-        nmofilas_id = result[1]
+    if rv != []:
+        for result in rv:
+            nmofilas_id = result[1]
+
+        percentage = nmofilas_id / nmofilas
+    else:
+        percentage = 0
 
     percentage = nmofilas_id/nmofilas
 

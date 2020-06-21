@@ -17,8 +17,8 @@ export class AppComponent implements OnInit {
     selectedLanguage = 'en';
     @ViewChild(NavbarComponent) navbar: NavbarComponent;
 
-    constructor( private renderer : Renderer, private router: Router, @Inject(DOCUMENT) private document: any, private element : ElementRef, public location: Location,
-      private translateService: TranslateService) {
+    constructor( private renderer: Renderer, private router: Router, @Inject(DOCUMENT) private document: any, private element : ElementRef,
+                 public location: Location, private translateService: TranslateService) {
       this.translateService.setDefaultLang(this.selectedLanguage);
       this.translateService.use(this.selectedLanguage);
     }

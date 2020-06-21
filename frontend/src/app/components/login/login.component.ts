@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
             });
           }
 
-          this.sleep(500).then( () => {this.router.navigate(['examples/menu/', this.selectedLanguage])})
+          this.sleep(500).then( () => {this.router.navigate(['menu/', this.selectedLanguage])})
         } else {
           if (this.selectedLanguage === 'es') {
             this.alerts.push({

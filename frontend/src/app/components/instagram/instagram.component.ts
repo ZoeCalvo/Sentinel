@@ -62,7 +62,7 @@ export class InstagramComponent implements OnInit {
           }
           this.searchIdInInstagram(id, since_date, until_date);
         } else {
-          this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
+          this.router.navigate(['dashboard/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
         }
       } else {
         if (this.selectedLanguage === 'es') {
@@ -76,7 +76,7 @@ export class InstagramComponent implements OnInit {
             this.alerts.push({
               id: 1,
               type: 'info',
-              message: 'The id is not in the database.\n This action may take several minutes.',
+              message: 'The id is not in database.\n This action may take several minutes.',
               icon: 'travel_info'
             })
         }
@@ -128,7 +128,7 @@ export class InstagramComponent implements OnInit {
         }
 
       } else {
-        this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
+        this.router.navigate(['dashboard/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
       }
 
     });

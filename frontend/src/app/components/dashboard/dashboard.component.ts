@@ -413,7 +413,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   goToTimeSeries(id, since_date, until_date) {
-    this.router.navigate(['examples/time-series/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
+    this.router.navigate(['time-series/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
   }
   ngOnDestroy() {}
 }

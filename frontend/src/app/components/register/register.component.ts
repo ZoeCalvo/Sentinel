@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
         && this.regexpUsuPass.test(user) && this.regexpUsuPass.test(passwd)) {
         const newRegister: Register = { name, surname, user, passwd } as Register;
         this.registerService.addUser(newRegister).subscribe();
-        this.router.navigate(['examples/login/', this.selectedLanguage])
+        this.router.navigate(['login/', this.selectedLanguage])
       } else {
         if (this.selectedLanguage === 'es') {
           this.alerts.push({

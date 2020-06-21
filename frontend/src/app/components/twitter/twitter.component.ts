@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {TwitterService} from './twitter.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IAlert} from '../../components/notification/notification.component';
+import {IAlert} from '../notification/notification.component';
 
 
 @Component({
@@ -63,7 +63,7 @@ export class TwitterComponent implements OnInit {
             }
             this.searchIdInTwitter(id, since_date, until_date);
           } else {
-            this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
+            this.router.navigate(['dashboard/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
           }
         } else {
           if (this.selectedLanguage === 'es') {
@@ -77,7 +77,7 @@ export class TwitterComponent implements OnInit {
             this.alerts.push({
               id: 1,
               type: 'info',
-              message: 'The id is not in the database.\n This action may take several minutes.',
+              message: 'The id is not in database.\n This action may take several minutes.',
               icon: 'travel_info'
             })
           }
@@ -108,7 +108,7 @@ export class TwitterComponent implements OnInit {
 
   searchIdInTwitter(id: string, since_date, until_date) {
     this.twitterService.searchIdInApi(id).subscribe(response => {
-      this.router.navigate(['examples/dashboard/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
+      this.router.navigate(['dashboard/', id, since_date, until_date, this.is_tw, this.selectedLanguage])
     });
 
   }

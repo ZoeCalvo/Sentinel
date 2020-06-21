@@ -12,10 +12,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class MenuComponent implements OnInit {
   selectedLanguage = 'es';
-  constructor(private route: ActivatedRoute) {
-      // this.translateService.setDefaultLang(this.selectedLanguage);
-      // this.translateService.use(this.selectedLanguage);
-  }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
       this.selectedLanguage = this.route.snapshot.paramMap.get('lang');
@@ -24,9 +21,4 @@ export class MenuComponent implements OnInit {
       var body = document.getElementsByTagName('body')[0];
       body.classList.add('index-page');
   }
-
-  // selectLanguage(lang: string) {
-  //   this.translateService.use(lang);
-  // }
-
 }

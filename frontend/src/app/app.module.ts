@@ -12,7 +12,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import {LoginComponent} from './components/login/login.component';
-import {ExamplesComponent} from './examples/examples.component';
 import {RegisterComponent} from './components/register/register.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {MenuComponent} from './components/menu/menu.component';
@@ -37,7 +36,6 @@ export function createTranslateLoader(http: HttpClient) {
         AppComponent,
         NavbarComponent,
         LoginComponent,
-        ExamplesComponent,
         RegisterComponent,
         DashboardComponent,
         MenuComponent,

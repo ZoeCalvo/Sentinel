@@ -20,11 +20,12 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 clf = SentimentClassifier()
 translator = YandexTranslate(os.getenv('YANDEX_KEY'))
+num_items = 50
 
 def searchHashtag(hashtag, since_date=None, until_date=None):
     analysis_score = []
 
-    for tweet in tweepy.Cursor(api.search, q=hashtag, tweet_mode="extended", since=since_date, until=until_date).items(4):
+    for tweet in tweepy.Cursor(api.search, q=hashtag, tweet_mode="extended", since=since_date, until=until_date).items(num_items):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
@@ -36,7 +37,7 @@ def searchHashtag(hashtag, since_date=None, until_date=None):
 
 def searchUser(user, since_date=None, until_date=None):
     analysis_score = []
-    for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items(20):
+    for tweet in tweepy.Cursor(api.search, q=user, tweet_mode="extended", since=since_date, until=until_date).items(num_items):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)
@@ -47,7 +48,7 @@ def searchUser(user, since_date=None, until_date=None):
 
 def searchWord(word, since_date=None, until_date=None):
     analysis_score = []
-    for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items(20):
+    for tweet in tweepy.Cursor(api.search, q=word, tweet_mode="extended", since=since_date, until=until_date).items(num_items):
         tweet_ = html.unescape(tweet._json["full_text"])
         tw_sinemoji = deEmojify(tweet_)
         score = sentiment_analysis(tw_sinemoji)

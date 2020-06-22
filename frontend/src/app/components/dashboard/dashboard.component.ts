@@ -180,7 +180,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.graphsService.getforGraphs(id, since_date, until_date, is_tw).subscribe(
       response => {
-        console.log(response);
+
         let score = response['data'].map(response => response.analysis_score)
         let date = response['data'].map(response=> response.date)
 

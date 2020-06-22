@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.selectedLanguage = this.route.snapshot.paramMap.get('lang');
-        console.log(this.selectedLanguage)
         const body = document.getElementsByTagName('body')[0];
         body.classList.add('login-page');
 

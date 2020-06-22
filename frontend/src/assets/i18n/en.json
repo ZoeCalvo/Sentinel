@@ -35,7 +35,7 @@
         "BUTTON": "Analyze"
     },
     "DASHBOARD": {
-        "BUTTON_TIMESERIES": "Access to temporary series",
+        "BUTTON_TIMESERIES": "Access to time series",
         "SCORESCHART": "Analysis Score",
         "AVERAGECHART": "Average for days",
         "INTERVALCHART": "Intervals graph",

@@ -5,8 +5,8 @@ from textblob import TextBlob
 from classifier import *
 from yandex_translate import YandexTranslate, YandexTranslateException
 import json
-from src.statistics_formulas import *
-from src.database import *
+from statistics_formulas import *
+from database import *
 
 #Autenticación
 access_token = os.getenv('ACCESS_TOKEN')

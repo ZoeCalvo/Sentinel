@@ -1,6 +1,6 @@
 from flask import jsonify
 
-from src.database import *
+from database import *
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.holtwinters import ExponentialSmoothing, SimpleExpSmoothing, Holt
 from statsmodels.tsa.seasonal import seasonal_decompose

@@ -6,8 +6,8 @@ import html
 from textblob import TextBlob
 from yandex_translate import YandexTranslate, YandexTranslateException
 from classifier import *
-from src.statistics_formulas import *
-from src.database import *
+from statistics_formulas import *
+from database import *
 import time
 from datetime import date, datetime, timedelta
 

@@ -1,7 +1,7 @@
 import mysql.connector
 import os
 from datetime import datetime
-from src.statistics_formulas import *
+from statistics_formulas import *
 user_db = os.getenv('USER_DB')
 pass_db = os.getenv('PASSWD_DB')
 mydb = mysql.connector.connect(host="localhost", user=user_db, passwd=pass_db, database="telusko")

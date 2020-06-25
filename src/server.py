@@ -3,10 +3,10 @@ from flask_cors import CORS
 import mysql.connector
 import os
 import json
-from src.instagram import *
-from src.twitter import *
-from src.database import *
-from src.time_series import *
+from instagram import *
+from twitter import *
+from database import *
+from time_series import *
 app = Flask(__name__)
 CORS(app)
 

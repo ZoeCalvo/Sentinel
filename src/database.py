@@ -22,7 +22,6 @@ def register_users(data):
     val = (name, surname, username, passwd)
     mycursor.execute(sql, val)
     mydb.commit()
-    # print(mycursor.rowcount, "record inserted.")
     return 'OK'
 
 def get_user(data):

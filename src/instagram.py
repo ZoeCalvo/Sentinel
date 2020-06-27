@@ -41,7 +41,6 @@ def research(api, user_id):
             user_name = f2[j].get("username")
             print("id: ", user_id)
             print("name: ", user_name)
-            #getMediaData(user_id)
         else:
             num += 1
     return None

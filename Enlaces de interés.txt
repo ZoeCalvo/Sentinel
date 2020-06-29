@@ -1,0 +1,16 @@
+ENLACES DE INTERÉS DEL PROYECTO FINAL DE GRADO SENTINEL
+
+Link al vídeo:
+	https://universidaddeburgos-my.sharepoint.com/:v:/g/personal/zcs0001_alu_ubu_es/ERjAsfxjujRFpTYdfLB4U38B4LJkMbzSpRDfwId5juWtGg?e=7F7T6x
+
+Link a la aplicación desplegada:
+	https://frontsentinel.herokuapp.com/
+
+Link al repositorio de GitHub:
+	https://github.com/ZoeCalvo/Sentinel
+
+Link a la máquina virtual:
+	https://universidaddeburgos-my.sharepoint.com/:u:/g/personal/zcs0001_alu_ubu_es/EXkdeBn6eGxAtBJ75ZehFYcBEUgRdfdd6piQdYTXsgBdYw?e=M5fjLd
+
+Link a la wiki del proyecto:
+	https://zcs0001.gitbook.io/sentinel/

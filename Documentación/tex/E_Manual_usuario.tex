@@ -1,0 +1,235 @@
+\apendice{Documentación de usuario}
+
+\section{Introducción}
+En este apéndice se va a explicar cómo ejecutar la aplicación por parte del usuario.
+
+\section{Requisitos de usuarios}
+La aplicación va a ser accesible desde este enlace \url{https://frontsentinel.herokuapp.com/}. 
+La aplicación ha sido desplegada y está operativa para el hosting gratuito, pero para poder disponer de ella de forma más rápida, ya que conlleva gran carga de almacenamiento, se facilita una máquina virtual con todos los requisitos ya instalados. De esta forma, se podrán realizar pruebas más rápidas.
+
+Como se trata de una aplicación web, no es necesario que el usuario cuente con más requisitos que tener una versión del navegador compatible:
+
+\begin{itemize}
+\tightlist
+    \item Safari 9 o superior.
+    \item Opera 28 o superior.
+    \item Google Chrome 41 o superior.
+    \item Mozilla Firefox 40 o superior.
+    \item Microsoft Edge 12 o superior.
+\end{itemize}
+
+
+
+\section{Instalación}
+El usuario no va necesitar instalar nada para poder utilizar Sentinel, simplemente debe utilizar un navegador de los anteriores y acceder al enlace.
+
+\section{Manual del usuario}
+Para el manual de usuario se ha realizado una wiki en español e inglés, está accesible a través de este enlace: 
+\url{https://zcs0001.gitbook.io/sentinel/}
+
+Como se ha explicado en los requisitos, para acceder a la aplicación se puede hacer a través del enlace \url{https://frontsentinel.herokuapp.com/}, o a través de la máquina virtual facilitada.
+
+\subsection{Inicio}
+Esta es la primera página que se visualiza cuando se entra en la web, en ella aparece el nombre de la aplicación, de qué trata en una frase y el nombre de la autora.
+
+\imagen{/manual_usuario/inicioES}{Página de inicio de la aplicación.}
+
+\subsection{Barra de navegación}
+Este elemento está presente en todas las ventanas de la aplicación y es el que va a permitir al usuario comenzar a interactuar con la web.
+Contiene tres botones y un menú desplegable. 
+El primer botón es \textbf{SENTINEL} que al pulsarlo nos redirigirá a la pantalla de inicio.
+El botón \textbf{INFORMACIÓN} nos lleva a la página en la que se explica de forma general la aplicación y cómo utilizarla.
+El botón \textbf{LOGIN}, es el que nos dará acceso a la pantalla en la que podremos introducir nuestro usuario y contraseña para acceder al menú de la aplicación.
+Además, cuenta con un menú desplegable para poder cambiar de idioma. Como se puede ver, la aplicación está disponible en inglés y en castellano.
+ 
+\imagen{/manual_usuario/navbarES}{Barra de navegación.}
+
+\subsection{Información}
+En la ventana de información se encuentra una breve explicación de qué es Sentinel y cuáles son sus objetivos.
+
+Cuenta con una lista de cuales son los cinco pasos que te permitirán utilizar de forma correcta la web y se cuenta de donde nace la idea de la herramienta.
+
+Además dentro de la página se adjuntan fotos de como es la aplicación, pantalla de inicio y gráficos.
+
+\imagen{/manual_usuario/info1ES}{Página de información primera parte.}
+\imagen{/manual_usuario/info2ES}{Página de información segunda parte.}
+
+\subsection{Login}
+En caso de ser la primera vez que se utiliza la web, hay un botón de \textbf{CREAR CUENTA} que nos redirigirá a la ventana del registro.
+
+Para poder acceder al menú hay que introducir el nombre de usuario y contraseña.
+
+En caso de que la cuenta exista, nos mostrará una notificación emergente de bienvenida. En caso contrario mostrará una diciendo que el usuario o la contraseña no son correctos.
+
+\imagen{/manual_usuario/loginES}{Página de login.}
+
+\imagen{/manual_usuario/accesoES}{Acceso permitido.}
+
+\imagen{/manual_usuario/noaccesoES}{Acceso denegado.}
+
+\subsection{Registro}
+Tras haber seleccionado el botón de \textbf{CREAR CUENTA} en la ventana de Login aparece la ventana en la que podremos registrarnos.
+Para realizar el registro hay que rellenar los campos que nos aparecen que son: nuestro nombre, apellido, el nombre de usuario que queramos utilizar y la contraseña.
+Después de rellenar el formulario pulsamos el botón de \textbf{REGISTRARSE} y si no hemos introducido ningún carácter inválido nos redirigirá a la ventana de \textbf{LOGIN} de nuevo para que realicemos el acceso.
+
+\imagen{/manual_usuario/registroES}{Página de registro.}
+
+Para los campos de nombre y apellidos solo se permiten letras mayúsculas y minúsculas. Para el nombre de usuario y la contraseña además de letras mayúsculas y minúsculas se pueden añadir números enteros y guiones bajos.
+
+En caso de introducir un carácter no permitido se mostrará una alerta.
+
+\imagen{/manual_usuario/letramalregistroES}{Carácter no permitido.}
+
+\subsection{Menú}
+Cuando realizamos el acceso correctamente la web nos redirige a la ventana del menú, donde podemos elegir en qué red social queremos analizar.
+Tenemos la opción de analizar en Twitter o en Instagram, para acceder a cualquiera de las dos, podemos seleccionar el botón o la imagen, ya que ambas dan acceso a la ventana de análisis.
+
+\imagen{/manual_usuario/menuES}{Página de menú.}
+
+\subsection{Ventana de análisis en Twitter e Instagram}
+La ventana de análisis en Twitter y la de análisis en Instagram son iguales excepto en los caracteres que se permiten en el identificador, por ello se han juntado.
+Podemos ver que tienen un formulario en el cual nos piden el identificador por el que queremos buscar y las fechas entre las que queremos buscar. Además una casilla en la que podemos solicitar que se actualicen los resultados de la base de datos.
+Para realizar el análisis lo único que es indispensable es el identificador, la fecha es opcional ya que si no introducimos ninguna se nos mostrarán todos los resultados que hay en la base de datos de ese identificador.
+
+\imagen{/manual_usuario/instagramES}{Página de análisis en instagram.}
+
+\imagen{/manual_usuario/twitterES}{Página de análisis en twitter.}
+
+En el análisis de Twitter el identificador que puede introducirse es un hashtag, un usuario o una palabra.
+\begin{itemize}
+\tightlist
+    \item \textbf{Hashtag:} Para buscar un hashtag hay que introducir el símbolo \# antes de la palabra. Por ejemplo \textit{\#ubu}. 
+    \imagen{/manual_usuario/hashtag}{Hashtag.}
+    \item \textbf{Usuario:} Si queremos buscar sobre un usuario hay que escribir lo primero @ seguido del nombre del usuario. Por ejemplo \textit{@UBUEstudiantes}.
+    \imagen{/manual_usuario/userTw}{Usuario de twitter.}
+    \item\textbf{Palabra:} En este caso simplemente se debe introducir la palabra. 
+    \imagen{/manual_usuario/palabra}{Palabra.}
+\end{itemize}
+En el análisis de Instagram solo se puede buscar sobre un usuario, por lo que en el identificador deberemos introducir el usuario pero sin @.
+
+\imagen{/manual_usuario/userIg}{Usuario de instagram.}
+
+Si escribimos algún carácter que no sea permitido, nos mostrará un mensaje de error.
+
+\imagen{/manual_usuario/errorTWES}{Carácter incorrecto para twitter.}
+\imagen{/manual_usuario/errorIGES}{Carácter incorrecto para instagram.}
+
+Para seleccionar fechas hay que seleccionar la casilla y se desplegará un calendario para que escojamos una fecha.
+
+\imagen{/manual_usuario/selectDate}{Escoger una fecha.}
+
+Cuando hayamos introducido todo se nos redirigirá a la ventana de gráficos para mostrar los resultados.
+
+\subsubsection{Actualizar base de datos}
+Cuando vamos a realizar el análisis la aplicación nos permite actualizar los resultados que están almacenados en la base de datos para poder tener datos más actuales.
+Si queremos seleccionar esta opción, deberemos marcar la casilla de Actualizar base de datos.
+Entonces, nos aparecerá una alerta de que la acción podría tardar unos minutos. Cuando termine de cargar los nuevos resultados nos redirigirá automáticamente a la ventana de gráficos.
+
+\imagen{/manual_usuario/updateBDES}{Actualizar la base de datos.}
+
+\subsubsection{El identificador no está en la base de datos}
+Cuando buscamos un identificador que no se encuentra en la base de datos previamente la aplicación mostrará una alerta de que la acción puede tardar unos minutos. Por tanto, hay que esperar y cuando se hayan cargado los resultados se nos redirigirá a la ventana de gráficos de forma automática.
+
+\imagen{/manual_usuario/noIDES}{El identificador no está en la base de datos.}
+
+\subsection{Gráficos}
+En esta pantalla se muestran los resultados de la búsqueda en gráficos para poder tener una experiencia más visual.
+Además de los gráficos, nos permite el acceso a la pantalla de series temporales. Este botón se encuentra en la parte superior a la derecha. También hay un botón para poder volver al menú y así realizar un análisis nuevo que se encuentra en la parte inferior a la izquierda.
+
+\imagen{/manual_usuario/accesoTSES}{Botón para acceder a series temporales.}
+
+\imagen{/manual_usuario/volvermenuES}{Botón para volver al menú.}
+
+Hay varios gráficos y tablas, a continuación se explica cada uno
+
+\subsubsection{Resultados de análisis-Gráfico}
+Es un gráfico de barras que nos muestra todos los resultados del análisis, su fecha y su puntuación.
+
+\imagen{/manual_usuario/resultsAnalisisES}{Gráfico de los resultados del análisis.}
+
+\subsubsection{Media por días}
+Este gráfico de líneas nos muestra el resultado de realizar la media por días.
+
+\imagen{/manual_usuario/mediaxdiaES}{Gráfico de la media por día.}
+
+\subsubsection{Gráfico de intervalos}
+Es un gráfico de barras que agrupa los resultados en intervalos de 0.1. Los intervalos son fijos entre el -1 y el 1.
+
+\imagen{/manual_usuario/intervalosfijosES}{Gráfico de intervalos fijos.}
+
+Si seleccionamos el icono de intervalos dinámicos que aparece debajo del gráfico, se nos mostrarán los resultados agrupados en intervalos calculados de forma dinámica. Es decir, serán diez intervalos entre el menor valor de los resultados y el mayor.
+
+\imagen{/manual_usuario/intervalosdinamicosES}{Gráfico de intervalos dinámicos.}
+
+\subsubsection{Sentinel Trends}
+
+Es un gráfico circular que nos muestra la importancia que tiene el identificador en nuestra base de datos, ya que se calcula cuántos resultados hay respecto al total.
+
+\imagen{/manual_usuario/sentinelTrendsES}{Gráfico de sentinel trends.}
+
+\subsubsection{Resultados de análisis-Tabla}
+Esta tabla nos muestra los resultados del análisis y el texto que se ha analizado.
+
+\imagen{/manual_usuario/analisisTabla}{Tabla de los resultados del análisis.}
+
+\subsubsection{Estadísticas}
+En esta tabla se nos muestra el identificador que hemos buscado junto con los cálculos estadísticos que se han realizado a los resultados. Las operaciones estadísticas realizadas son media, mediana, moda, varianza y desviación típica.
+
+\imagen{/manual_usuario/tablaestadisticasES}{Tabla de estadísticas.}
+
+\subsection{Series Temporales}
+En esta ventana podemos calcular series temporales a partir de los resultados recogidos del identificador. 
+Se muestra un menú en el que hay que elegir qué serie temporal queremos, el modelo y una casilla en la que pondremos cuántos valores queremos predecir.
+
+\imagen{/manual_usuario/menuTSES}{Menú de series temporales.}
+
+También tenemos un botón en la parte inferior a la izquierda para volver al menú.
+
+\imagen{/manual_usuario/volvermenuES}{Botón para volver al menú.}
+
+\subsubsection{Desplegable serie temporal}
+Nos dan tres opciones de series temporales a calcular, suavizado exponencial, método Holt y método Arima.
+
+\imagen{/manual_usuario/tsTipoES}{Desplegable serie temporal.}
+
+\subsubsection{Desplegable modelo}
+Se puede elegir entre el modelo aditivo o multiplicativo.
+
+\imagen{/manual_usuario/modeloES}{Desplegable modelo.}
+
+\subsubsection{Valores a predecir}
+Tenemos una casilla para introducir un valor entero positivo de cuántos valores queremos predecir. Además cuenta con flechas para aumentar el valor por si no queremos escribir el valor.
+
+\imagen{/manual_usuario/prediccionES}{Valores a predecir.}
+
+Cuando hayamos seleccionado una opción en cada uno pulsaremos el botón de calcular, lo cual nos mostrará los resultados.
+
+Lo primero, nos muestra si la serie temporal es o no estacionaria.
+
+\imagen{/manual_usuario/estacionariaES}{Es o no estacionaria.}
+
+Después se nos muestran cuatro gráficos.
+
+\subsubsection{Serie temporal}
+Este gráfico nos muestra los resultados reales, en la línea verde, los resultados de calcular la serie temporal en naranja y los valores de predicción en azul.
+
+\imagen{/manual_usuario/TSgraficoES}{Gráfico de serie temporal.}
+
+Los tres gráficos restantes resultan de descomponer la serie temporal.
+
+\subsubsection{Estacionalidad}
+En este gráfico se muestra la estacionalidad de la serie temporal, es decir, su variación a lo largo del tiempo.
+
+\imagen{/manual_usuario/estacionalidadES}{Gráfico de la estacionalidad.}
+
+\subsubsection{Tendencia}
+La gráfica muestra la tendencia de la serie temporal que refleja la evolución a largo plazo.
+
+\imagen{/manual_usuario/TendenciaES}{Gráfico de la tendencia.}
+
+\subsubsection{Residuo}
+En este gráfico vemos el residuo de la serie temporal, que se usa para probar el grado de ajuste de los modelos.
+
+\imagen{/manual_usuario/residuoES}{Gráfico del residuo.}
+
+

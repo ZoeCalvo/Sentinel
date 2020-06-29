@@ -1,0 +1,9 @@
+CREATE TABLE `datahashtags` (
+   `iddatahashtags` int NOT NULL AUTO_INCREMENT,
+   `hashtag` varchar(45) NOT NULL,
+   `text` varchar(300) DEFAULT NULL,
+   `date` date DEFAULT NULL,
+   `analysis_score` float DEFAULT NULL,
+   PRIMARY KEY (`iddatahashtags`),
+   KEY `idx_hashtag` (`hashtag`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4

@@ -4,10 +4,10 @@ import re
 import os
 import html
 from textblob import TextBlob
-from yandex_translate import YandexTranslate
+from yandex_translate import YandexTranslate, YandexTranslateException
 from classifier import *
-from src.statistics_formulas import *
-from src.database import *
+from statistics_formulas import *
+from database import *
 import time
 from datetime import date, datetime, timedelta
 
@@ -41,7 +41,6 @@ def research(api, user_id):
             user_name = f2[j].get("username")
             print("id: ", user_id)
             print("name: ", user_name)
-            #getMediaData(user_id)
         else:
             num += 1
     return None
@@ -81,7 +80,7 @@ def getMediaData(api, userId, username):
 
 
         results = reconvert_results_ig(list_results_analysis)
-        insert_statistics(username, results)
+        insert_statistics(username, results, True)
 
     except:
         pass
@@ -134,16 +133,14 @@ def sentiment_analysis(comment):
     comment = html.unescape(comment)
 
     if not comment == '""':
-        # if translator.detect(comment) == 'en':
-        #     score = TextBlob(comment).sentiment.polarity
-        # elif translator.detect(comment) == 'es':
-            # Primera opción utilizar la librería en español
-        score = clf.predict(comment)
-            # Segunda opción, traducir y utilizar librería en inglés
-            # translate = translator.translate(comment, 'en')
-            # score = TextBlob(translate["text"][0]).sentiment.polarity
-        # else:
-        #     score = TextBlob(comment).sentiment
+        try:
+            if translator.detect(comment) == 'en':
+                score = TextBlob(comment).sentiment.polarity
+            else:
+                score=clf.predict(comment)
+        except YandexTranslateException:
+            score = clf.predict(comment)
+
         return score
     else:
         return None
@@ -151,33 +148,12 @@ def sentiment_analysis(comment):
 def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')
 
-def explore(api):
-    explore = []
-    captions = []
-    _ = api.explore()
-    for post in api.LastJson['items']:
-        explore.append(post)
-
-    for post in explore:
-        if "media" in post:
-            if post["media"]:
-                if "id" in post["media"]:
-                    postId = str(post["media"]["id"])
-
-                if "caption" in post["media"]:
-                    captions.append(post["media"]["caption"])
-                    for txt in captions:
-                        if txt is not None:
-                            if "text" in txt:
-                                text = str(txt["text"])
-                                print(text)
-                        getMediaHashtag(postId, text)
-    return None
-
 def search_users(api, userName):
-    _ = api.searchUsername(userName)
-    userId = api.LastJson["user"]["pk"]
-    #
+    try:
+        _ = api.searchUsername(userName)
+        userId = api.LastJson["user"]["pk"]
+    except:
+        userId = False
 
     return userId
 

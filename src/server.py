@@ -3,10 +3,10 @@ from flask_cors import CORS
 import mysql.connector
 import os
 import json
-from src.instagram import *
-from src.twitter import *
-from src.database import *
-
+from instagram import *
+from twitter import *
+from database import *
+from time_series import *
 app = Flask(__name__)
 CORS(app)
 
@@ -20,35 +20,12 @@ def login():
 @app.route('/register', methods=['POST'])
 def register_db():
     register_users(request.json)
-    return 'OK'
+    return jsonify({'ok': True})
 
 @app.route('/')
 def titulo():
 
     return jsonify({'text': 'Hola!!!'})
-
-
-@app.route('/instagram')
-def init_ig():
-    api_ig = main()
-    followings = input("¿Quieres mirar a quién sigues?: (Y/N) ")
-    if followings == "Y":
-        user = input("Introduce tu nombre de usuario sin @: ")
-        userId = search_users(api_ig, user)
-        research(api_ig, userId)
-    else:
-        ans = input("Quieres buscar a un usuario concreto?: (Y/N) ")
-        if ans == "Y":
-            user = input("Introduce el nombre del usuario sin @: ")
-            userId = search_users(api_ig, user)
-            results_analysis = getMediaData(api_ig, userId, user)
-            userId_json = json.dumps(userId)
-            results_analysis_json = json.dumps(results_analysis)
-        else:
-            explore(api_ig)
-
-    return jsonify({'userID' : userId_json, 'results_analysis' : results_analysis_json})
-
 
 @app.route('/idTwitterInDB', methods=['GET'])
 def checkIdInDBTw():
@@ -75,8 +52,11 @@ def checkIdInDBIg():
 def searchIdIg():
     api_ig = main()
     userId = search_users(api_ig, request.args.get('id'))
-    getMediaData(api_ig, userId, request.args.get('id'))
-    return jsonify({'ok': True})
+    if userId != False:
+        getMediaData(api_ig, userId, request.args.get('id'))
+    else:
+        return jsonify({'userExists': False})
+    return jsonify({'userExists': True})
 
 @app.route('/getDataforDashboard', methods=['GET'])
 def getDataforDashboard():
@@ -162,6 +142,23 @@ def getDataForPieChart():
                                                  request.args.get('until_date'))
 
     return jsonify({'data':analysis_score})
+
+@app.route('/statistics', methods=['GET'])
+def getStatisticsForTable():
+    statistics = select_statistics(request.args.get('id'))
+
+    return jsonify({'data':statistics})
+
+@app.route('/timeSerie', methods=['GET'])
+def getTimeSeries():
+    obj_data,obj_data_time_serie,proyeccion,estacionaria, estacionalidad, tendencia, residuo = loading_data(request.args.get('id'),
+                                        request.args.get('since_date'), request.args.get('until_date'),
+                                        request.args.get('is_tw'),request.args.get('type'), request.args.get('schema'),
+                                        request.args.get('num_periods'))
+
+
+    return jsonify(data_original = obj_data, data_time_serie = obj_data_time_serie, proyeccion = proyeccion, estacionaria = estacionaria,
+                   estacionalidad = estacionalidad, tendencia = tendencia, residuo = residuo)
 
 if __name__ == '__main__':
     app.run()

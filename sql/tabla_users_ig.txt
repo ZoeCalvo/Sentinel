@@ -1,0 +1,10 @@
+ CREATE TABLE `datauserig` (
+   `iddatauserig` int NOT NULL AUTO_INCREMENT,
+   `user` varchar(45) NOT NULL,
+   `post` varchar(45) DEFAULT NULL,
+   `datepost` date DEFAULT NULL,
+   `comment` varchar(2200) DEFAULT NULL,
+   `analysis_score` float DEFAULT NULL,
+   PRIMARY KEY (`iddatauserig`),
+   KEY `idx_user` (`user`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4

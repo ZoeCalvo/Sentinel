@@ -1,0 +1,21 @@
+ CREATE TABLE `statistics` (
+   `idstatistics` varchar(45) NOT NULL,
+   `mean` float DEFAULT NULL,
+   `median` float DEFAULT NULL,
+   `mode` float DEFAULT NULL,
+   `variance` float DEFAULT NULL,
+   `typical_deviation` float DEFAULT NULL,
+   `hashtag` varchar(45) DEFAULT NULL,
+   `usertw` varchar(45) DEFAULT NULL,
+   `userig` varchar(45) DEFAULT NULL,
+   `word` varchar(45) DEFAULT NULL,
+   PRIMARY KEY (`idstatistics`),
+   KEY `hashtag_idx` (`hashtag`),
+   KEY `usertw_idx` (`usertw`),
+   KEY `userig_idx` (`userig`),
+   KEY `word_idx` (`word`),
+   CONSTRAINT `hashtag` FOREIGN KEY (`hashtag`) REFERENCES `datahashtags` (`hashtag`),
+   CONSTRAINT `userig` FOREIGN KEY (`userig`) REFERENCES `datauserig` (`user`),
+   CONSTRAINT `usertw` FOREIGN KEY (`usertw`) REFERENCES `datausertw` (`user`),
+   CONSTRAINT `word` FOREIGN KEY (`word`) REFERENCES `dataword` (`word`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4

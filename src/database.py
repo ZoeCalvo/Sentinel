@@ -1,7 +1,7 @@
 import mysql.connector
 import os
 from datetime import datetime
-from src.statistics_formulas import *
+from statistics_formulas import *
 user_db = os.getenv('USER_DB')
 pass_db = os.getenv('PASSWD_DB')
 mydb = mysql.connector.connect(host="localhost", user=user_db, passwd=pass_db, database="telusko")
@@ -22,7 +22,6 @@ def register_users(data):
     val = (name, surname, username, passwd)
     mycursor.execute(sql, val)
     mydb.commit()
-    # print(mycursor.rowcount, "record inserted.")
     return 'OK'
 
 def get_user(data):
@@ -38,41 +37,150 @@ def get_user(data):
 
 
 
-def insert_dataHashtags(hashtag, data, text, score, list_scores):
-    analysis_score = _float64_to_mysql(score)
-    sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
-    val = (hashtag, text, date, analysis_score)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    insert_statistics(hashtag, list_scores)
+def insert_dataHashtags(hashtag, data, text, score):
+   try:
+        total_scores = []
+        created_at = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').date()
+        sql = ("SELECT text, date FROM datahashtags WHERE hashtag = %s")
+        value = (hashtag,)
+        mycursor.execute(sql, value)
+        result = mycursor.fetchall()
+        if result != []:
+            last_date = result[0][1]
+            last_text = result[0][0]
+            for d in result:
+                if last_date < d[1]:
+                    last_date = d[1]
+                    last_text = d[0]
+
+            if created_at >= last_date:
+                if text != last_text:
+                    analysis_score = _float64_to_mysql(score)
+                    sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
+                    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
+                    val = (hashtag, text, date, analysis_score)
+                    mycursor.execute(sql, val)
+                    mydb.commit()
+
+        else:
+            analysis_score = _float64_to_mysql(score)
+            sql = ("INSERT INTO datahashtags(hashtag, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
+            date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
+            val = (hashtag, text, date, analysis_score)
+            mycursor.execute(sql, val)
+            mydb.commit()
+   except:
+    pass
+
+    sql = ("SELECT analysis_score FROM datahashtags WHERE hashtag = %s")
+    value = (hashtag,)
+    mycursor.execute(sql, value)
+    result = mycursor.fetchall()
+
+    for r in result:
+        total_scores.append(r[0])
+
+    insert_statistics(hashtag, total_scores)
+
     return 'OK'
 
 
-def insert_dataUsersTw(user, data, text, score, list_score):
-    analysis_score = _float64_to_mysql(score)
-    sql = ("INSERT INTO datausertw(user, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
-    val = (user, text, date, analysis_score)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    insert_statistics(user, list_score)
+def insert_dataUsersTw(user, data, text, score):
+    try:
+        total_scores = []
+        created_at = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').date()
+        sql = ("SELECT text,date FROM datausertw WHERE user = %s")
+        value = (user,)
+        mycursor.execute(sql, value)
+        result = mycursor.fetchall()
+        if result != []:
+            last_date = result[0][1]
+            last_text = result[0][0]
+            for d in result:
+                if last_date < d[1]:
+                    last_date = d[1]
+                    last_text = d[0]
+
+            if created_at >= last_date:
+                if text != last_text:
+                    analysis_score = _float64_to_mysql(score)
+                    sql = ("INSERT INTO datausertw(user, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
+                    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
+                    val = (user, text, date, analysis_score)
+                    mycursor.execute(sql, val)
+                    mydb.commit()
+
+        else:
+            analysis_score = _float64_to_mysql(score)
+            sql = ("INSERT INTO datausertw(user, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
+            date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
+            val = (user, text, date, analysis_score)
+            mycursor.execute(sql, val)
+            mydb.commit()
+
+    except:
+        pass
+    sql = ("SELECT analysis_score FROM datausertw WHERE user = %s")
+    value = (user,)
+    mycursor.execute(sql, value)
+    result = mycursor.fetchall()
+
+    for r in result:
+        total_scores.append(r[0])
+
+    insert_statistics(user, total_scores)
     return 'OK'
 
 
-def insert_dataWord(word, data, text, score, list_score):
-    analysis_score = _float64_to_mysql(score)
-    sql = ("INSERT INTO dataword(word, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
-    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
-    val = (word, text, date, analysis_score)
-    mycursor.execute(sql, val)
-    mydb.commit()
-    insert_statistics(word, list_score)
+def insert_dataWord(word, data, text, score):
+    try:
+        total_scores = []
+        created_at = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').date()
+        sql = ("SELECT text, date FROM dataword WHERE word = %s")
+        value = (word,)
+        mycursor.execute(sql, value)
+        result = mycursor.fetchall()
+        if result != []:
+            last_date = result[0][1]
+            last_text = result[0][0]
+            for d in result:
+                if last_date < d[1]:
+                    last_date = d[1]
+                    last_text = d[0]
+
+            if created_at >= last_date:
+                if text != last_text:
+                    analysis_score = _float64_to_mysql(score)
+                    sql = ("INSERT INTO dataword(word, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
+                    date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
+                    val = (word, text, date, analysis_score)
+                    mycursor.execute(sql, val)
+                    mydb.commit()
+
+
+        else:
+            analysis_score = _float64_to_mysql(score)
+            sql = ("INSERT INTO dataword(word, text, date, analysis_score) VALUES (%s, %s, %s, %s)")
+            date = datetime.strptime(data._json['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d')
+            val = (word, text, date, analysis_score)
+            mycursor.execute(sql, val)
+            mydb.commit()
+    except:
+        pass
+    sql = ("SELECT analysis_score FROM dataword WHERE word = %s")
+    value = (word,)
+    mycursor.execute(sql, value)
+    result = mycursor.fetchall()
+
+    for r in result:
+        total_scores.append(r[0])
+
+    insert_statistics(word, total_scores)
 
     return 'OK'
 
 
-def insert_statistics(id, analysis_score):
+def insert_statistics(id, analysis_score, ig=False):
     mean, median, mode, variance, typical_deviation = calculateStats(analysis_score)
     mean = _float64_to_mysql(mean)
     median = _float64_to_mysql(median)
@@ -84,8 +192,23 @@ def insert_statistics(id, analysis_score):
     mycursor.execute(sql, val)
     r = mycursor.fetchall()
     if r == []:
-        sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation) VALUES (%s, %s, %s, %s, %s, %s)")
-        val = (id, mean, median, mode, variance, typical_deviation)
+        if ig==False:
+            if id[0]=='#':
+                sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, hashtag)"
+                       " VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                val = (id, mean, median, mode, variance, typical_deviation, id)
+            elif id[0]=='@':
+                sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, usertw) "
+                       "VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                val = (id, mean, median, mode, variance, typical_deviation, id)
+            else:
+                sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, word)"
+                       " VALUES (%s, %s, %s, %s, %s, %s, %s)")
+                val = (id, mean, median, mode, variance, typical_deviation, id)
+        else:
+            sql = ("INSERT INTO statistics(idstatistics, mean, median, mode, variance, typical_deviation, userig)"
+                   " VALUES (%s, %s, %s, %s, %s, %s, %s)")
+            val = (id, mean, median, mode, variance, typical_deviation, id)
         mycursor.execute(sql, val)
     else:
         sql = ("UPDATE statistics SET mean=%s, median=%s, mode=%s, variance=%s, typical_deviation=%s WHERE idstatistics = %s")
@@ -96,13 +219,34 @@ def insert_statistics(id, analysis_score):
     return 'OK'
 
 def insert_dataUsersIg(user, post, datepost, comment, analysis_score):
-    analysis_score = _float64_to_mysql(analysis_score)
-    datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
-    sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
-    val = (user, post, datepost, comment, analysis_score)
-    mycursor.execute(sql, val)
-    mydb.commit()
+    created_at = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').date()
+    sql = ("SELECT datepost, comment FROM datauserig WHERE user = %s")
+    value = (user,)
+    mycursor.execute(sql, value)
+    result = mycursor.fetchall()
+    if result != []:
+        last_date = result[0][0]
+        last_text = result[0][1]
+        for d in result:
+            if last_date < d[0]:
+                last_date = d[0]
+                last_text = d[1]
 
+        if created_at >= last_date:
+            if comment != last_text:
+                analysis_score = _float64_to_mysql(analysis_score)
+                datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+                sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
+                val = (user, post, datepost, comment, analysis_score)
+                mycursor.execute(sql, val)
+                mydb.commit()
+    else:
+        analysis_score = _float64_to_mysql(analysis_score)
+        datepost = datetime.strptime(datepost, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+        sql = ("INSERT INTO datauserig(user, post, datepost, comment, analysis_score) VALUES (%s, %s, %s, %s, %s)")
+        val = (user, post, datepost, comment, analysis_score)
+        mycursor.execute(sql, val)
+        mydb.commit()
     return 'OK'
 
 def checkIdinDBTw(id):
@@ -161,8 +305,10 @@ def select_dataHashtags(hashtag, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[2])
+
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -189,8 +335,9 @@ def selectHashtagsGroupByDates(hashtag, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[1])
     for result in rv:
-        content = {'analysis_score': result[0], 'date': result[1]}
+        content = {'analysis_score': result[0], 'date': result[1].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -236,7 +383,11 @@ def selectHashtagsByIntervals(hashtag, since_date, until_date):
 
     gap = (max - min)/10
 
-    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    intervals = [(round(min, 2), round(min + gap, 2)), (round(min + gap, 2), round(min + gap * 2, 2)),
+                 (round(min + gap * 2, 2), round(min + gap * 3, 2)), (round(min + gap * 3, 2), round(min + gap * 4, 2)),
+                 (round(min + gap * 4, 2), round(min + gap * 5, 2)), (round(min + gap * 5, 2), round(min + gap * 6, 2)),
+                 (round(min + gap * 6, 2), round(min + gap * 7, 2)), (round(min + gap * 7, 2), round(min + gap * 8, 2)),
+                 (round(min + gap * 8, 2), round(min + gap * 9, 2)), (round(min + gap * 9, 2), round(max, 2))]
     for result in rv:
         if min <= result[0] and result[0] <= min+gap:
             int0 = int0 + 1
@@ -357,10 +508,13 @@ def selectHashtagsForPieChart(hashtag, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
-    for result in rv:
-        nmofilas_id = result[1]
+    if rv!=[]:
+        for result in rv:
+            nmofilas_id = result[1]
 
-    percentage = nmofilas_id/nmofilas
+        percentage = nmofilas_id/nmofilas
+    else:
+        percentage = 0
 
     for result in rv:
         content = {'id': result[0], 'numero_filas': percentage}
@@ -369,6 +523,31 @@ def selectHashtagsForPieChart(hashtag, since_date, until_date):
     content = {'id': 'others', 'numero_filas': 1-percentage}
     final.append(content)
     return final
+
+def selectHashtagsForTimeSeries(hashtag, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, date FROM datahashtags WHERE hashtag = %s AND date<=%s")
+            val = (hashtag, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, date FROM datahashtags WHERE hashtag = %s AND date>=%s")
+            val = (hashtag, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, date FROM datahashtags WHERE hashtag = %s")
+            val = (hashtag,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, date FROM datahashtags WHERE hashtag = %s AND date BETWEEN %s AND %s")
+        val = (hashtag, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    rv.sort(key=lambda r: r[1])
+
+    return rv
 
 def select_dataUserTw(user, since_date, until_date):
     if since_date=='' or until_date=='':
@@ -391,8 +570,9 @@ def select_dataUserTw(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[2])
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -418,8 +598,9 @@ def selectUserTwGroupByDates(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[1])
     for result in rv:
-        content = {'analysis_score': result[0], 'date': result[1]}
+        content = {'analysis_score': result[0], 'date': result[1].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -463,7 +644,11 @@ def selectUserTwByIntervals(user, since_date, until_date):
         if max < result[0]:
             max = result[0]
     gap = (max - min)/10
-    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    intervals = [(round(min, 2), round(min + gap, 2)), (round(min + gap, 2), round(min + gap * 2, 2)),
+                 (round(min + gap * 2, 2), round(min + gap * 3, 2)), (round(min + gap * 3, 2), round(min + gap * 4, 2)),
+                 (round(min + gap * 4, 2), round(min + gap * 5, 2)), (round(min + gap * 5, 2), round(min + gap * 6, 2)),
+                 (round(min + gap * 6, 2), round(min + gap * 7, 2)), (round(min + gap * 7, 2), round(min + gap * 8, 2)),
+                 (round(min + gap * 8, 2), round(min + gap * 9, 2)), (round(min + gap * 9, 2), round(max, 2))]
     for result in rv:
         if min <= result[0] and result[0] <= min+gap:
             int0 = int0 + 1
@@ -578,8 +763,13 @@ def selectUserTwForPieChart(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
-    for result in rv:
-        nmofilas_id = result[1]
+    if rv != []:
+        for result in rv:
+            nmofilas_id = result[1]
+
+        percentage = nmofilas_id / nmofilas
+    else:
+        percentage = 0
 
     percentage = nmofilas_id/nmofilas
 
@@ -590,6 +780,31 @@ def selectUserTwForPieChart(user, since_date, until_date):
     content = {'id': 'others', 'numero_filas': 1-percentage}
     final.append(content)
     return final
+
+def selectUserTwForTimeSeries(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, date FROM datausertw WHERE user = %s AND date<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, date FROM datausertw WHERE user = %s AND date>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, date FROM datausertw WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, date FROM datausertw WHERE user = %s AND date BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    rv.sort(key=lambda r: r[1])
+
+    return rv
 
 def select_dataWord(word, since_date, until_date):
     if since_date=='' or until_date=='':
@@ -612,8 +827,9 @@ def select_dataWord(word, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[2])
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -639,8 +855,9 @@ def selectWordGroupByDates(word, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[1])
     for result in rv:
-        content = {'analysis_score': result[0], 'date': result[1]}
+        content = {'analysis_score': result[0], 'date': result[1].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -684,7 +901,11 @@ def selectWordByIntervals(word, since_date, until_date):
         if max < result[0]:
             max = result[0]
     gap = (max - min)/10
-    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    intervals = [(round(min, 2), round(min + gap, 2)), (round(min + gap, 2), round(min + gap * 2, 2)),
+                 (round(min + gap * 2, 2), round(min + gap * 3, 2)), (round(min + gap * 3, 2), round(min + gap * 4, 2)),
+                 (round(min + gap * 4, 2), round(min + gap * 5, 2)), (round(min + gap * 5, 2), round(min + gap * 6, 2)),
+                 (round(min + gap * 6, 2), round(min + gap * 7, 2)), (round(min + gap * 7, 2), round(min + gap * 8, 2)),
+                 (round(min + gap * 8, 2), round(min + gap * 9, 2)), (round(min + gap * 9, 2), round(max, 2))]
     for result in rv:
         if min <= result[0] and result[0] <= min+gap:
             int0 = int0 + 1
@@ -799,8 +1020,13 @@ def selectWordForPieChart(word, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
-    for result in rv:
-        nmofilas_id = result[1]
+    if rv != []:
+        for result in rv:
+            nmofilas_id = result[1]
+
+        percentage = nmofilas_id / nmofilas
+    else:
+        percentage = 0
 
     percentage = nmofilas_id/nmofilas
 
@@ -811,6 +1037,31 @@ def selectWordForPieChart(word, since_date, until_date):
     content = {'id': 'others', 'numero_filas': 1-percentage}
     final.append(content)
     return final
+
+def selectWordForTimeSeries(word, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, date FROM dataword WHERE word = %s AND date<=%s")
+            val = (word, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, date FROM dataword WHERE word = %s AND date>=%s")
+            val = (word, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, date FROM dataword WHERE word = %s")
+            val = (word,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, date FROM dataword WHERE word = %s AND date BETWEEN %s AND %s")
+        val = (word, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    rv.sort(key=lambda r: r[1])
+
+    return rv
 
 def select_dataUserIg(user, since_date, until_date):
     if since_date=='' or until_date=='':
@@ -833,8 +1084,9 @@ def select_dataUserIg(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[2])
     for result in rv:
-        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2]}
+        content = {'analysis_score': result[0], 'text': result[1], 'date': result[2].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -860,8 +1112,9 @@ def selectDataUserIgByDates(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
+    rv.sort(key=lambda r: r[1])
     for result in rv:
-        content = {'analysis_score': result[0], 'date': result[1]}
+        content = {'analysis_score': result[0], 'date': result[1].strftime("%d/%m/%Y")}
         final.append(content)
         content = {}
     return final
@@ -905,7 +1158,11 @@ def selectDataUserIgByIntervals(user, since_date, until_date):
         if max < result[0]:
             max = result[0]
     gap = (max - min)/10
-    intervals = [(min, min+gap), (min+gap, min+gap*2), (min+gap*2, min+gap*3), (min+gap*3, min+gap*4), (min+gap*4, min+gap*5), (min+gap*5, min+gap*6), (min+gap*6, min+gap*7), (min+gap*7, min+gap*8), (min+gap*8, min+gap*9), (min+gap*9, max)]
+    intervals = [(round(min, 2), round(min + gap, 2)), (round(min + gap, 2), round(min + gap * 2, 2)),
+                 (round(min + gap * 2, 2), round(min + gap * 3, 2)), (round(min + gap * 3, 2), round(min + gap * 4, 2)),
+                 (round(min + gap * 4, 2), round(min + gap * 5, 2)), (round(min + gap * 5, 2), round(min + gap * 6, 2)),
+                 (round(min + gap * 6, 2), round(min + gap * 7, 2)), (round(min + gap * 7, 2), round(min + gap * 8, 2)),
+                 (round(min + gap * 8, 2), round(min + gap * 9, 2)), (round(min + gap * 9, 2), round(max, 2))]
     for result in rv:
         if min <= result[0] and result[0] <= min+gap:
             int0 = int0 + 1
@@ -1020,8 +1277,13 @@ def selectDataUserIgForPieChart(user, since_date, until_date):
     rv = mycursor.fetchall()
     final = []
     content = {}
-    for result in rv:
-        nmofilas_id = result[1]
+    if rv != []:
+        for result in rv:
+            nmofilas_id = result[1]
+
+        percentage = nmofilas_id / nmofilas
+    else:
+        percentage = 0
 
     percentage = nmofilas_id/nmofilas
 
@@ -1033,9 +1295,44 @@ def selectDataUserIgForPieChart(user, since_date, until_date):
     final.append(content)
     return final
 
+def selectUserIgForTimeSeries(user, since_date, until_date):
+    if since_date=='' or until_date=='':
+        if until_date is not '':
+            sql = ("SELECT analysis_score, datepost FROM datauserig WHERE user = %s AND date<=%s")
+            val = (user, until_date)
+            mycursor.execute(sql, val)
+        elif since_date is not '':
+            sql = ("SELECT analysis_score, datepost FROM datauserig WHERE user = %s AND date>=%s")
+            val = (user, since_date)
+            mycursor.execute(sql, val)
+        else:
+            sql = ("SELECT analysis_score, datepost FROM datauserig WHERE user = %s")
+            val = (user,)
+            mycursor.execute(sql, val)
+    else:
+        sql = ("SELECT analysis_score, datepost FROM datauserig WHERE user = %s AND date BETWEEN %s AND %s")
+        val = (user, since_date, until_date)
+        mycursor.execute(sql, val)
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    rv.sort(key=lambda r: r[1])
+
+    return rv
+
 def select_statistics(id):
-    sql = ("SELECT * FROM statistics WHERE id = %s")
+    sql = ("SELECT idstatistics, mean, median, mode, variance, typical_deviation FROM statistics WHERE idstatistics = %s")
     val = (id,)
     mycursor.execute(sql, val)
-    result = mycursor.fetchall()
-    return result
+    rv = mycursor.fetchall()
+    final = []
+    content = {}
+    for r in rv:
+        content = {'id': r[0], 'media': r[1],
+                   'mediana': r[2], 'moda': r[3], 'varianza': r[4], 'desviación típica': r[5]}
+        final.append(content)
+        content = {}
+
+    return final
+
+

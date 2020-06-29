@@ -1,0 +1,83 @@
+{
+    "HOME": {
+        "TITLE": "Sentinel",
+        "SUBTITLE": "Sentiment analyzer",
+        "FOOTER": "Zoe Calvo"
+    },
+    "NAVBAR": {
+        "TITLE": "Sentinel",
+        "INFORMATION": "Information",
+        "LOGIN": "Login",
+        "ENGLISH": "English",
+        "SPANISH": "Spanish"
+    },
+    "LOGIN": {
+        "TITLE": "Login",
+        "BUTTON": "Login",
+        "REGISTER": "Create Account"
+    },
+    "REGISTER": {
+        "TITLE": "Create Account",
+        "BUTTON": "Check in"
+    },
+    "MENU": {
+        "TWITTER": "Analyze Twitter",
+        "INSTAGRAM": "Analyze Instagram"
+    },
+    "TWITTER": {
+        "TITLE": "Analysis on Twitter",
+        "UPDATE": "Update database",
+        "BUTTON": "Analyze"
+    },
+    "INSTAGRAM": {
+        "TITLE": "Analysis on Instagram",
+        "UPDATE": "Update database",
+        "BUTTON": "Analyze"
+    },
+    "DASHBOARD": {
+        "BUTTON_TIMESERIES": "Access to time series",
+        "SCORESCHART": "Analysis Score",
+        "AVERAGECHART": "Average for days",
+        "INTERVALCHART": "Intervals graph",
+        "BUTTON_DYNAMIC": "Dynamic intervals",
+        "PIECHART": "Sentinel Trends",
+        "TABLESCORES": "Analysis Score",
+        "TABLESTATISTICS": "Statistics",
+        "MENU": "Back to menu"
+    },
+    "TIME_SERIES": {
+        "CHOOSE_TS": "Choose which time series you want to plot",
+        "TIT_TS_MENU": "Time series",
+        "OPTION1_TS": "Exponential Smoothing",
+        "OPTION2_TS": "Holt Method",
+        "OPTION3_TS": "Arima Method",
+        "CHOOSE_SCHEMA": "What kind of model do you want?",
+        "TIT_MODEL_MENU": "Model",
+        "OPTION1_SCHEMA": "Additive",
+        "OPTION2_SCHEMA": "Multiplicative",
+        "CHOOSE_PRED": "How many values do you want to predict?",
+        "BUTTON": "Calculate",
+        "STATIONARY": "The time series is stationary",
+        "NOSTATIONARY": "The time series isn't stationary",
+        "TIMESERIE": "Time series",
+        "SEASONALITY": "Seasonality",
+        "TREND": "Trend",
+        "RESIDUE": "Residue",
+        "MENU": "Back to menu"
+    },
+    "INFORMATION": {
+        "TITLE": "Sentinel",
+        "WHAT": "What is it?",
+        "DESCRIP": "Sentinel is a text sentiment analyzer that will allow you to make marketing decisions and see the effect they have on people.",
+        "REGISTER": "1. Sign up.",
+        "LOGIN": "2. Access with your account.",
+        "CHOOSE": "3. Choose social network to search.",
+        "WRITEID": "4. Enter the identifier to analyze.",
+        "RESULTS": "5. See the results!",
+        "SUBTITLE1": "Imagine knowing what people think about a company or how news affects a society.",
+        "TEXT1": "Currently, social networks are a very important factor in people's lives, everyone has an opinion and expresses it openly in their profiles. As an entity that may be affected by these comments, it is your responsibility to know how to take advantage of them and be able to improve thanks to them.",
+        "TEXT2": "From this idea Sentinel is born, the analysis of feelings is a practice that is carried out to make reports and graphs of how people react to different topics. Whether you are a company that wants to see how a new product has been received in the market or what people think about your company, or the government if you want to carry out surveys how a new measure has affected society, Sentinel is yours application.",
+        "TEXT3": "Sentinel uses Twitter and Instagram to search for topics that interest you and perform the analysis. These results will be shown in graphs to make the experience more visual."
+
+    }
+}

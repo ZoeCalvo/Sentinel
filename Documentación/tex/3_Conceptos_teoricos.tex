@@ -1,0 +1,129 @@
+\capitulo{3}{Conceptos teóricos}
+
+\section{Sentiment Analysis}
+El análisis de sentimiento \cite{sentiment_analysis} es una disciplina informática que se basa en identificar de forma automática las opiniones, sentimientos, pensamientos y emociones de las personas a través de textos, vídeos o audios. Esta rama de estudio pertenece al ámbito de la inteligencia artificial, ciencia social y ciencias de la computación.
+El análisis de sentimiento puede aplicarse a diferentes niveles:
+\begin{itemize}
+\tightlist
+    \item Detección de subjetividad: Solamente distingue entre si un comentario es subjetivo u objetivo.
+    \item Detección de polaridad: Tras detectar que el comentario es subjetivo, determina si es positivo o negativo.
+\end{itemize}
+
+El interés de esta disciplina es que puede usarse tanto a nivel de aplicaciones destinadas a empresas y en redes sociales, pero también puede aplicarse a la educación y al cuidado de la salud.
+
+Existen tres métodos aplicables para extraer la polaridad de un texto:
+\begin{itemize}
+\tightlist
+    \item Método basado en la lingüística: Se asocia un valor real a cada concepto que se extrae de la frase. Luego se corrigen y se combinan todos en un solo valor. En el proceso de combinación el valor irá cambiando dependiendo de palabras como 'pero' o 'muy'.
+    \item Método basado en machine learning: Se utiliza una máquina la cual extrae los conceptos de la frase en un vector y les aplica un algoritmo de forma automática para generar el valor de la polaridad.
+    \item Método combinado: Se basa en combinar las dos técnicas anteriores. Puede ocurrir que la primera técnica no consiga extraer la polaridad, pero sus resultados son más fiables. Por ello, en la combinación la técnica de machine learning respalda a la de lingüística para ofrecer los mejores resultados.
+\end{itemize}
+
+\section{API}
+Una API \cite{api} es un conjunto de código utilizado para desarrollar el software de aplicaciones. 
+Las siglas se refieren a Application Programming Interface o Interfaz de Programación de Aplicaciones.
+
+Son clave para la simplificación del desarrollo de aplicaciones, ya que no es necesario conocer la implementación de sus productos para poder comunicarse con ellos. 
+
+Otras ventajas importantes son:
+\begin{itemize}
+\tightlist
+    \item Dan flexibilidad.
+    \item Simplifican el diseño y el uso de la aplicación.
+    \item Ahorran tiempo y dinero.
+\end{itemize}
+
+\section{Web Service}
+Un web service \cite{web_service} es un conjunto de protocolos y estándares que es utilizado por aplicaciones que están escritas en distintos lenguajes de programación para intercambiar información entre ellas.
+Estas aplicaciones envían parámetros al servidor donde se aloja el web service y este les responde la petición.
+
+Algunas de las mejoras que aportan a las aplicaciones son las siguientes:
+\begin{itemize}
+\tightlist
+    \item Proporcionan interoperabilidad entre aplicaciones software, sin importar la plataforma sobre la que estén instaladas.
+    \item Permite que los servicios de una compañía se comuniquen con los de otra que está en diferente lugar geográfico.
+    \item Se aprovecha de los sistemas de seguridad firewall del protocolo HTTP.
+    \item Fomentan la utilización de estándares y protocolos basados en texto, los cuales facilitan su entendimiento y el acceso a su contenido.
+\end{itemize}
+
+La ventaja más importante de los web services es que son muy prácticos ya que son independientes de las aplicaciones.
+
+\section{Protocolo HTTP}
+El protocolo de transferencia de hipertexto \cite{http} es el que permite las transferencias en la World Wide Web. Se trata de un protocolo de comunicación que define la sintaxis que deben utilizar los elementos software de la arquitectura web para comunicarse. HTTP no guarda la información sobre conexiones anteriores, es decir, es un protocolo sin estado. Esto es un problema ya que las aplicaciones web necesitan mantener este estado. Para solucionarlo están las cookies, que es información que el servidor almacena y es lo que permite, por ejemplo, recordar el inicio de sesión en las aplicaciones.
+
+\section{REST}
+El protocolo REST \cite{rest} o Representational State Transfer, es un conjunto de características que podemos usar para definir una arquitectura software que será utilizada para crear aplicaciones web que respeten el protocolo HTTP. Es una alternativa a otros protocolos como SOAP que es muy complejo.
+
+Las características de REST son:
+\begin{itemize}
+\tightlist
+    \item Las operaciones más importantes son GET, POST, PUT y DELETE.
+    \item El sistema debe estar dividido por capas, cada una de estas tendrá una funcionalidad de REST.
+    \item Cada petición realizada a HTTP debe llevar toda la información necesaria ya que es un protocolo sin estado. Stateless o sin estado significa que no es capaz de guardar datos y por tanto no puede recordarlos.
+    \item Se utilizan hipermedios, lo que permite al cliente navegar por los objetos HTML y ejecutar acciones definidas sobre los datos.
+    \item Los objetos REST se identifican a partir de su URI, lo cual nos facilita acceder a la información para modificarla.
+    \item El sistema REST ofrece una interfaz uniforme ya que las acciones que se realizan sobre los objetos son concretas y estos siempre se identifican por la URI.
+\end{itemize}
+
+Tras explicar las características del protocolo REST, hay que destacar las ventajas que ofrece frente a otros:
+\begin{itemize}
+\tightlist
+    \item Una API REST es independiente del lenguaje de programación o la plataforma sobre la que se trabaje, lo único que debe permanecer es el lenguaje de las peticiones, ya sea XML o JSON. Esto ofrece gran libertad ya que permite usar distintos entornos de desarrollo.
+    \item Separa el cliente y el servidor, es decir, la interfaz de usuario del servidor y el almacenamiento de datos son independientes, lo que mejora la portabilidad de la interfaz y aumenta la escalabilidad. Además, esta separación permite tener el front y el back en distintos servidores y esto hace que la aplicación sera más flexible.
+\end{itemize}
+
+\section{URI}
+El Uniform Resource Identifier \cite{uri} sirve para acceder a un recurso por internet. Es el identificador que identifica la información que a la que hay que acceder y donde se encuentra. 
+
+Se compone de cinco partes, dos obligatorias, scheme y path que proporcionan la información del protocolo utilizado y la ruta al recurso, y tres opcionales, authority, query y fragment, que identifica el dominio, representa la consulta y designa una parte del recurso respectivamente.
+
+Hay dos tipos de URI, el absoluto y el relativo. El absoluto el cual es independiente del contexto y tiene que llevar obligatoriamente el scheme, authority y path. 
+El relativo no tiene que llevar el scheme por lo que es necesario contar con un URI base que permita que se anexione correctamente.
+
+\section{API Endpoint}
+Un API Endpoint \cite{endpoint} es el lugar donde la api y el software de la aplicación se conectan. Es decir, es el punto de conexión para enviar peticiones y recibir respuesta.
+
+La parte del programa que envía la información por el endpoint es el servidor y el cliente gestiona las peticiones. Los endpoints permiten operaciones como GET, POST, DELETE y PATCH, y normalmente se especifica la operación a realizar en la URL.
+\newpage
+\section{Idempotencia}
+La idempotencia \cite{idempotent} es una característica que tienen algunos métodos HTTP por la cual el resultado no se altera, no importa las veces que el método sea llamado.
+
+En las APIs REST los métodos que tienen esta característica son:
+\begin{itemize}
+\tightlist
+    \item GET: Este método nunca debe cambiar su resultado, ya que su función es recuperar datos para su representación. Por tanto, siempre es idempotente.
+    \item PUT: Su función es actualizar el estado un recurso, por tanto habrá ocasiones en las que se ejecute y el estado sea el mismo una y otra vez. Por ello, generalmente es un método idempotente.
+    \item DELETE: La primera vez que se ejecuta este método da una respuesta, puede ser que borre de forma efectiva o que no encuentre el objeto, pero el resto de respuestas serán la misma, por ello es idempotente.
+\end{itemize}
+
+El método que en ningún caso puede ser idempotente es el método POST, ya que su función es crear un nuevo recurso, por tanto la respuesta no será nunca la misma.
+
+\section{Series temporales}
+Una serie temporal \cite{time_series} es una secuencia de observaciones de una variable a lo largo del tiempo, tomando estos valores ordenados cronológicamente.
+
+Idealmente las muestras son tomadas en intervalos regulares de tiempo.
+
+Los componentes de una serie temporal son cuatro:
+\begin{itemize}
+\tightlist
+    \item Tendencia: Movimiento regular de la serie a largo plazo.
+    \item Estacionalidad: Fluctuaciones a corto plazo del periodo regular.
+    \item Residuo: Oscilaciones imprevisibles debidas a factores externos que no muestran periodicidad.
+    \item Variaciones cíclicas: Movimientos a medio plazo que presentan cierta regularidad.
+\end{itemize}
+
+Los esquemas más utilizados son el aditivo y el multiplicativo, esto no quiere decir que todas las series temporales sean compatibles con ellos. 
+Para saber cual es el más indicado, podemos observar si la serie es estacionaria o no. Una serie estacionaria es aquella que tiene una tendencia constante a lo largo del tiempo y que no presenta movimiento estacional, aunque sí puede presentar movimiento residual.
+Por ello, en las series no estacionarias tiene más sentido utilizar el esquema multiplicativo, ya que la relación entre dos registros es más lógico que sea más parecida en terminos relativos que absolutos.
+
+Para elegir el esquema adecuado, hay varios métodos, pero el más frecuente es representar la serie para estudiarla posteriormente.
+
+Los tipos de series temporales que podemos ver en este proyecto son: \cite{time_series_types}
+
+\begin{itemize}
+\tightlist
+    \item\textbf{Suavizado exponencial: \cite{suavizado_exponencial}} Es la evolución de la media móvil ponderada, en este caso se utiliza un método de autocorrección para ajustar los pronósticos en dirección opuesta a las desviaciones anteriores. Dicha corrección se ve afectada por un coeficiente de suavización.
+    \item\textbf{Método de Holt:} Pretende identificar las tendencias lineales mediante el doble alisado, sin contemplar otras componentes de la serie. Busca identificar la tendencia de la serie de tal forma que permita a la tendencia variar a lo largo del tiempo, ajustándose el modelo de forma automática.
+    \item\textbf{Modelos Arima:} Son modelos que consiguen una representación más simple combinando términos autoregresivos y de medias móviles.
+    Para poder modelar una serie con Arima debe convertirse primero a estacionaria.
+\end{itemize}

@@ -1,0 +1,134 @@
+\capitulo{4}{Técnicas y herramientas}
+
+\section{Python}
+Python \cite{python} es un lenguaje de programación multiplataforma orientado a objetos y además interpretado, por lo que no es necesaria su compilación para ejecutarlo, lo que aumenta la rapidez de desarrollo.
+
+Destaca respecto a otros lenguajes por varias razones:
+\begin{itemize}
+\tightlist
+    \item Tiene una gran cantidad de librerías que incorporan varios tipos de datos y funciones, lo que facilita la realización de varias tareas.
+    \item Es sencillo y los programas son creados con gran rapidez. 
+    \item Como ya se ha comentado puede ser utilizado en varias plataformas.
+    \item Es gratuito.
+\end{itemize}
+
+Python fue creado por Guido Van Rossum. Buscaba un lenguaje que fuera orientado a objetos, sencillo y que realizase una serie de tareas que en esos momentos se hacían utilizando el lenguaje C.
+
+Este lenguaje es utilizado por grandes compañías como Google, Youtube o Facebook.
+\newpage
+\section{PyCharm}
+Para realizar el desarrollo de la aplicación se ha utilizado PyCharm \cite{pycharm}. Es un entorno de desarrollo para trabajar con Python que facilita el desarrollo de aplicaciones web tanto para la parte backend, Django, Flask,... como para la parte de frontend HTML, CSS, Angular...
+
+Es un entorno muy intuitivo y ofrece un intérprete en el editor de código en tiempo real lo que facilita reconocer los errores. 
+
+Además, cuenta con una versión gratuita para estudiantes que ofrece todos las opciones de desarrollo.
+
+
+
+\section{Flask}
+Flask \cite{flask} es un micro framework escrito en Python que permite crear aplicaciones web de forma rápida.
+
+Al ser micro, flask se instala con las herramientas necesarias para hacer una web funcional, pero en caso de necesitar funcionalidades extras se pueden añadir ya que cuenta con un gran conjunto de plugins.
+
+Además incluye un servidor web de desarrollo por lo que nos facilita la visualización de los cambios que vamos realizando.
+
+También se estudió la opción de realizar la aplicación con Django \cite{django}, ya que tiene la misma funcionalidad, pero al final nos decantamos por Flask ya que en Django el uso de sockets es confuso, y además es un framework que está más orientado a proyectos más grandes y robustos.
+
+\section{MySQL}
+MySQL \cite{mysql} es un gestor de bases de datos relacional desarrollado por Oracle Corporation y es considerada una de las más populares en todo el mundo.
+
+Inicialmente fue creada por MySQLAB, la cual fue adquirida por Sun Microsystems y esta comprada por Oracle Corporation en 2010.
+
+Para acceder a las bases de datos de MySQL se pueden usar diferentes lenguajes de programación como Java, C, Python, PHP,...
+
+Se utiliza mayormente para aplicaciones web ya que es muy rápida en lectura y la modificación de los datos suele ser baja.
+
+Hay varias ventajas que se deben destacar \cite{mysql_ventajas}:
+\begin{itemize}
+\tightlist
+    \item\textbf{Seguridad de los datos:} Es el sistema de administración de bases de datos más seguro, utilizado por ello por aplicaciones como Wordpress o Twitter.
+    
+    \item\textbf{Alto rendimiento:} Cuenta con un marco de motor de almacenamiento que permite a sus clientes configurar el servidor para tener un buen rendimiento.
+    
+    \item\textbf{Escalabilidad:} Facilita la administración de aplicaciones que estén muy integradas. Permitiendo adaptarse a lo largo del tiempo.
+\end{itemize}
+
+También se barajó utilizar SQLite, pero nos decantamos por MySQL debido a las ventajas anteriores, ya que nuestra aplicación va a utilizar varios datos de cuentas de redes sociales y queremos que el entorno sea seguro.
+
+\section{GitHub}
+GitHub \cite{github} es una plataforma de desarrollo colaborativo software para albergar proyectos que utilicen Git como sistema de control de versiones.
+
+No solo aloja tu repositorio de código, también te ofrece herramientas para facilitar el trabajo en equipo, algunas destacadas son:
+
+\begin{itemize}
+\tightlist
+    \item\textbf{Wiki:} Para el mantenimiento de las distintas versiones.
+    \item\textbf{Sistema de seguimiento de problemas:} Permite a los miembros del equipo detallar los problemas que pueda haber en el software.
+    \item\textbf{Herramienta de revisión de código:} En la que se pueden añadir notas para debatir sobre los cambios realizados.
+    \item\textbf{Visor de ramas:} Muestra las ramas que hay creadas en un repositorio y los desarrollos de cada una.
+\end{itemize}
+
+En este proyecto GitHub es una de las partes más importantes ya que es donde se encuentra todo el código referente al proyecto y donde ha quedado registrado el trabajo que se ha ido haciendo de forma progresiva.
+
+\newpage
+\section{ZenHub}
+ZenHub \cite{zenhub} es una plataforma de gestión de proyectos que se integra con GitHub.
+
+Nos permite controlar los proyectos utilizando paneles muy visuales que hacen más sencilla la gestión de tareas.
+
+Además cuenta con diferentes gráficos e informes estadísticos que pueden sacarse por semana de trabajo para evaluar si la estimación ha sido la correcta.
+
+\section{GitKraken}
+Gitkraken \cite{gitkraken} es una interfaz gráfica multiplataforma para Git. Permite llevar un seguimiento de los repositorios junto con sus ramas, tags y manejarlo todo de forma muy visual.
+
+Ha sido imprescindible durante el desarrollo del proyecto para ver las diferentes ramas y los cambios realizados. Todos los commits se hacían en local desde la aplicación y al final de cada sprint se realizaba un push a remoto, para que quedara constancia de los cambios en GitHub.
+
+\section{Zotero}
+Zotero \cite{zotero} es un gestor de referencias libre, gratuito y multiplataforma.
+
+Tiene varias funciones:
+\begin{itemize}
+\tightlist
+    \item\textit{Recopilar: } Recopila información y la guarda en la base de datos mediante capturas, ya sean individuales o colectivas.
+    \item\textit{Organizar:} Para poder encontrarlos de forma fácil se basa en colecciones, etiquetas, elementos relacionados y búsquedas guardadas.
+    \item\textit{Citar:} Permite crear referencias bibliográficas de forma muy sencilla.
+    \item\textit{Sincronizar:} Podemos guardar todas las referencias en nuestro ordenador y servidor.
+    \item\textit{Colaborar:} Permite compartir colecciones y crear grupos de colaboración.
+\end{itemize}
+
+En este proyecto se han utilizado las funciones de recopilación, organización, citar y sincronizar. Todas las referencias bibliográficas de la memoria y de los anexos han sido generadas con Zotero lo que ha facilitado mucho esta labor, ya que permite guardar todas las webs necesarias y tiene la opción de generar citas en lenguaje LateX.
+
+\section{LateX}
+LateX \cite{latex} es un sistema de composición tipográfica basado en TeX. Fue creado con la intención de que el autor no se tuviera que preocupar por la forma del documento y se centrara más en el contenido.
+
+Garantiza una buena estructura , casi de forma automática. Nació para ser utilizado mayormente en documentos científicos por tener que incluir fórmulas matemáticas, pero puede utilizarse en todos los ámbitos. Sobretodo, es ideal para trabajos de gran extensión ya que permite tener el documento perfectamente organizado.
+
+\section{Overleaf}
+Overleaf \cite{overleaf} es un editor de textos LateX online que permite además de realizar documentos en lenguaje TeX tener varios colaboradores dependiendo de la versión que tengamos.
+Se ha utilizado este editor por esta razón, ya que permite que el tutor pueda hacer anotaciones en el texto directamente y no sea necesario exportar el documento a un PDF, gracias a que es online.
+
+\section{Pencil Project}
+Pencil Project \cite{pencil} es una aplicación para la creación de prototipos de interfaces gráficas.
+Estos prototipos pueden estar basados en aplicaciones para móviles o escritorio.
+Ha sido utilizado para crear el prototipo de interfaz gráfica de la aplicación web para establecer el camino a seguir en el proyecto.
+
+\section{Senti-py}
+Senti-py \cite{sentipy} es una librería de Python para realizar el análisis de sentimientos en textos en español. 
+Para realizar el análisis debemos pasar un json y nos retornará un valor entre 0 y 1 donde 0 significa que el comentario es muy negativo y 1 que es muy positivo.
+
+\section{TextBlob}
+TextBlob \cite{textblob} es una librería muy completa que tiene varias funcionalidades, traducción, podemos añadir palabras, nos permite clasificar el sentimiento, etc. Es la que nos va a permitir analizar los textos en inglés.
+Respecto a medir el nivel de sentimiento cuenta con dos parámetros, polaridad y subjetividad. En nuestro caso nos centraremos en la polaridad ya que nos ofrece el nivel de positivo o negativo que es el json pasado. La polaridad se mide entre -1 y 1 siendo 0 neutral.
+
+\section{Yandex Translate}
+Yandex \cite{yandex} es una herramienta gratuita para realizar la detección de idioma y traducción de textos. La hemos utilizado para traducir los textos de español a inglés y poder analizar esos textos con la librería para textos en inglés. De esta forma podremos realizar el mismo análisis a todos los textos.
+
+\section{Heroku}
+Heroku \cite{heroku} es un PaaS, plataforma como servicio, que nos brinda un servidor para poder desplegar la aplicación.
+A diferencia de otras plataformas, permite añadir funcionalidades extra, desarrollar en varios lenguajes de programación y desplegar versiones.
+
+\section{Drawio}
+Drawio \cite{drawio} es una herramienta online para realizar diagramas de varios tipos, entidad-relación, UML,... Se ha utilizado para generar tanto el diagrama de secuencias como el diagrama de casos de uso.
+
+\section{Statsmodels}
+Statsmodels \cite{statsmodels} es un módulo de Python para realizar operaciones estadísticas. En nuestro caso se ha utilizado para el cálculo de series temporales. Cuenta con los métodos para calcularlas, además de test para saber si es o no estacionaria y para realizar la descomposición de la serie, tanto manual como automática.

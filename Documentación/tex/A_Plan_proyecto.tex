@@ -1,0 +1,560 @@
+\apendice{Plan de Proyecto Software}
+
+\section{Introducción}
+Este primer apartado de los anexos se ha dedicado a la explicación del desarrollo del proyecto, recogido en planificación temporal, y a la viabilidad del proyecto, dividida en viabilidad económica donde se hará una aproximación de los costes que conlleva el proyecto y viabilidad legal donde se debe tener en cuenta la legislación que puede afectar al proyecto.
+
+\section{Planificación temporal}
+Antes de comenzar el proyecto se decidió utilizar metodología ágil para gestionarlo.
+Se han realizado sprints de una o dos semanas de duración. Al final de cada sprint se ha hecho una reunión para revisar si se había conseguido lograr los objetivos marcados al inicio y plantear las tareas a realizar para el nuevo sprint.
+
+Para la gestión del proyecto se han utilizado GitHub y ZenHub. El tablero que provee ZenHub ha permitido que visualmente la organización del proyecto haya sido más sencilla. Además, GitHub ha ayudado en la estimación de tareas, ya que cuenta con story points para ello.
+\newpage
+\subsection{Sprint 1 - 21/01/2020-29/01/2020}
+La primera semana se ha dedicado a configurar el repositorio del proyecto, a elegir el entorno de desarrollo y el editor de texto para la memoria. 
+Tras la elección del IDE se ha configurado para poder comenzar a trabajar en él.
+
+También se ha hecho la investigación de trabajos relacionados y se ha buscado información sobre los servidores flask para poder alojar la aplicación web.
+
+Por último, se ha implementado dicho servidor flask.
+
+\imagen{burndown/Sprint1}{Burndown Report Sprint 1.}
+\imagen{burndown/TablaSprint1}{Issues Sprint 1.}
+
+\begin{table}[ht!]
+    \centering
+    \resizebox{15cm}{!} {
+    \begin{tabular}{|l|c|c|}
+    \hline
+    \rowcolor[rgb]{0.81,0.81,0.77}
+    \textbf{Completed Issues and Pull Requests}     &\textbf{Tag}     & \textbf{Story points} \\ \hline
+    \textbf{Crear y configurar repositorio}         &\cellcolor[rgb]{0.93,0.35,0.0}\textcolor{white}{configuration}      &1 \\ \hline 
+    \textbf{Elegir editor de texto para la memoria}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &1 \\ \hline
+    \textbf{Elegir IDE}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &2 \\ \hline 
+    \textbf{Buscar trabajos relacionados}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &2 \\ \hline 
+    \textbf{Buscar información sobre servidores flask}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &2 \\ \hline 
+    \textbf{Implementar servidor flask}         &\cellcolor[rgb]{0.69,0.93,0.93}development      &5 \\ \hline 
+    \textbf{Documentar las tareas realizadas en el sprint}         &\cellcolor[rgb]{0.0,0.33,0.71}\textcolor{white}{documentation}      &1 \\ \hline 
+    \end{tabular}}
+    \caption{Completed Issues and Pull Requests Sprint 1.}
+    \label{tab:my_label}
+\end{table}
+
+\subsection{Sprint 2 - 29/01/2020-06/02/2020}
+Para este sprint se fijaron como objetivo la conexión con las APIs de Twitter e Instagram y la conexión con la base de datos.
+
+Lo primero que se hizo fue informarse sobre como funciona la API de Twitter y crearse una cuenta de desarrollador que es necesaria poder tener nuestras credenciales y así manejar los datos de la aplicación.
+Con esto creamos la conexión con Twitter y conseguimos realizar búsquedas por usuario o tema.
+
+Para la conexión con  Instagram fue más complicado ya que al ser Facebook el desarrollador han descontinuado la opción de "Instagram Developer". Por ello utilizamos una biblioteca de github que tiene implementadas las conexiones con la API y conseguimos así extraer la información de nuestros seguidores para poder acceder a sus posts. Además se implementó la extracción de comentarios de posts con lo que podemos ver los usuarios que han sido nombrados, los hashtags y el texto del comentario para poder analizarlo.
+
+Por último, se ha realizado la conexión con la base de datos MySQL para más adelante poder volcar los datos que utilizaremos en el análisis.
+
+\imagen{burndown/Sprint2}{Burndown Report Sprint 2.}
+\imagen{burndown/TablaSprint2}{Issues Sprint 2.}
+
+\begin{table}[ht!]
+    \centering
+    \resizebox{15cm}{!} {
+    \begin{tabular}{|l|c|c|}
+    \hline
+    \rowcolor[rgb]{0.81,0.81,0.77}
+    \textbf{Completed Issues and Pull Requests}     &\textbf{Tag}     & \textbf{Story points} \\ \hline
+    \textbf{Buscar información sobre API de twitter}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &2 \\ \hline 
+    \textbf{Implementar extracción de los datos de twitter}         &\cellcolor[rgb]{0.69,0.93,0.93}development      &5 \\ \hline
+    \textbf{Buscar información sobre la API de instagram}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &2 \\ \hline 
+    \textbf{Implementar extracción de los datos de instagram}         &\cellcolor[rgb]{0.69,0.93,0.93}development      &5 \\ \hline 
+    \textbf{Buscar información sobre bases de datos compatibles con flask}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &2 \\ \hline 
+    \textbf{Realizar la conexión de la base de datos con nuestra aplicación}         &\cellcolor[rgb]{0.69,0.93,0.93}development      &7 \\ \hline 
+    \textbf{Documentar las tareas realizadas en el sprint}         &\cellcolor[rgb]{0.0,0.33,0.71}\textcolor{white}{documentation}      &1 \\ \hline 
+    \end{tabular}}
+    \caption{Completed Issues and Pull Requests Sprint 2.}
+    \label{tab:my_label}
+\end{table}
+
+\subsection{Sprint 3 - 06/02/2020-12/02/2020}
+Durante esta semana se ha realizado el prototipo de la interfaz gráfica de la aplicación web para hacerse una idea de como seguir el desarrollo del proyecto.
+Para ello se ha utilizado la herramienta Pencil, que ya se había utilizado antes durante el grado.
+
+También se ha avanzado en la memoria en el apartado de técnicas y herramientas en el cual se ha explicado los entornos que se van utilizando hasta ahora.
+
+\imagen{burndown/Sprint3}{Burndown Report Sprint 3.}
+\imagen{burndown/TablaSprint3}{Issues Sprint 3.}
+
+\begin{table}[ht!]
+    \centering
+    \resizebox{15cm}{!} {
+    \begin{tabular}{|l|c|c|}
+    \hline
+    \rowcolor[rgb]{0.81,0.81,0.77}
+    \textbf{Completed Issues and Pull Requests}     &\textbf{Tag}     & \textbf{Story points} \\ \hline
+    \textbf{Realizar prototipo de la aplicación}         &\cellcolor[rgb]{0.0,0.33,0.71}\textcolor{white}{documentation}      &3 \\ \hline 
+    \textbf{Justificación de la elección de herramientas de trabajo}         &\cellcolor[rgb]{0.0,0.33,0.71}\textcolor{white}{documentation}      &1 \\ \hline 
+    \textbf{Documentar las tareas realizadas en el sprint}         &\cellcolor[rgb]{0.0,0.33,0.71}\textcolor{white}{documentation}      &1 \\ \hline 
+    \end{tabular}}
+    \caption{Completed Issues and Pull Requests Sprint 3.}
+    \label{tab:my_label}
+\end{table}
+
+
+\subsection{Sprint 4 - 12/02/2020 - 20/02/2020}
+Durante esta semana se ha solventado un problema que se ha tenido con GitHub, ya que por error se subió el código con las claves de las cuentas visibles. Para poder solucionarlo se ha descargado la herramienta BFG Repo Cleaner que nos permite sustituir todas las claves de los códigos commiteados por **REMOVED** para que no sean públicas.
+
+Después de pasar este problema, se ha implementado la búsqueda de usuarios en instagram para la aplicación.
+
+Se ha realizado la búsqueda por fecha en twitter, aunque al tener una licencia de developer gratuita solo se nos permite buscar información de los últimos siete días.
+
+Respecto a investigación, esta semana se ha centrado en el front de la aplicación que va a ser implementado con Angular, framework que no se ha utilizado durante el grado, por lo que se ha necesitado buscar información de como funciona para poder incluirlo en el proyecto.
+
+Para el manual de usuario y para la ayuda que va a tener la aplicación para facilitar el uso se va a utilizar la herramienta GitBooks para poder crear una wiki.
+
+Por último, para mostrar los resultados del análisis que se hará a los datos se utilizará la herramienta Google Data Studio, que puede recoger datos de MySQL y poder visualizarlos en gráficos, tablas, etc.
+
+\imagen{burndown/Sprint4}{Burndown Report Sprint 4.}
+\imagen{burndown/TablaSprint4}{Issues Sprint 4.}
+
+\begin{table}[ht!]
+    \centering
+    \resizebox{15cm}{!} {
+    \begin{tabular}{|l|c|c|}
+    \hline
+    \rowcolor[rgb]{0.81,0.81,0.77}
+    \textbf{Completed Issues and Pull Requests}     &\textbf{Tag}     & \textbf{Story points} \\ \hline
+    \textbf{Búsqueda de usuarios en instagram}         &\cellcolor[rgb]{0.69,0.93,0.93}development      &3 \\ \hline 
+    \textbf{Extracción de tweets por fecha}         &\cellcolor[rgb]{0.69,0.93,0.93}development      &3 \\ \hline
+    \textbf{Buscar información sobre cómo crear un wiki}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &2 \\ \hline 
+    \textbf{Buscar información sobre angular}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &2 \\ \hline 
+    \textbf{Investigar sobre google data studio y sus funcionalidades}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &2 \\ \hline 
+    \textbf{Documentar las tareas realizadas en el sprint}         &\cellcolor[rgb]{0.0,0.33,0.71}\textcolor{white}{documentation}     &1 \\ \hline 
+    \end{tabular}}
+    \caption{Completed Issues and Pull Requests Sprint 4.}
+    \label{tab:my_label}
+\end{table}
+
+\subsection{Sprint 5 - 20/02/2020 - 02/03/2020}
+En esta semana se fijó como objetivo buscar la forma de incluir las variables de contraseñas en la aplicación sin tenerlas en localhost. 
+
+Se ha optado por utilizar variables de entorno para guardar estas contraseñas, ya que el servidor también permite tener variables de entorno y hacer uso de ellas, de esta forma las claves no podrán ser vistas por nadie que no sea el administrador.
+
+También se debía hacer la comunicación de flask con angular y comenzar a crear la interfaz de la aplicación.
+
+Ha habido varios problemas con esta tarea, no se conseguía hacer la conexión entre backend y frontend, esto ha sido debido a la falta de conocimiento sobre angular por lo que ha llevado tiempo conseguir que la conexión funcionase.
+
+Habiendo conseguido ya la conexión, me he centrado más en adquirir los conocimientos del framework angular para realizar un buen trabajo en la interfaz.
+
+\imagen{burndown/Sprint5}{Burndown Report Sprint 5.}
+\imagen{burndown/TablaSprint5}{Issues Sprint 5.}
+
+\begin{table}[ht!]
+    \centering
+    \resizebox{15cm}{!} {
+    \begin{tabular}{|l|c|c|}
+    \hline
+    \rowcolor[rgb]{0.81,0.81,0.77}
+    \textbf{Completed Issues and Pull Requests}     &\textbf{Tag}     & \textbf{Story points} \\ \hline
+    \textbf{Investigar sobre la encriptación de archivos}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &2 \\ \hline 
+    \textbf{Realizar la encriptación de archivos}         &\cellcolor[rgb]{0.69,0.93,0.93}development      &3 \\ \hline
+    \textbf{Comienzo del desarrollo de la interfaz}         &\cellcolor[rgb]{0.69,0.93,0.93}development      &7 \\ \hline 
+    \textbf{Documentar las tareas realizadas en el sprint}         &\cellcolor[rgb]{0.0,0.33,0.71}\textcolor{white}{documentation}     &1 \\ \hline 
+    \end{tabular}}
+    \caption{Completed Issues and Pull Requests Sprint 5.}
+    \label{tab:my_label}
+\end{table}
+
+
+\subsection{Sprint 6 - 02/03/2020 - 09/03/2020}
+En este sprint se fijó que durante la semana se fuera aprendiendo cómo funciona angular y su conexión con backend, el envío de datos entre frontend y backend, etc. Además se debía leer sobre las librerías de sentiment analysis elegidas a principio del TFG y buscar algunas más para tener posibilidad de complementar unas con otras.
+
+Los primeros días se estuvo siguiendo un tutorial de la web oficial de angular, el cual ha permitido aprender como realizar los métodos GET y POST.
+Se ha conseguido realizar el registro de personas en la aplicación de forma que se registran a través de angular y se queda guardado en la base de datos.
+
+Respecto a las librerías de sentiment analysis se ha escogido una librería que realiza la clasificación en español y parece bastante completa, dando un valor entre 0 y 1 con varios decimales dependiendo lo positivo o negativo de la frase, lo que nos permitirá clasificar de forma bastante exacta las opiniones.
+
+\imagen{burndown/Sprint6}{Burndown Report Sprint 6.}
+\imagen{burndown/TablaSprint6}{Issues Sprint 6.}
+
+\begin{table}[ht!]
+    \centering
+    \resizebox{15cm}{!} {
+    \begin{tabular}{|l|c|c|}
+    \hline
+    \rowcolor[rgb]{0.81,0.81,0.77}
+    \textbf{Completed Issues and Pull Requests}     &\textbf{Tag}     & \textbf{Story points} \\ \hline
+    \textbf{Documentarse sobre el funcionamiento de angular}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &5 \\ \hline 
+    \textbf{Implementar el registro de usuarios en la aplicación}         &\cellcolor[rgb]{0.69,0.93,0.93}development      &5 \\ \hline
+    \textbf{Investigar sobre librerías de sentiment analysis}         &\cellcolor[rgb]{0.6,1.0,0.6}research      &3 \\ \hline 
+    \textbf{Documentar las tareas realizadas en el sprint}         &\cellcolor[rgb]{0.0,0.33,0.71}\textcolor{white}{documentation}      &1 \\ \hline 
+    \end{tabular}}
+    \caption{Completed Issues and Pull Requests Sprint 5.}
+    \label{tab:my_label}
+\end{table}
+\newpage
+\subsection{Sprint 7 - 09/03/2020 - 18/03/2020}
+En la reunión al comienzo de este sprint se pactó que las tareas que se debían llevar a cabo eran buscar librerías de sentiment analysis, que puedan utilizarse tanto en español como en inglés y buscar un template de angular para la parte front de la aplicación.
+
+Sobre las librerías, después de que en el sprint anterior se escogiese una que analiza solo textos en español, se estuvo buscando una para textos en inglés y así poder complementarse mutuamente.
+
+Tras encontrar una librería muy completa, ya que cuenta con varios métodos de detección y traducción de idioma además de implementar el análisis de sentimientos, se procedió al desarrollo de un método que probase ambas librerías, tanto la española como la inglesa.
+
+Durante el desarrollo del método que analiza los datos extraídos de la API de Twitter se comprobó que las librerías puntúan de distinta forma. Por ello, bien se puede hacer una equivalencia entre los resultados, o como comentábamos antes, como la librería en inglés tiene métodos de detección y traducción se puede traducir nuestro texto en castellano a inglés y así analizarlo.
+
+Pues bien, se ha realizado la implementación de las dos formas para más tarde escoger cual es la más indicada. 
+Al realizar la traducción del texto, nos dimos cuenta de que se realiza con la API Translate de Google la cual nos limita las veces que podemos realizar esta traducción. Por ello se ha buscado otra API de traducción que nos permite realizar esta acción de forma ilimitada.
+
+Tras conseguir que el método funcionase correctamente, se desarrolló otro muy parecido para los datos extraídos de Instagram, es necesario otro método porque la estructura de los datos es distinta.
+
+Respecto al template de angular, se ha elegido uno muy completo que cuenta con varios ejemplos de página para poder basarnos en ellos y acomodarlos a nuestra aplicación.
+
+Se ha empezado a integrar ya con nuestro backend lo que ha dado varios errores que no han permitido terminar con la tarea este sprint por lo que se deja pendiente para el siguiente.
+
+\imagen{burndown/Sprint7}{Burndown Report Sprint 7.}
+
+\imagen{burndown/TablaSprint7}{Issues y Story points Sprint 7.}
+
+\subsection{Sprint 8 - 18/03/2020 - 25/03/2020}
+En este sprint se acordó terminar la integración del template de angular escogido con nuestro proyecto, implementar la recogida de datos de sentiment analysis en twitter e instagram desde el servidor y la búsqueda de un template para gráficos.
+
+La integración del template era una tarea establecida para el sprint pasado pero al intentar realizar la instalación y la integración con el proyecto angular que ya teníamos daba varios errores. 
+Estos errores han podido solucionarse a base de buscar y documentarse ya que lo que ocurría es que varios de los módulos de node no concordaban.
+
+Lo primero que se intentó fue ir instalando diferentes herramientas, como windows-build-tools para poder instalar node-gyp, tuve que modificar las versiones de varios paquetes porque las mías eran superiores y no concordaban.
+Viendo que esto no funcionaba, borré los módulos de node que tenía mi proyecto e instalé de nuevo el template, para que los generase de nuevo. Esto tampoco hizo efecto, y tras una gran búsqueda encontré que el fallo se encontraba en el módulo @agm/core, es el módulo que se encarga con la conexión de Google Maps. Por tanto, borré este módulo y copié el módulo equivalente del template, lo compilé y se ejecutó con éxito.
+
+Cabe decir que si no hubiera arreglado todos los fallos anteriores, como modificar las versiones de otros módulos o instalar node-gyp o windows-build-tools, no habría funcionado ya que esos errores también era necesario solucionarlos.
+
+Para ir viendo los módulos que fallaban cada vez, me fue muy útil el comando npm audit, que te muestra cada vulnerabilidad y su riesgo, dividiendose en low, moderate y high.
+
+Para terminar la tarea, se ha llevado a cabo la prueba de registrar usuarios con la nueva vista, está función la habíamos implementado semanas antes. Al principio no se conseguía realizar la conexión, pero era porque faltaba añadir el módulo HttpClientModule, para darnos cuenta de este problema fue muy útil la consola de Chrome.
+
+Las tareas de recoger los datos de sentiment analysis tanto en twitter como en instagram han sido muy similares.
+
+Se han utilizado los métodos creados el sprint anterior y se han modificado para que los datos que arrojan se guarden en listas. 
+Al realizar las pruebas, ha habido varios fallos con la API de detección y traducción de idiomas, por lo que se ha decidido cambiar a una nueva que se llama Yandex.
+
+También se ha realizado la conexión del servidor con twitter e instagram de forma que se devuelvan estas listas como un objeto json, para luego poder mostrarlo en gráficos y series temporales.
+
+En la búsqueda de templates de gráficos, se han encontrado dos opciones del mismo creador que el template elegido para las pantallas de la aplicación. Se ha decidido así para que haya más coherencia en el diseño. De estas dos opciones se escogerá en la reunión cuál es la más adecuada.
+
+\imagen{burndown/Sprint8}{Burndown Report Sprint 8.}
+\imagen{burndown/TablaSprint8}{Issues y Story points Sprint 8.}
+
+\subsection{Sprint 9 - 25/03/2020 - 01/04/2020}
+En este sprint se fijaron como objetivo la realización de un módulo para separar las operaciones realizadas sobre la base de datos, implementar las operaciones estadísticas media, mediana, moda, varianza y desviación típica e integrar el template para mostrar los gráficos.
+
+La operación del registro en base de datos se desarrolló de forma provisional en el archivo principal donde se levanta el servidor flask, y se ha decidido separar a un módulo que solamente tenga operaciones sobre la base de datos para así en el servidor solamente tener llamadas a otros módulos y respetar el patrón MVC.
+
+En el desarrollo de las funciones estadísticas, lo primero que se debía hacer era modificar el formato de los resultados que arrojaba la función de sentiment analysis en instagram ya que nos devuelve una lista en la cual aparecen todos los comentarios dividos en listas por post.
+Tras generar una única lista en la que se encuentren todos los resultados juntos, se investigó como realizar operaciones estadísticas en Python. 
+Este lenguaje tiene un módulo llamado statistics que nos ofrece todas las fórmulas que necesitamos y más. 
+Para finalizar esta tarea, se implementó la salida de estos valores en un json y se comprobó que todo funcionaba correctamente.
+
+Estas tareas se han compaginado con la tarea de integración del gráfico, la cual nos ha llevado bastante más tiempo del esperado. 
+Tras instalar las dependencias necesarias para poder mostrar tanto gráficos como tablas, se comenzó la tarea de cuadrar todos los elementos de los dos templates que se van a utilizar para la aplicación. Se tuvo varios problemas ya que las etiquetas no referenciaban bien a los archivos .scss. 
+
+Tras solventar los problemas, se ha conseguido que se integren de forma adecuada.
+
+\imagen{burndown/Sprint9}{Burndown Report Sprint 9.}
+\imagen{burndown/TablaSprint9}{Issues y Story points Sprint 9.}
+
+\subsection{Sprint 10 - 01/04/2020 - 08/04/2020}
+Esta semana en la reunión se concretó que las tareas a realizar fueran el volcado de datos de Instagram y Twitter a la base de datos, así como sus estadísticas, la comunicación de la base de datos con angular para mostrar gráficos y avanzar en la memoria.
+
+El volcado de datos se ha realizado en diferentes tablas, una por opción de búsqueda, por lo que para Twitter tenemos tres tablas, una para búsqueda de usuarios, otra hashtags y la última por palabras. Para Instagram una, ya que la búsqueda solamente se realiza por usuario.
+
+Además hay una tabla para el volcado de estadísticas que es común a todas la otras y se relacionan por el id, el cual puede ser como ya hemos dicho un usuario, una palabra o un hashtag en el caso de Twitter y un usuario en el caso de Instagram.
+
+Respecto al avance de la memoria se ha escrito la parte de introducción, objetivos y parte de los conceptos teóricos.
+
+En la tarea de la comunicación entre la base de datos y angular ha habido varias complicaciones.
+Sí se ha conseguido que los datos se pasen a angular y sean visibles en forma de tablas pero aún no se ha conseguido volcar en un array para poder mostrarlo en gráfico.
+
+El problema es el desconocimiento del tipo y de la estructura del objeto que se recibe desde back. Esto es por el poco conocimiento que se tiene de angular, lo que hace más difícil la implementación de funciones.
+
+\imagen{burndown/Sprint10}{Burndown Report Sprint 10.}
+\imagen{burndown/TablaSprint10}{Issues y Story points Sprint 10.}
+
+\subsection{Sprint 11 - 08/04/2020 - 15/04/2020}
+En este sprint al haber una tarea que no se había finalizado en el pasado se decidió que había que centrarse en conseguir esa funcionalidad y avanzar en la memoria.
+
+Por ello, la tarea principal de esta semana ha sido conseguir enviar los datos desde back de forma correcta para poder mostrarlos en un gráfico o tabla.
+
+Para ello se estuvo modificando la estructura del objeto JSON que se envía a angular para poder recorrerlo, ya que como no lo reconocía de forma correcta como un array no permitía el acceso a los datos. Tras buscar información en foros y blogs de internet, se encontró un vídeo tutorial el cual se llevó a cabo para aprender a enviar datos de forma correcta.
+Tras conseguir enviar los datos, se estuvo probando varias maneras para visualizarlo en forma de gráfico hasta que se dió con la solución. Para poder mostrarlo con el formato adecuado ha sido de gran ayuda la página web del módulo Chart.js que viene bien explicada con los distintos parámetros que se pueden añadir al gráfico y cuenta con ejemplos para su visualización.
+
+Tras conseguir el gráfico, se decidió consolidar más los conocimientos haciendo más complejo el objeto JSON para mostrar en una tabla los resultados del análisis, parámetro que ya se enviaba, junto con el texto que ha sido analizado.
+
+Para ello se siguieron las pautas anteriores cambiando el recorrido del objeto que recoge angular y se consiguió mostrar en una tabla.
+
+Tras terminar con estas tareas, se ha avanzado en la memoria en el apartado de conceptos teóricos, añadiendo varios conceptos que es necesario explicar por la importancia que tienen dentro del proyecto.
+
+\imagen{burndown/Sprint11}{Burndown Report Sprint 11.}
+\imagen{burndown/TablaSprint11}{Issues y Story points Sprint 11.}
+
+\subsection{Sprint 12 - 15/04/2020 - 24/04/2020}
+Esta semana se decidió que había que desarrollar ventanas en front para hacer las comunicaciones con back.
+Por ello, se ha decidido montar la pantalla del login, la del menú, la de análisis de Twitter y la de Instagram. Además se ha terminado el apartado de conceptos teóricos y se ha completado el de técnicas y herramientas con las librerías de análisis de sentimiento y el traductor.
+
+Para realizar la pantalla del login se ha implementado una petición POST que envía el usuario y la contraseña. Se comprueba si estos datos están en la tabla de registro y si es así a nuestro usuario le aparecerá una notificación de bienvenida, en caso de no estar registrado le saldrá la notificación de que debe registrarse para acceder.
+
+La pantalla del menú se ha montado de forma que nos da acceso o bien a realizar el análisis en Twitter o a hacerlo en Instagram. Para ello hay dos opciones y se elige la que se prefiera.
+
+La pantalla para realizar el análisis tanto de Twitter como de Instagram es igual, hay un formulario en el cual debes introducir el id del cual quieres recuperar el análisis y opcionalmente puedes introducir las fechas para filtrar el intervalo que quieres recuperar.
+
+Estos datos son enviados a back mediante un GET. Cuando tenemos estos datos en back, se realizar la petición a base de datos para recoger los análisis y mandarlos a través de este GET a Angular. 
+Al recuperar los datos, estos se muestran en gráficos y tablas.
+
+\imagen{burndown/Sprint12}{Burndown Report Sprint 12.}
+\imagen{burndown/TablaSprint12}{Issues y Story points Sprint 12.}
+
+\subsection{Sprint 13 - 24/04/2020 - 05/05/2020}
+Este sprint se ha basado en crear varios gráficos con los datos que tenemos. Los gráficos que hemos creado son uno por intervalos y otro por fechas. Además se ha buscado información sobre realizar el login con otras aplicaciones como Facebook, Google, etc.
+
+Lo primero que se ha implementado es la opción de visualizar los datos de un id entre dos fechas seleccionadas. Ahora el cliente tiene la opción de introducir la fecha de comienzo y de fin de cuándo quiere la información del id, una de las dos o ninguna.
+
+El gráfico de fechas lo que muestra es la media de los resultados de análisis de un id por día. Para ello se recogen de la base de datos los resultados de análisis y se realiza su media agrupándolos por fecha.
+
+Para el gráfico de intervalos se extraen todos los resultados y se recorren para hallar el mínimo y el máximo. Después estos dos valores se restan y dividen entre diez para obtener diez intervalos.
+Después volvemos a recorrer los resultados y vamos aumentando el valor del intervalo al que pertenezca.
+Finalmente, el gráfico muestra un valor entero que representa el número de valores que se encuentran dentro de ese intervalo.
+
+Sobre la búsqueda de información de implementar el login con otras aplicaciones, se ha encontrado que hay que registrarse como developer de esas aplicaciones y registrar la URL de nuestra aplicación, por tanto se deja para más adelante su desarrollo.
+
+\imagen{burndown/Sprint13}{Burndown Report Sprint 13.}
+\imagen{burndown/TablaSprint13}{Issues y Story points Sprint 13.}
+
+\subsection{Sprint 14 - 05/05/2020 - 12/05/2020}
+Esta semana la tarea principal era solucionar un problema de conexión entre el back y el front por el cual las peticiones get de los gráficos no estaban funcionando correctamente. Además se decidió mostrar el gráfico de intervalos con intervalos fijos y se ha mirado la posibilidad de utilizar GitHub Pages para alojar nuestra aplicación.
+
+El error de conexión, tras varios debugs y prestando atención a los logs se concluyó que el problema era que las peticiones se solapaban y por tanto se creaba un problema al consultar a la base de datos.
+Para solucionarlo se ha optado por crear un método que separe en el tiempo las tres peticiones durante unos milisegundos y así se realicen de forma correcta las consultas.
+
+Para el gráfico de intervalos el sprint pasado se implementó un método que calculaba los intervalos de forma dinámica dependiendo de los resultados de la consulta y así observar el gráfico de forma más repartida. 
+
+Para esta semana se creó el método con intervalos fijos y para no desechar el anterior se ha implementado la opción de poder visualizar el gráfico de intervalos dinámicos también.
+Por tanto, al cargar los resultados el gráfico que aparece es el de los intervalos fijos y hay un botón el cual vuelve a cargar el gráfico pero esta vez redimensionado con los intervalos dinámicos. Para ello, se utiliza un método el cual al clickar encima del botón pone un booleano a true y con ello se vuelve a realizar la petición get.
+
+Sobre GitHub Pages se ha buscado en varias páginas información de si era posible alojar python en la plataforma, lo cual no es posible. Por tanto, se desecha la idea de utilizarlo y se buscarán otras opciones.
+
+\imagen{burndown/Sprint14}{Burndown Report Sprint 14.}
+\imagen{burndown/TablaSprint14}{Issues y Story points Sprint 14.}
+
+\subsection{Sprint 15 - 12/05/2020 - 19/05/2020}
+Las tareas que esta semana se decidió llevar a cabo fueron realizar las redirecciones entre las ventanas de registro, login y menú, implementar métodos para la visualización de gráficos para todas las posibilidades de twitter e instagram, crear un nuevo gráfico y documentarse sobre la herramienta Heroku.
+
+Las conexiones que se han hecho entre ventanas han sido desde la ventana login al registro para crearte una cuenta, desde el registro a login cuando introduces los datos y cuando te logeas al menú.
+
+Esta última se realiza cuando introduces la cuenta de usuario y la contraseña y ya estabas registrado antes, para ello se realiza una consulta en la base de datos, en caso de que sí se encuentre esa cuenta te redirige al menú de la aplicación, en caso contrario te muestra una alerta de que se han introducido mal los datos.
+
+Para la implementación de los métodos de consultas a la base de datos, había que realizarlos para usuarios y palabras en twitter y para el usuario de instagram. Para este último ha sido algo más complejo ya que la extracción de datos de la API es diferente. Además, el tipo de fecha en la base de datos estaba mal definido por lo que se han tenido que modificar las tablas.
+Después de la modificación se ha implementado y probado todas las posibilidades y funcionan correctamente.
+
+Se ha buscado información sobre Heroku, que va a ser la herramienta donde alojaremos la aplicación. Esto ha sido documentado en la memoria.
+
+El nuevo gráfico es circular y nos muestra el porcentaje que representa el id por el que hemos buscado en nuestra base de datos. Para ello se ha implementado un nuevo servicio y dos consultas a base de datos, una que nos devuelve el total de datos de nuestra tabla y la segunda que nos devuelve el número que ocupa el id buscado. Después se realiza la división de el número de filas que ocupa el id entre el total y así obtenemos el porcentaje.
+
+\imagen{burndown/Sprint15}{Burndown Report Sprint 15.}
+\imagen{burndown/TablaSprint15}{Issues y Story points Sprint 15.}
+
+\subsection{Sprint 16 - 19/05/2020 - 26/05/2020}
+Para este sprint se decidió implementar un date picker para que el usuario en vez de escribir la fecha la seleccione en un calendario, que se pueda introducir un identificador que no se encuentra previamente en la base de datos y se busque en la api elegida, y además avanzar en los anexos y la memoria.
+
+Para implementar el date picker se ha utilizado un componente de angular que al seleccionar el campo de fecha despliega un calendario para seleccionar el día, mes y año.
+
+Cuando un identificador que ha sido introducido por el cliente no se encuentra en nuestra base de datos, la aplicación lanza una alerta de que no está registrado y que el análisis puede tardar varios minutos. Para ello se han creado dos peticiones, una para ver si se encuentra en la base de datos y otra para hacer la llamada a la API. Cuando se llama a la API esta nos devuelve los valores, se introducen en base de datos y se devuelven para mostrarlos en los gráficos.
+
+En los anexos se ha completado el apartado de especificación de requisitos, redactando los diferentes requisitos, funcionales y no funcionales, y se han añadido los casos de uso y su diagrama. 
+
+En la memoria se han mejorado varios aspectos que había comentado el tutor.
+
+\imagen{burndown/Sprint16}{Burndown Report Sprint 16.}
+\imagen{burndown/TablaSprint16}{Issues y Story points Sprint 16.}
+\newpage
+\subsection{Sprint 17 - 26/05/2020 - 02/06/2020}
+Para esta semana se decidió que se iba a realizar la primera release.
+
+Por ello, las tareas que se han realizado han sido añadir una pantalla de inicio y una de información y modificar algunas pantallas que ya tenía la aplicación como la de los gráficos.
+
+Esta primera versión de la aplicación nos permite la búsqueda de textos en twitter por hashtag, usuario o palabra y en instagram por usuario. Hay varios resultados ya almacenados en la base de datos, para que la aplicación sea más rápida, aunque si se quiere buscar una palabra que no se encuentra almacenada también es posible.
+Para utilizar la aplicación primero hay que registrarse y acceder con nuestra cuenta. Los resultados se mostrarán a través de gráficos y tablas.
+
+Después de realizar la release, se ha implementado una nueva funcionalidad que es la opción de actualizar la base de datos. Se ha añadido en caso de que al buscar una palabra que se encuentre en la base de datos puedas seleccionar la opción de actualizar sus registros.
+
+Para ello se ha añadido una checkbox en las pantallas de análisis, si se selecciona se llamará al servicio de búsqueda en API y se actualizará la base de datos.
+
+\imagen{burndown/Sprint17}{Burndown Report Sprint 17.}
+\imagen{burndown/TablaSprint17}{Issues y Story points Sprint 17.}
+
+\subsection{Sprint 18 - 02/06/2020 - 09/06/2020}
+Este sprint se ha enfocado principalmente en aprender sobre las series temporales. Además se ha seguido avanzando en los anexos y se ha creado el botón de acceso a la página donde se van a representar las series.
+
+Para aprender lo esencial de las series temporales, qué son, para qué se usan y cuáles son las principales, el tutor ha proporcionado un tema sobre la demanda independiente y los métodos predictivos en el cual se explican las media móviles, el suavizado exponencial y los métodos estacionales.
+Además se ha proporcionado un curso sobre el análisis de series temporales con R y Python que ha servido de mucha ayuda. En él explican las fórmulas para realizar los modelos estadísticos y ponen ejemplos para mayor comprensión.
+
+Se ha implementado el acceso a la página de series temporales. Al principio se pensó en crear una página intermedia entre la de introducir los datos para el análisis para poder escoger entre los gráficos básicos y las series temporales. Tras la implementación parecía poco práctico, porque un usuario no debe tener que escoger entre gráficos y series temporales. Para hacer la aplicación más lineal se ha optado por un botón en la página de gráficos de forma que tras ver los gráficos resultantes se puede acceder a las series temporales y seguir con la experiencia.
+
+En los anexos se ha avanzado en el apéndice C, por lo que se han creado todos los diagramas de secuencia, el diagrama del diseño de datos. También se han añadido varias tablas y gráficos al apéndice A sobre el seguimiento del proyecto.
+
+\imagen{burndown/Sprint18}{Burndown Report Sprint 18.}
+\imagen{burndown/TablaSprint18}{Issues y Story points Sprint 18.}
+
+\subsection{Sprint 19 - 09/06/2020 - 16/06/2020}
+En este sprint se han realizado arreglos visuales a la aplicación, los cálculos de series temporales así como su representación y se ha avanzado en la memoria y anexos.
+
+En los anexos se ha terminado el apéndice C, que faltaba por redactar los diferentes patrones arquitectónicos de la aplicación. En la memoria se ha redactado el apartado 5, aspectos relevantes del desarrollo del proyecto.
+
+Los arreglos visuales han sido varios, desde ordenar las fechas de los gráficos de forma ascendente, hasta arreglar la tabla de estadísticas, que daba un problema con las claves foráneas.
+Además se ha mejorado la ventana de información y se han borrado componentes que no se utilizan.
+
+Para el cálculo de series temporales se ha utilizado la libreria statsmodels de python.
+Se ha implementado tanto el cálculo de la serie temporal a elegir, entre suavizado exponencial, Holt y Arima, la descomposición de la serie temporal y realizar el test para saber si es o no estacionaria.
+Para mostrarla, se han creado varios desplegables para que el usuario elija las opciones y por último una casilla en la que introduce el número de predicciones que desea hacer.
+Después se muestra un gráfico con los valores calculados en los que aparecen los datos originales, la serie calculada y la predicción a partir de la serie calculada. La descomposición se muestra en tres gráficos, uno para la estacionalidas, otro para la tendencia y el último para los residuos.
+
+\imagen{burndown/Sprint19}{Burndown Report Sprint 19.}
+\imagen{burndown/TablaSprint19}{Issues y Story points Sprint 19.}
+
+\subsection{Sprint 20 - 16/06/2020 - 24/06/2020}
+En esta semana se fijó implementar la internacionalización de la aplicación, realizar la wiki para el manual de usuario y realizar la subida de la aplicación a Heroku. Además se han realizado una serie de arreglos a nivel visual y en código.
+
+En los arreglos se han realizado los cambios de carpetas para tener mayor orden de los elementos, se han borrado comentarios y métodos no utilizados. Además se han implementado controles de introducción de caracteres erróneos.
+
+En la internacionalización se han tenido que generar dos documentos, uno con los términos en español y otro con los términos en inglés. Se ha añadido un desplegable para seleccionar el idioma.
+
+La wiki se ha realizado el gitbook y se han realizado dos modelos, una en español y una en inglés. El manual de usuario además, se ha añadido al apéndice E de los anexos.
+
+La subida de la aplicación a Heroku ha resultado un problema, ya que al tener los dos lenguajes en el mismo repositorio heroku no conseguía determinar qué tecnología utilizar.
+Por tanto, la solución encontrada ha sido crear dos repositorios que serviran solamente para poder subirlo a heroku. Cada repositorio tiene la tecnología, una de python y otra de angular. Se han creado una aplicación para cada repositorio, después se han modificado las rutas de conexión y de esta forma conseguimos comunicar ambas aplicaciones.
+
+\imagen{burndown/Sprint20}{Burndown Report Sprint 20.}
+\imagen{burndown/TablaSprint20}{Issues y Story points Sprint 20.}
+
+\subsection{Sprint 21 - 24/06/2020 - 29/03/2020}
+Tras haber conseguido con éxito desplegar la aplicación en el serivdor gratuito Heroku, se han tenido varios problemas con la limitación de RAM que nos imponen debido a que es un plan gratuito. El problema ocurre porque al tener una aplicación con un número grande de servicios la RAM no es capaz de soportar y su rendimiento no es tan bueno como el esperado.
+Por ello se ha optado que además se cree una máquina virtual para que el tribunal pueda probar más cómodamente la aplicación.
+La máquina virtual cuenta con el SO Windows 10 Pro, con licencia que ha comprado el tutor.
+Tras instalar todos los requerimientos en la máquina virtual se ha comprobado que funciona.
+También durante este sprint se ha terminado la memoria y los anexos.
+Se han grabado los vídeos necesarios para la entrega, tanto el explicativo como la demostración.
+
+\imagen{burndown/Sprint21}{Burndown Report Sprint 21.}
+\imagen{burndown/TablaSprint21}{Issues y Story points Sprint 21.}
+\newpage
+\section{Estudio de viabilidad}
+En este apartado se van a calcular los costes del proyecto y sus beneficios en caso de que se lanzara al mercado.
+
+\subsection{Viabilidad económica}
+
+\subsubsection{Costes}
+Primero se detallarán los costes.
+
+\begin{itemize}
+\item\textbf{Costes de personal}
+
+En este apartado se calculará el gasto que supone tener al empleado. Se calcula que se han realizado unas 600 horas de trabajo repartidas durante 6 meses. Esto supone un trabajo de entre 20 y 30 horas semanales, ya que dependiendo de la semana ha habido más o menos carga de trabajo. Vamos a estimar unas 25 horas.
+El salario del alumno va a ser de unos 18\EUR{}/hora, lo que supondrá un salario bruto de:
+
+
+ $$ 25\frac{horas}{semana}\times18\frac{\text{\euro}}{hora}\times4\frac{semanas}{mes}=1800\text{\euro}\hspace{0.5em}al\hspace{0.5em}mes  $$
+ 
+Este cálculo corresponde con el salario bruto del empleado, para calcular el salario real que recibirá el empleado debemos calcular los impuestos que la empresa debe pagar por él. Esto se puede consultar en la página oficial de la seguridad social: \url{http://www.seg-social.es/wps/portal/wss/internet/Trabajadores/CotizacionRecaudacionTrabajadores/36537}. Aunque sean del año 2019 no ha habido cambios para este año.
+
+Los impuestos son:
+\begin{itemize}
+\tightlist
+    \item 23.6\% contingencias.
+    \item 5.5\% desempleo.
+    \item 0.20\% FOGASA.
+    \item 0.60\% formación profesional.
+\end{itemize}
+
+\imagen{viabilidad/tipo_cotizacion}{Régimen general de la Seguridad Social parte 1.}
+\imagen{viabilidad/desempleo_fogasa_fp}{Régimen general de la Seguridad Social parte 2.}
+
+Teniendo en cuenta estos impuestos, calculamos el gasto que supone el empleado:
+
+$$\frac{1800\frac{\text{\euro}}{mes}}{1-(0.236+0.055+0.002+0.006)}=2567,76\text{\euro}\hspace{0.5em}al\hspace{0.5em}mes$$
+
+Además se cuenta con dos profesores que tienen conocimientos en el tema y están contratados como apoyo. El salario de cada uno es de 38\EUR{}/mes, ya que cuentan con experiencia. Se les contrata por dos horas a la semana:
+
+$$ 2\frac{horas}{semana}\times38\frac{\text{\euro}}{hora}\times4\frac{semanas}{mes}=304\text{\euro}\hspace{0.5em}al\hspace{0.5em}mes\hspace{0.5em}por\hspace{0.5em}profesor $$
+
+Son 608\EUR{} brutos, a los cuales hay que sumar los impuestos:
+
+$$\frac{608\frac{\text{\euro}}{mes}}{1-(0.236+0.055+0.002+0.006)}=867,33\text{\euro}\hspace{0.5em}al\hspace{0.5em}mes\hspace{0.5em}entre\hspace{0.5em}los\hspace{0.5em}dos\hspace{0.5em}profesores$$
+
+Tras realizar todos los cálculos, la empresa deberá pagar mensualmente 3435.1\EUR{}. Como el proyecto ha durado seis meses, el coste total será de 20610,55\EUR{}.
+
+\item \textbf{Hardware}
+
+Los recursos hardware utilizados han sido un ordenador cuyo coste fue de 520\EUR{} y que ya fue amortizado en su totalidad en ejercicios anteriores, por tanto, los costes hardware han sido de 0\EUR{}.
+
+\item \textbf{Software}
+
+En el proyecto todas las herramientas software utilizadas han sido gratuitas a excepción del sistema operativo que se ha utilizado para la máquina virtual. El coste de la licencia ha sido de 8\EUR{}. La amortización de la licencia es en un periodo de 4 años.
+
+$$\frac{8\text{\euro}}{4 años}=2\text{\euro}\hspace{0.5em}al año$$
+
+Como la duración del proyecto ha sido de seis meses, el coste total ha sido 1\EUR{}.
+
+\item\textbf{Total}
+
+Para calcular los costes totales del proyecto hay que tener en cuenta los costes indirectos, en este caso la tarifa de internet es de 90\EUR{}/mes, como es compartido su utilización ha sido del 50\% del total contratado, por lo que han sido 45\EUR{}/mes. 
+
+Se han desestimado otras ofertas menos costosas para este servicio por fallos reiterados de cobertura en la zona geográfica de la localización.
+Por tanto, por seis meses ha sido 270\EUR{}.
+La tabla de costes totales nos quedaría de la siguiente forma:
+
+\begin{table}[ht!]
+    \centering
+    \resizebox{6.5cm}{!} {
+    \begin{tabular}{l c}
+    
+         \textbf{Tipo de costes}     &  \textbf{Total } \\ \hline
+         \textit{Personal}       & 20610,55\text{\euro} \\ 
+         \textit{Hardware}    & 0\text{\euro} \\  
+         \textit{Software}      & 1\text{\euro} \\ 
+         \textit{Indirectos}      &270\text{\euro}   \\ \hline
+         \textbf{Total}         &20881,55\text{\euro}\\ 
+    \end{tabular}}
+    \caption{Costes totales}
+    \label{tab:my_label}
+\end{table}
+\end{itemize}
+
+\subsubsection{Beneficios}
+Al ser un proyecto de carácter educativo no se obtiene ningún beneficio de la utilización de la aplicación.
+
+\newpage
+\subsection{Viabilidad legal}
+En este apartado se van a estudiar las licencias que tienen las herramientas utilizadas.
+
+\begin{table}[ht!]
+    \centering
+    \resizebox{15cm}{!} {
+    \begin{tabular}{|l|l|l|}
+    \hline
+         \textbf{Herramienta/Librería}     &  \textbf{Versión}   &\textbf{Licencia} \\ \hline
+         {Flask}       & {1.1.1}  &{BSD} \\ \hline
+         {Nodejs}       & {12.16.1}     &{MIT} \\ \hline 
+         {GitHub}       & {3.0}    &{GNU} \\ \hline 
+         {PyCharm}       & {2019.3.5}     &{Commercial} \\ \hline
+         {YandexTranslate}       & {-}    &{Commercial} \\ \hline 
+         {MySQL}       & {12.16.1}   &{GPL} \\ \hline 
+         {AngularCLI}      &{9.1.0}     &{MIT} \\\hline
+         {@angular-devkit/architect}       & {0.901.0}    &{MIT} \\ \hline 
+         {@angular-devkit/core}       & {9.1.0}    &{MIT} \\ \hline 
+         {@angular-devkit/schematics}       & {9.1.0}    &{MIT} \\ \hline
+         {@schematics/angular}       & {9.1.0}    &{MIT} \\ \hline 
+         {rxjs}       & {6.5.4}    &{MIT} \\ \hline 
+         {now-ui-kit-angular}       & {-}    &{MIT} \\ \hline 
+         {now-ui-dashboard-angular}       & {-}    &{MIT} \\ \hline 
+    \end{tabular}}
+    \caption{Tabla de licencias}
+    \label{tab:my_label}
+\end{table}
+\newpage
+Como se puede observar, todas las licencias permiten su uso libre excepto PyCharm y YandexTranslate, que son de tipo \textit{Commercial}. 
+
+Aún así, la licencia de nuestro proyecto sería una licencia \textit{MIT} ya que PyCharm individual es \textit{Apache 2.0} y en el caso de Yandex se nos permite su uso de forma libre siempre y cuando se especifique que la aplicación utiliza sus servicios.
+
+
+

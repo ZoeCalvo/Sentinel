@@ -1,0 +1,113 @@
+\apendice{Documentación técnica de programación}
+
+\section{Introducción}
+En este apéndice se va a explicar cómo está organizado el proyecto, el manual del programador y los requisitos necesarios para poder ejecutar el proyecto. 
+
+\section{Estructura de directorios}
+En el proyecto hay cuatro directorios principales:
+\begin{itemize}
+\tightlist
+    \item\textbf{frontend:} Es el directorio donde se encuentra todo el código de Angular con el que se ha realizado la interfaz de la aplicación y las conexiones con el código de python.
+    \item\textbf{src:} Aquí se alojan todos los archivos python, que son los que realizan la gestión de la aplicación.
+    \item\textbf{ux\_ui:} En esta carpeta se aloja el prototipo que se realizó al principio del proyecto de cómo iba a ser la aplicación.
+    \item\textbf{doc:} En este directorio encontramos los documentos de la memoria y los anexos, junto con sus imágenes y complementos.
+\end{itemize}
+\newpage
+\subsection{frontend}
+Dentro de este directorio como hemos indicado anteriormente se encuentran todo el código que crea la interfaz y la conecta con el código de python.
+Dentro de ella podemos encontrar dos subdirectorios:
+\begin{itemize}
+\tightlist
+    \item\textbf{e2e:} Contiene configuración de angular.
+    \item\textbf{src:} Contiene el código en typescript, los archivos css y las imágenes.
+\end{itemize}
+
+\subsubsection{frontend/src}
+Contiene tres subdirectorios:
+\begin{itemize}
+\tightlist
+    \item src/app: Contiene todos los componentes que generan la interfaz. Hay un componente por cada página de la aplicación.
+    \item src/assets: Aloja todos los archivos css y las imágenes utilizadas en la aplicación.
+\end{itemize}
+
+
+\section{Manual del programador}
+
+\subsection{Instalación de Python}
+Para ejecutar nuestro proyecto es necesario instalar Python, para ello podemos descargar la versión aquí: \url{https://www.python.org/downloads/}
+Cuando la descarga haya finalizado ejecutamos e instalamos.
+
+\subsection{Instalación de MySQL}
+En MySQL es necesario descargar MySQL Workbench y MySQL Server. Para ello iremos a la página oficial, \url{https://dev.mysql.com/downloads/} y descargaremos el MySQL Installer.
+Cuando lo ejecutamos, hay que seguir las instrucciones y añadir los complementos. También hay que instalar el MySQL Connector Python.
+
+\subsection{Instalación de Nodejs}
+Para la parte de angular es necesario instalar Nodejs, por tanto accederemos a la página oficial, \url{https://nodejs.org/es/download/}, y descargaremos la versión que necesitemos y llevaremos a cabo su instalación.
+
+Tras la instalación de los distintos elementos es recomendable reiniciar el equipo para que no haya problemas de compatibilidad, ya que por ejemplo, MySQL Connector Python necesita que tengamos instalado Python, y puede darse que si no reiniciamos el equipo no lo detecte.
+
+\section{Compilación, instalación y ejecución del proyecto}
+Para la utilización del proyecto, se debe descargar del repositorio de GitHub en el que está subido \url{https://github.com/ZoeCalvo/Sentinel}, lo descomprimimos y ya podemos comenzar.
+El proyecto ha sido realizado con la herramienta de PyCharm, su instalación es opcional ya que se puede ejecutar desde la consola de comandos.
+
+En caso de que instalemos PyCharm:
+
+\subsection{Importar y ejecutar en PyCharm}
+Debemos abrir la herramienta y seleccionar \textit{File>Open} escogemos el proyecto y aceptamos.
+Tardar unos minutos en generar los esquemas e importar todo. 
+Cuando ya hayamos realizado esto, deberemos instalar varias librerías de Python que se irán marcando en rojo.
+Si usamos PyCharm, posicionando el ratón encima de la librería nos sugerirá instalar el paquete, seleccionamos que sí y comenzará la instalación.
+
+Las librerías que necesitan instalación son:
+
+\subsection{Librerías de Python}
+Las primeras librerías necesarias serán \textit{Flask y Flask\-Cors}, ya que la aplicación utiliza el framework Flask.
+Cors se utiliza para que las conexiones entre páginas no causen problema.
+
+Para poder acceder a Instagram, nos hemos instalado una librería de un repositorio de GitHub.
+Para Twitter hay que instalar la librería \textit{tweepy.py}
+
+En cuanto al análisis de sentimientos, se ha utilizado un repositorio de GitHub \url{https://github.com/aylliote/senti-py.git}, lo descomprimimos y para instalarlo debemos instalar \textit{spanish\_sentiment\_analysis}.
+
+Para los análisis en inglés, tenemos la librería TextBlob que es la que hemos utilizado para el análisis y Yandex Translate, que lo hemos utilizado para la detección del idioma.
+
+Para el cálculo de series temporales se han utilizado las librerías \textit{statsmodels y pmdarima}, cuya instalación también es necesaria.
+
+Para realizar la instalación de cada una de las librerías, en consola se realizará con el comando \textit{pip install} seguido de la librería.
+
+
+\subsection{Instalación de Angular}
+Tras realizar la instalación de Nodejs, para poder construir el proyecto de angular debemos ejecutar una serie de comandos.
+
+Primero, en una consola nos posicionamos en la ruta del proyecto de angular, en nuestro caso sería dentro de la carpeta \textit{frontend}.
+Ejecutamos el comando \textit{npm install -g @angular/cli} que va a instalar las dependencias de angular/cli.
+Tardará unos minutos, cuando termine ejecutaremos \textit{npm install} lo que va a instalar todos los módulos de node que tenemos indicados en el archivo \textit{package.json}.
+Para finalizar levantaremos el proyecto con \textit{npm start}, este comando compila el proyecto y lo levanta en \url{http://localhost:4200/}.
+
+Esto es necesario solo para la primera vez que se instala el proyecto.
+
+\subsection{Ejecución del proyecto}
+Cuando el proyecto ya se ha levantado una vez, para poder correr la aplicación deberemos abrir dos consolas, en las cuales accederemos dentro del proyecto de esta forma:
+
+$$\textit{cd \{path\}}$$
+
+En la primera consola, estando ya dentro de la ruta del proyecto escribiremos lo siguiente:
+
+$$\textit{cd src}$$
+$$\textit{py server.py}$$
+
+Con ello ejecutaremos el servidor.
+
+En la segunda consola escribiremos:
+
+$$\textit{cd frontend}$$
+$$\textit{ng serve}$$
+
+Esto iniciará nuestro proyecto en \url{http://localhost:4200/}
+
+Mientras estemos utilizando la aplicación no debemos cerrar ninguna de las dos consolas ya que esto parará su ejecución.
+
+La aplicación necesita algunas credenciales, las cuales se han introducido en variables de entorno para que no sean públicas en el repositorio, por tanto si no están declaradas en variables de entorno, la aplicación no se ejecutará.
+
+\subsection{Máquina Virtual}
+Si se utiliza la máquina virtual que se proporciona, el PIN de acceso es: \textit{1a2b}.

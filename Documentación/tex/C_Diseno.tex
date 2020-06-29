@@ -1,0 +1,80 @@
+\apendice{Especificación de diseño}
+
+\section{Introducción}
+En este apartado se explica cómo se han organizado y diseñado las diferentes partes de la aplicación.
+
+\section{Diseño de datos}
+La base de datos de la aplicación cuenta con diferentes tablas:
+
+\begin{itemize}\tightlist
+    \item \textbf{Register:} En esta tabla se almacenan todos los usuarios registrados. Para crear una cuenta el usuario debe introducir su nombre, apellido, nombre que quiere dar a la cuenta y la contraseña. La tabla además tiene un identificador que es un autoincremental.
+    \item \textbf{Datahashtags:} Almacena los hashtags con la fecha de creación, los tweets donde aparece y el valor del análisis. 
+    \item \textbf{Datausertw:} Guarda los resultados de los tweets referentes a un usuario, el tweet en el que ha sido nombrado, la fecha del tweet y el valor del análisis.
+    \item \textbf{Dataword:} En ella se almacenan las palabras buscadas junto con los tweets en los que aparece esa palabra, la fecha en la que se escribieron y el análisis de los tweets.
+    \item \textbf{Datauserig:} Guarda todos los comentarios que se han realizado en el perfil del usuario buscado junto con la fecha de estos y el resultado del análisis.
+    \item \textbf{Statistics:} En esta tabla se almacenan cada hashtag, usuario de twitter, palabra o usuario de instagram junto con la media, moda, mediana, varianza y desviación típica del conjunto de sus resultados.
+\end{itemize}
+
+\imagen{Esquema_BD}{Esquema de la base de datos.}
+
+\newpage
+\section{Diseño procedimental}
+En este apartado se muestra la ejecución de la aplicación mediante varios diagramas de secuencia.
+
+\subsection{Registro y Login}
+El primer diagrama de secuencia representa los pasos que sigue el programa en el momento en el que el usuario se registra y después accede a la aplicación con su cuenta.
+
+\imagen{img/sequence_diagram/sequence_diagram_login_register.png}{Diagrama de secuencia de Registro y Login}
+
+\newpage
+\subsection{Análisis en twitter}
+En este diagrama podemos ver la ejecución del programa cuando se realiza el análisis en la opción de twitter.
+
+\imagen{img/sequence_diagram/sequence_diagram_tw.jpg}{Diagrama de secuencia de Análisis en twitter}
+
+\newpage
+\subsection{Análisis en instagram}
+Aquí podemos observar los pasos al ejecutar una orden de análisis en instagram. 
+
+\imagen{img/sequence_diagram/sequence_diagram_ig.jpg}{Diagrama de secuencia de Análisis en instagram}
+
+\newpage
+\section{Diseño arquitectónico}
+En este apartado se explicarán los diferentes patrones de diseño que se han utilizado para que la aplicación tenga un buen diseño software y esto ayude a la mantenibilidad de esta.
+
+\subsection{Modelo-Vista-Controlador (MVC)}
+En este patrón como su nombre indica las partes del \textbf{modelo}, los datos de la aplicación, la \textbf{vista}, representación de los datos y el \textbf{controlador}, encargado de reaccionar a las entradas del usuario, están bien diferenciadas y relacionadas entre ellas. \cite{apuntesMVC}
+
+En nuestra aplicación cada componente abarca:
+\begin{itemize}\tightlist
+    \item \textbf{Modelo:} Está compuesto por los módulos de instagram, twitter, statistics\_formulas y database. En estos módulos se realizan todas las operaciones para extraer los datos de las APIs, se calcula el sentimiento de los resultados y se almacena todo en la base de datos.
+    \item \textbf{Vista:} Es la interfaz de usuario, es la parte con la que el usuario interactúa y le muestra toda la información. Se ha realizado en angular y se trata de varios componentes que realizan comunicaciones con el controlador para poder comunicarse entre distintas ventanas, mostrar gráficos, etc.
+    \item\textbf{Controlador:} Es el módulo denominado server. Se encarga de todas las comunicaciones con los servicios de la vista. Este recoge las peticiones que se hacen desde la interfaz y llama a los diferentes módulos para realizar las operaciones y devolver un json con la información deseada.
+\end{itemize}
+
+\imagen{patrones/mvc}{Patrón MVC. \cite{ImgMVC}}
+
+\subsection{Fachada}
+Este patrón tiene como función dar una interfaz unificada de alto nivel al cliente, aunque por debajo este formado por varias interfaces. \cite{patronFachada}
+
+En nuestro caso el patrón fachada se utiliza para 'ocultar' a la interfaz de usuario los módulos que realmente hacen las operaciones, es decir, los módulos de twitter, instagram, database y statistics\_formulas. En ellos se realizan todas las operaciones y se comunican entre ellos para poder almacenar los resultados en la base de datos. Sin embargo, la interfaz de usuario no conoce de su existencia, ya que solamente se comunica con el módulo server que en este caso hace la función de fachada. El módulo server es el que conoce toda la estructura, porque se comunica con ambas partes, ya que los módulos que realizan las operaciones tampoco tienen conocimiento de la existencia de la fachada, pues no tienen ninguna dependencia hacia ella. 
+
+\imagen{patrones/fachada}{Patrón Fachada.}
+
+\clearpage
+\section{Diseño de interfaces}
+Al principio del proyecto, en la semana tres se realizó un prototipo de la interfaz de la aplicación. Para ello se utilizó la herramienta Pencil.
+
+\imagen{prototipo_interfaz}{Prototipo de interfaz.}
+
+Este prototipo nos sirvió para hacernos una idea de como enfocar la aplicación a nivel de usuario, aunque se han modificado algunas cosas para la interfaz final, la estructura es casi la misma.
+
+Cuando se empezó con la parte visual de la aplicación se decidió que era mejor buscar una plantilla y modificarla a nuestro gusto, para que las ventanas de la aplicación se unificaran.
+
+\newpage
+Se ha utilizado una plantilla para la estructura de ventanas como login, menú, la portada, etc. Para la ventana de gráficos se buscó en la misma web una plantilla específica para este componente que se asemejara a la plantilla del resto de la aplicación. El resultado final es el siguiente:
+
+\imagen{interfazreal}{Interfaz final.}
+
+
+

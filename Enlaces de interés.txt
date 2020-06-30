@@ -1,7 +1,10 @@
 ENLACES DE INTERÉS DEL PROYECTO FINAL DE GRADO SENTINEL
 
 Link al vídeo:
-	https://universidaddeburgos-my.sharepoint.com/:v:/g/personal/zcs0001_alu_ubu_es/ERjAsfxjujRFpTYdfLB4U38B4LJkMbzSpRDfwId5juWtGg?e=7F7T6x
+	https://universidaddeburgos-my.sharepoint.com/:v:/g/personal/zcs0001_alu_ubu_es/ERjAsfxjujRFpTYdfLB4U38B4LJkMbzSpRDfwId5juWtGg
+
+	Algún miembro del tribunal ha tenido problemas con el acceso, por ello mi tutor José Manuel Galán lo ha subido ya a la cuenta de Youtube de TFGs de GII:
+		https://www.youtube.com/watch?v=lmQfHgu5jcY&feature=youtu.be
 
 Link a la aplicación desplegada:
 	https://frontsentinel.herokuapp.com/

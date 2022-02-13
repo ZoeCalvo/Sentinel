@@ -28,7 +28,7 @@
     "@ng-bootstrap/ng-bootstrap": "4.1.0",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^5.0.0",
-    "ajv": "6.10.0",
+    "ajv": "6.12.3",
     "ajv-keywords": "3.4.0",
     "bootstrap": "^4.0.0",
     "chart.js": "^2.7.3",
